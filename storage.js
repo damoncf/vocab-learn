@@ -21,6 +21,8 @@ const STORAGE_KEYS = {
   UNFAMILIAR_WORDS:  'vocab_unfamiliar_words',
   SOURCE_TYPE:       'vocab_source_type',
   FILE_WORDS:        'vocab_file_words',
+  BUILTIN_VOCAB_ID:  'vocab_builtin_vocab_id',
+  BUILTIN_VOCAB_USED:'vocab_builtin_used',
 };
 
 /* -------------------------------------------------------
@@ -128,6 +130,56 @@ const Session = {
 
   getSessionDate() {
     return localStorage.getItem(STORAGE_KEYS.SESSION_DATE) || this.todayString();
+  },
+};
+
+/* -------------------------------------------------------
+   Built-in vocabulary selection
+   ------------------------------------------------------- */
+const BuiltinVocab = {
+  /**
+   * Set the currently active built-in vocabulary ID (e.g. 'cet4')
+   * @param {string} id
+   */
+  set(id) {
+    localStorage.setItem(STORAGE_KEYS.BUILTIN_VOCAB_ID, id);
+    // Reset used tracking when switching vocab
+    localStorage.setItem(STORAGE_KEYS.BUILTIN_VOCAB_USED, '[]');
+  },
+
+  /**
+   * Get the currently active built-in vocabulary ID
+   * @returns {string|null}
+   */
+  get() {
+    return localStorage.getItem(STORAGE_KEYS.BUILTIN_VOCAB_ID) || null;
+  },
+
+  /**
+   * Clear the built-in vocabulary selection
+   */
+  clear() {
+    localStorage.removeItem(STORAGE_KEYS.BUILTIN_VOCAB_ID);
+    localStorage.removeItem(STORAGE_KEYS.BUILTIN_VOCAB_USED);
+  },
+
+  /**
+   * Get the set of already-used words from the current built-in vocab
+   * @returns {string[]}
+   */
+  getUsedWords() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.BUILTIN_VOCAB_USED) || '[]'); }
+    catch (_) { return []; }
+  },
+
+  /**
+   * Add words to the used set
+   * @param {string[]} words
+   */
+  addUsedWords(words) {
+    const existing = new Set(this.getUsedWords());
+    words.forEach(w => existing.add(w));
+    localStorage.setItem(STORAGE_KEYS.BUILTIN_VOCAB_USED, JSON.stringify([...existing]));
   },
 };
 
