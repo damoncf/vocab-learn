@@ -1,0 +1,271 @@
+/**
+ * storage.js — localStorage management & record file generation
+ *
+ * Responsibilities:
+ *  - Persist app settings (API key, words per batch, difficulty)
+ *  - Track session state (batch index, used words, session date)
+ *  - Build and download record Markdown files to .workspace/records/
+ */
+
+/* -------------------------------------------------------
+   Keys
+   ------------------------------------------------------- */
+const STORAGE_KEYS = {
+  API_KEY:           'vocab_api_key',
+  WORDS_PER_BATCH:   'vocab_words_per_batch',
+  DIFFICULTY:        'vocab_difficulty',
+  SESSION_DATE:      'vocab_session_date',
+  BATCH_INDEX:       'vocab_batch_index',
+  USED_WORDS:        'vocab_used_words',
+  FAMILIAR_WORDS:    'vocab_familiar_words',
+  UNFAMILIAR_WORDS:  'vocab_unfamiliar_words',
+  SOURCE_TYPE:       'vocab_source_type',
+  FILE_WORDS:        'vocab_file_words',
+};
+
+/* -------------------------------------------------------
+   Settings
+   ------------------------------------------------------- */
+const Settings = {
+  getApiKey()             { return localStorage.getItem(STORAGE_KEYS.API_KEY) || ''; },
+  setApiKey(v)            { localStorage.setItem(STORAGE_KEYS.API_KEY, v); },
+
+  getWordsPerBatch()      { return parseInt(localStorage.getItem(STORAGE_KEYS.WORDS_PER_BATCH) || '100', 10); },
+  setWordsPerBatch(v)     { localStorage.setItem(STORAGE_KEYS.WORDS_PER_BATCH, String(v)); },
+
+  getDifficulty()         { return localStorage.getItem(STORAGE_KEYS.DIFFICULTY) || 'intermediate'; },
+  setDifficulty(v)        { localStorage.setItem(STORAGE_KEYS.DIFFICULTY, v); },
+
+  getSourceType()         { return localStorage.getItem(STORAGE_KEYS.SOURCE_TYPE) || 'ai'; },
+  setSourceType(v)        { localStorage.setItem(STORAGE_KEYS.SOURCE_TYPE, v); },
+
+  getAll() {
+    return {
+      apiKey:        this.getApiKey(),
+      wordsPerBatch: this.getWordsPerBatch(),
+      difficulty:    this.getDifficulty(),
+      sourceType:    this.getSourceType(),
+    };
+  },
+
+  saveAll({ apiKey, wordsPerBatch, difficulty }) {
+    if (apiKey       !== undefined) this.setApiKey(apiKey);
+    if (wordsPerBatch !== undefined) this.setWordsPerBatch(wordsPerBatch);
+    if (difficulty   !== undefined) this.setDifficulty(difficulty);
+  },
+};
+
+/* -------------------------------------------------------
+   Session State
+   ------------------------------------------------------- */
+const Session = {
+  /** Today's date string YYYYMMDD */
+  todayString() {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm   = String(d.getMonth() + 1).padStart(2, '0');
+    const dd   = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}${mm}${dd}`;
+  },
+
+  /** Ensure session is for today; reset if it's a new day. */
+  initSession() {
+    const today = this.todayString();
+    const stored = localStorage.getItem(STORAGE_KEYS.SESSION_DATE);
+    if (stored !== today) {
+      this.resetSession(today);
+    }
+    return today;
+  },
+
+  resetSession(dateStr) {
+    const today = dateStr || this.todayString();
+    localStorage.setItem(STORAGE_KEYS.SESSION_DATE,    today);
+    localStorage.setItem(STORAGE_KEYS.BATCH_INDEX,     '1');
+    localStorage.setItem(STORAGE_KEYS.USED_WORDS,      '[]');
+    localStorage.setItem(STORAGE_KEYS.FAMILIAR_WORDS,  '[]');
+    localStorage.setItem(STORAGE_KEYS.UNFAMILIAR_WORDS,'[]');
+  },
+
+  getBatchIndex() {
+    return parseInt(localStorage.getItem(STORAGE_KEYS.BATCH_INDEX) || '1', 10);
+  },
+  incrementBatchIndex() {
+    const next = this.getBatchIndex() + 1;
+    localStorage.setItem(STORAGE_KEYS.BATCH_INDEX, String(next));
+    return next;
+  },
+
+  getUsedWords() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.USED_WORDS) || '[]'); }
+    catch (_) { return []; }
+  },
+  addUsedWords(words) {
+    const existing = new Set(this.getUsedWords());
+    words.forEach(w => existing.add(w));
+    localStorage.setItem(STORAGE_KEYS.USED_WORDS, JSON.stringify([...existing]));
+  },
+
+  getFamiliarWords() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.FAMILIAR_WORDS) || '[]'); }
+    catch (_) { return []; }
+  },
+  addFamiliarWords(words) {
+    const existing = new Set(this.getFamiliarWords());
+    words.forEach(w => existing.add(w));
+    localStorage.setItem(STORAGE_KEYS.FAMILIAR_WORDS, JSON.stringify([...existing]));
+  },
+
+  getUnfamiliarWords() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.UNFAMILIAR_WORDS) || '[]'); }
+    catch (_) { return []; }
+  },
+  addUnfamiliarWords(words) {
+    const existing = new Set(this.getUnfamiliarWords());
+    words.forEach(w => existing.add(w));
+    localStorage.setItem(STORAGE_KEYS.UNFAMILIAR_WORDS, JSON.stringify([...existing]));
+  },
+
+  getSessionDate() {
+    return localStorage.getItem(STORAGE_KEYS.SESSION_DATE) || this.todayString();
+  },
+};
+
+/* -------------------------------------------------------
+   File source word pool
+   ------------------------------------------------------- */
+const FileWords = {
+  set(words) {
+    localStorage.setItem(STORAGE_KEYS.FILE_WORDS, JSON.stringify(words));
+  },
+  get() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.FILE_WORDS) || '[]'); }
+    catch (_) { return []; }
+  },
+  clear() {
+    localStorage.removeItem(STORAGE_KEYS.FILE_WORDS);
+  },
+};
+
+/* -------------------------------------------------------
+   Record file generation
+   Produces a Markdown file and triggers a browser download
+   because browsers cannot write directly to the filesystem.
+   The file is named record-YYYYMMDD.md.
+   ------------------------------------------------------- */
+const Records = {
+  /**
+   * Build the Markdown content for the daily record.
+   * @param {string} dateStr  - YYYYMMDD
+   * @param {string[]} familiarWords
+   * @param {string[]} unfamiliarWords
+   * @param {number} batchIndex - which batch we just finished
+   */
+  buildMarkdown(dateStr, familiarWords, unfamiliarWords, batchIndex) {
+    const displayDate = `${dateStr.slice(0,4)}-${dateStr.slice(4,6)}-${dateStr.slice(6,8)}`;
+    const now = new Date().toLocaleTimeString('en-US', { hour12: false });
+
+    const familiarSection = familiarWords.length > 0
+      ? familiarWords.map(w => `- ${w}`).join('\n')
+      : '_No familiar words recorded yet._';
+
+    const unfamiliarSection = unfamiliarWords.length > 0
+      ? unfamiliarWords.map(w => `- ${w}`).join('\n')
+      : '_No unfamiliar words recorded yet._';
+
+    return `# Vocabulary Record — ${displayDate}
+
+> Generated by VocabLearn at ${now} (after batch ${batchIndex})
+
+## Summary
+
+| Metric | Count |
+|---|---|
+| Familiar words | ${familiarWords.length} |
+| Unfamiliar words | ${unfamiliarWords.length} |
+| Total reviewed | ${familiarWords.length + unfamiliarWords.length} |
+| Batches completed | ${batchIndex} |
+
+---
+
+## Familiar Words (✓ Known)
+
+${familiarSection}
+
+---
+
+## Unfamiliar Words (✗ Needs Study)
+
+${unfamiliarSection}
+`;
+  },
+
+  /**
+   * Trigger a browser download of the record file.
+   * Returns the filename for display purposes.
+   */
+  download(dateStr, familiarWords, unfamiliarWords, batchIndex) {
+    const content  = this.buildMarkdown(dateStr, familiarWords, unfamiliarWords, batchIndex);
+    const filename = `record-${dateStr}.md`;
+
+    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    return filename;
+  },
+
+  /**
+   * Save the latest record data to localStorage so it
+   * persists across page refreshes within the session.
+   */
+  saveToLocalStorage(dateStr, familiarWords, unfamiliarWords) {
+    const key  = `vocab_record_${dateStr}`;
+    const data = { dateStr, familiarWords, unfamiliarWords, savedAt: new Date().toISOString() };
+    localStorage.setItem(key, JSON.stringify(data));
+  },
+
+  loadFromLocalStorage(dateStr) {
+    try {
+      const raw = localStorage.getItem(`vocab_record_${dateStr}`);
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) { return null; }
+  },
+};
+
+/* -------------------------------------------------------
+   Parse a text file into a word list.
+   Accepts one word per line, or comma/space-separated.
+   ------------------------------------------------------- */
+function parseWordFile(text) {
+  return text
+    .split(/[\n,]+/)
+    .map(w => w.trim().toLowerCase().replace(/[^a-z'-]/g, ''))
+    .filter(w => w.length > 1);
+}
+
+/**
+ * Read multiple File objects and merge words.
+ * Returns a Promise<string[]>.
+ */
+function readWordFiles(fileList) {
+  const readers = Array.from(fileList).map(file =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload  = e => resolve(parseWordFile(e.target.result));
+      reader.onerror = () => reject(new Error(`Failed to read ${file.name}`));
+      reader.readAsText(file);
+    })
+  );
+  return Promise.all(readers).then(arrays => {
+    const all = arrays.flat();
+    // Deduplicate
+    return [...new Set(all)];
+  });
+}

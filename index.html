@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VocabLearn</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ===== Top Navigation ===== -->
+  <header class="app-header">
+    <div class="header-left">
+      <h1 class="logo">VocabLearn</h1>
+      <span class="session-info" id="sessionInfo"></span>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-ghost" id="btnSource" title="Change vocabulary source">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Source
+      </button>
+      <button class="btn btn-ghost" id="btnSettings" title="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+        Settings
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Main Content Area ===== -->
+  <main id="mainContent">
+
+    <!-- === SCREEN: Welcome === -->
+    <section id="screenWelcome" class="screen active">
+      <div class="welcome-card">
+        <div class="welcome-icon">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="8" y="4" width="48" height="56" rx="4"/>
+            <line x1="18" y1="18" x2="46" y2="18"/>
+            <line x1="18" y1="26" x2="46" y2="26"/>
+            <line x1="18" y1="34" x2="36" y2="34"/>
+          </svg>
+        </div>
+        <h2>Start Your Vocabulary Session</h2>
+        <p>Review 100 words at a time. Mark the ones you don't know for detailed study.</p>
+        <div class="welcome-actions">
+          <button class="btn btn-primary btn-large" id="btnStart">
+            Start Learning
+          </button>
+          <button class="btn btn-secondary btn-large" id="btnLoadFile">
+            Load from File
+          </button>
+          <button class="btn btn-secondary btn-large" id="btnReview" style="display:none">
+            Review <span id="reviewBadge"></span>
+          </button>
+        </div>
+        <input type="file" id="fileInput" accept=".txt" multiple style="display:none" />
+        <p class="welcome-hint" id="welcomeHint">No API key? <a href="#" id="linkSettings">Configure settings</a> first.</p>
+        <p class="welcome-hint" id="reviewDueHint" style="display:none"></p>
+      </div>
+    </section>
+
+    <!-- === SCREEN: Loading === -->
+    <section id="screenLoading" class="screen">
+      <div class="loading-card">
+        <div class="spinner"></div>
+        <p id="loadingMsg">Generating vocabulary list...</p>
+      </div>
+    </section>
+
+    <!-- === SCREEN: Word Grid === -->
+    <section id="screenGrid" class="screen">
+      <div class="grid-toolbar">
+        <div class="grid-toolbar-left">
+          <span class="progress-badge" id="batchLabel">Batch 1</span>
+          <span class="word-count" id="wordCountLabel">100 words</span>
+        </div>
+        <div class="grid-toolbar-right">
+          <span class="selection-hint">Click words you <strong>don't know</strong></span>
+          <button class="btn btn-primary" id="btnNext">
+            Next →
+          </button>
+        </div>
+      </div>
+      <div class="word-grid" id="wordGrid"></div>
+      <div class="grid-footer">
+        <span id="markedCount">0 words marked as unfamiliar</span>
+      </div>
+    </section>
+
+    <!-- === SCREEN: Detail Review === -->
+    <section id="screenDetail" class="screen">
+      <div class="detail-toolbar">
+        <button class="btn btn-ghost" id="btnBackToGrid">← Back</button>
+        <h2>Review Unfamiliar Words</h2>
+        <button class="btn btn-primary" id="btnConfirm">Confirm & Continue →</button>
+      </div>
+      <div id="loadingDetail" class="loading-inline" style="display:none">
+        <div class="spinner spinner-sm"></div>
+        <span>Loading word details...</span>
+      </div>
+      <div class="detail-grid" id="detailGrid"></div>
+    </section>
+
+    <!-- === SCREEN: Session Complete === -->
+    <section id="screenDone" class="screen">
+      <div class="done-card">
+        <div class="done-icon">✓</div>
+        <h2>Batch Complete!</h2>
+        <div class="done-stats" id="doneStats"></div>
+        <div class="done-actions">
+          <button class="btn btn-primary btn-large" id="btnNextBatch">Next 100 Words →</button>
+          <button class="btn btn-secondary btn-large" id="btnStartQuiz">Start Quiz</button>
+          <button class="btn btn-secondary btn-large" id="btnDownloadRecord">Download Record</button>
+          <button class="btn btn-secondary btn-large" id="btnRestart">Start Over</button>
+        </div>
+        <p class="done-note" id="doneNote"></p>
+        <p class="done-note" id="historySection" style="display:none">
+          <a href="#" id="linkShowHistory">View Learning History</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- === SCREEN: Review === -->
+    <section id="screenReview" class="screen">
+      <div class="review-toolbar">
+        <div class="review-toolbar-left">
+          <button class="btn btn-ghost" id="btnReviewBack">← Back</button>
+          <h2>Review Unfamiliar Words</h2>
+        </div>
+        <div class="review-toolbar-right">
+          <span class="review-progress" id="reviewProgress"></span>
+        </div>
+      </div>
+      <div class="review-content" id="reviewContent">
+        <div class="review-stats" id="reviewStats"></div>
+        <div class="review-list" id="reviewList"></div>
+      </div>
+    </section>
+
+    <!-- === SCREEN: Quiz === -->
+    <section id="screenQuiz" class="screen">
+      <div class="quiz-toolbar">
+        <div class="quiz-toolbar-left">
+          <button class="btn btn-ghost" id="btnQuizBack">← Back</button>
+          <h2>Quiz</h2>
+        </div>
+        <div class="quiz-toolbar-right">
+          <span class="quiz-score" id="quizScore">0 / 10</span>
+        </div>
+      </div>
+      <div class="quiz-content" id="quizContent"></div>
+    </section>
+
+  </main>
+
+  <!-- ===== Settings Modal ===== -->
+  <div class="modal-backdrop" id="modalSettings" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Settings</h3>
+        <button class="modal-close" id="closeSettings">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputApiKey">DeepSeek API Key</label>
+          <div class="input-with-toggle">
+            <input type="password" id="inputApiKey" placeholder="sk-..." autocomplete="off" />
+            <button class="btn-toggle-pw" id="toggleApiKey" type="button">Show</button>
+          </div>
+          <span class="form-hint">Stored locally in your browser. Never sent anywhere except DeepSeek.</span>
+        </div>
+        <div class="form-group">
+          <label for="inputWordsPerBatch">Words per batch</label>
+          <input type="number" id="inputWordsPerBatch" min="10" max="500" value="100" />
+        </div>
+        <div class="form-group">
+          <label for="inputDifficulty">Vocabulary level</label>
+          <select id="inputDifficulty">
+            <option value="beginner">Beginner (A1–A2)</option>
+            <option value="intermediate" selected>Intermediate (B1–B2)</option>
+            <option value="advanced">Advanced (C1–C2)</option>
+            <option value="academic">Academic / GRE</option>
+            <option value="business">Business English</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btnSaveSettings">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Source Modal ===== -->
+  <div class="modal-backdrop" id="modalSource" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Vocabulary Source</h3>
+        <button class="modal-close" id="closeSource">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="source-options">
+          <label class="source-option" id="srcAI">
+            <input type="radio" name="source" value="ai" checked />
+            <div class="source-card">
+              <div class="source-icon">🤖</div>
+              <div class="source-info">
+                <strong>AI Generated</strong>
+                <span>DeepSeek generates fresh vocabulary batches</span>
+              </div>
+            </div>
+          </label>
+          <label class="source-option" id="srcFile">
+            <input type="radio" name="source" value="file" />
+            <div class="source-card">
+              <div class="source-icon">📄</div>
+              <div class="source-info">
+                <strong>Text File(s)</strong>
+                <span>Load words from .txt files (one word per line)</span>
+              </div>
+            </div>
+          </label>
+        </div>
+        <div id="fileSourcePanel" style="display:none" class="file-source-panel">
+          <button class="btn btn-secondary" id="btnChooseFiles">Choose File(s)</button>
+          <span id="fileSourceStatus" class="form-hint"></span>
+          <input type="file" id="fileInputSource" accept=".txt" multiple style="display:none" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btnApplySource">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Toast Notification ===== -->
+  <div id="toast" class="toast" style="display:none"></div>
+
+  <script src="storage.js"></script>
+  <script src="api.js"></script>
+  <script src="review.js"></script>
+  <script src="quiz.js"></script>
+  <script src="tts.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
