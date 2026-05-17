@@ -39,6 +39,15 @@ const State = {
 
   // Review state
   reviewState: null, // current review word being shown
+
+  // Built-in vocabulary data (loaded from JSON)
+  builtinVocabData: null,
+  builtinVocabId: null,
+
+  // Reading mode state
+  readingExtractedWords: [],
+  readingUnknownWords: [],
+  readingUnknownSet: new Set(),
 };
 
 /* =========================================================
@@ -277,10 +286,14 @@ function wireEvents() {
   DOM.btnChooseFiles.addEventListener('click', () => DOM.fileInputSource.click());
   DOM.fileInputSource.addEventListener('change', handleSourceFileSelect);
 
-  // Source radio toggles file panel
+  // Source radio toggles file/builtin panel
   document.querySelectorAll('input[name="source"]').forEach(radio => {
     radio.addEventListener('change', () => {
       DOM.fileSourcePanel.style.display = radio.value === 'file' ? 'flex' : 'none';
+      DOM.builtinSourcePanel.style.display = radio.value === 'builtin' ? 'block' : 'none';
+      if (radio.value === 'builtin') {
+        loadBuiltinVocabList();
+      }
     });
   });
 
@@ -336,6 +349,8 @@ function handleKeyboardShortcut(e) {
         }
       } else if (activeId === 'screenDetail') {
         DOM.btnBackToGrid.click();
+      } else if (activeId === 'screenReading') {
+        DOM.btnReadingBack.click();
       }
       break;
 
@@ -387,10 +402,21 @@ function applySource() {
     showToast('Please choose at least one .txt file first.', 'error');
     return;
   }
+  if (val === 'builtin') {
+    const selectedId = document.querySelector('input[name="builtinVocab"]:checked')?.value;
+    if (!selectedId) {
+      showToast('Please select a vocabulary list first.', 'error');
+      return;
+    }
+    State.builtinVocabId = selectedId;
+    BuiltinVocab.set(selectedId);
+    loadBuiltinVocabData(selectedId);
+  }
   State.sourceType = val;
   Settings.setSourceType(val);
   closeModal(DOM.modalSource);
-  showToast(`Source set to ${val === 'ai' ? 'AI Generated' : 'Text File'}.`, 'success');
+  const label = val === 'ai' ? 'AI Generated' : val === 'file' ? 'Text File' : 'Built-in: ' + (State.builtinVocabId || '');
+  showToast(`Source set to ${label}.`, 'success');
 }
 
 /* =========================================================
@@ -431,10 +457,21 @@ async function startSession() {
     return;
   }
 
+  if (State.sourceType === 'builtin' && !State.builtinVocabData) {
+    showToast('Please select a built-in vocabulary list first.', 'error');
+    openSource();
+    setTimeout(() => {
+      document.querySelector('input[name="source"][value="builtin"]').click();
+    }, 100);
+    return;
+  }
+
   showScreen('loading');
   DOM.loadingMsg.textContent = State.sourceType === 'ai'
     ? 'Generating vocabulary list...'
-    : 'Loading words from file...';
+    : State.sourceType === 'builtin'
+      ? 'Loading vocabulary...'
+      : 'Loading words from file...';
 
   try {
     const words = await fetchWordBatch(apiKey, wordsPerBatch);
@@ -465,6 +502,20 @@ async function fetchWordBatch(apiKey, count) {
       return State.fileWordPool.slice(0, count);
     }
     return pool.slice(0, count);
+  }
+
+  if (State.sourceType === 'builtin') {
+    if (!State.builtinVocabData || !Array.isArray(State.builtinVocabData)) {
+      throw new Error('Built-in vocabulary not loaded. Please select a word list.');
+    }
+    const usedWords = new Set(BuiltinVocab.getUsedWords());
+    const available = State.builtinVocabData.filter(entry => !usedWords.has(entry.word));
+    if (available.length === 0) {
+      showToast('All words in this vocabulary have been reviewed! Restarting.', 'info', 4000);
+      BuiltinVocab.clear();
+      return State.builtinVocabData.slice(0, count).map(e => e.word);
+    }
+    return available.slice(0, count).map(e => e.word);
   }
 
   // AI source with caching
@@ -520,34 +571,53 @@ async function handleNext() {
   const marked = [...State.markedIndices].map(i => State.currentWords[i]);
 
   if (marked.length > 0) {
-    // Show detail screen with skeleton cards first
     showScreen('detail');
     renderDetailSkeletons(marked.length);
     DOM.loadingDetail.style.display = 'flex';
-    DOM.loadingDetail.querySelector('span').textContent = 'Loading word details...';
     DOM.btnConfirm.disabled = true;
 
-    const apiKey = Settings.getApiKey();
-    try {
-      const details = await getWordDetailsBatched(
-        apiKey,
-        marked,
-        15,
-        (done, total) => {
-          DOM.loadingDetail.querySelector('span').textContent =
-            `Loading word details... ${done}/${total}`;
+    // Try to get details from built-in vocab data first
+    if (State.builtinVocabData && Array.isArray(State.builtinVocabData)) {
+      const builtinMap = new Map();
+      State.builtinVocabData.forEach(entry => {
+        if (entry && entry.word) builtinMap.set(entry.word.toLowerCase(), entry);
+      });
+
+      const details = marked.map(w => {
+        const found = builtinMap.get(w.toLowerCase());
+        if (found) {
+          return found;
         }
-      );
+        return { word: w, pronunciation: '', partOfSpeech: '', definition: '', example: '' };
+      });
+
       State.wordDetails = details;
-      renderDetailCards(details);
-    } catch (err) {
-      showToast('Failed to load word details: ' + err.message, 'error', 6000);
-      // Still show the words even without details
-      State.wordDetails = marked.map(w => ({ word: w, pronunciation: '', partOfSpeech: '', definition: 'Details unavailable.', example: '' }));
-      renderDetailCards(State.wordDetails);
-    } finally {
       DOM.loadingDetail.style.display = 'none';
       DOM.btnConfirm.disabled = false;
+      renderDetailCards(details);
+    } else {
+      // Fall back to API
+      const apiKey = Settings.getApiKey();
+      try {
+        const details = await getWordDetailsBatched(
+          apiKey,
+          marked,
+          15,
+          (done, total) => {
+            DOM.loadingDetail.querySelector('span').textContent =
+              `Loading word details... ${done}/${total}`;
+          }
+        );
+        State.wordDetails = details;
+        renderDetailCards(details);
+      } catch (err) {
+        showToast('Failed to load word details: ' + err.message, 'error', 6000);
+        State.wordDetails = marked.map(w => ({ word: w, pronunciation: '', partOfSpeech: '', definition: 'Details unavailable.', example: '' }));
+        renderDetailCards(State.wordDetails);
+      } finally {
+        DOM.loadingDetail.style.display = 'none';
+        DOM.btnConfirm.disabled = false;
+      }
     }
   } else {
     // No unfamiliar words — go directly to done
@@ -589,6 +659,7 @@ function renderDetailCards(details) {
       </div>
       ${d.partOfSpeech ? `<span class="detail-pos">${escHtml(d.partOfSpeech)}</span>` : ''}
       <p class="detail-definition">${escHtml(d.definition)}</p>
+      ${d.chineseDef ? `<p class="detail-chinese">${escHtml(d.chineseDef)}</p>` : ''}
       ${d.example ? `<p class="detail-example">${escHtml(d.example)}
         <button class="detail-speak-btn" data-sentence="${escHtml(d.example)}">🔊</button>
       </p>` : ''}
@@ -628,6 +699,11 @@ function finalizeAndDone(unfamiliarWords) {
   Session.addUsedWords(State.currentWords);
   Session.addFamiliarWords(familiarWords);
   Session.addUnfamiliarWords(unfamiliarWords);
+
+  // Track used words for built-in vocabulary
+  if (State.sourceType === 'builtin' && State.builtinVocabId) {
+    BuiltinVocab.addUsedWords(State.currentWords);
+  }
 
   const allFamiliar   = Session.getFamiliarWords();
   const allUnfamiliar = Session.getUnfamiliarWords();
@@ -795,31 +871,34 @@ function showReviewDetail(word) {
   // Clear the review list and show detail
   DOM.reviewList.innerHTML = '';
 
-  // Build a detail card with pronunciation, definition, actions
+  // Build a detail card with SM-2 difficulty buttons
   const detailEl = document.createElement('div');
   detailEl.className = 'review-detail';
+
+  let defText = escapeForReview(word);
+  const detail = State.wordDetails.find(d => d.word?.toLowerCase() === entry.word.toLowerCase());
+  if (detail && detail.definition) {
+    defText = escHtml(detail.definition);
+  }
+
+  const pronDisplay = detail?.pronunciation 
+    ? `${escHtml(detail.pronunciation)} · ` 
+    : '';
+
   detailEl.innerHTML = `
     <span class="review-detail-word">
       ${escHtml(entry.word)}
       <button class="review-detail-speak" data-word="${escHtml(entry.word)}">🔊</button>
     </span>
-    <span class="review-detail-pronunciation">Status: ${getStatusLabel(entry.status)} | Interval: ${entry.interval} day${entry.interval > 1 ? 's' : ''}</span>
-    <p class="review-detail-def">${escapeForReview(entry.word)}</p>
+    <span class="review-detail-pronunciation">${pronDisplay}EF: ${entry.ef ? entry.ef.toFixed(2) : '2.50'} | Rep: ${entry.repetition || 0} | Interval: ${entry.interval || 1}d</span>
+    <p class="review-detail-def">${defText}</p>
     <div class="review-detail-actions">
-      <button class="btn btn-remember" data-action="remember">✓ Remembered</button>
-      <button class="btn btn-forget" data-action="forget">✗ Not Yet</button>
+      <button class="btn btn-forget" data-quality="0">Again</button>
+      <button class="btn btn-ghost" data-quality="2" style="border-color:var(--color-text-muted)">Hard</button>
+      <button class="btn btn-remember" data-quality="4">Good</button>
+      <button class="btn btn-remember" data-quality="5" style="border-color:var(--color-primary)">Easy</button>
     </div>
   `;
-
-  // Try to show definition from existing details if available
-  const detail = State.wordDetails.find(d => d.word.toLowerCase() === entry.word.toLowerCase());
-  if (detail && detail.definition) {
-    detailEl.querySelector('.review-detail-def').textContent = detail.definition;
-    if (detail.pronunciation) {
-      detailEl.querySelector('.review-detail-pronunciation').textContent =
-        `${detail.pronunciation} · ${getStatusLabel(entry.status)} · ${entry.interval}d interval`;
-    }
-  }
 
   DOM.reviewList.appendChild(detailEl);
 
@@ -828,17 +907,15 @@ function showReviewDetail(word) {
     TTS.speakWord(entry.word);
   });
 
-  // Wire up action buttons
+  // Wire up SM-2 difficulty buttons
   detailEl.querySelectorAll('.review-detail-actions .btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const action = btn.dataset.action;
-      if (action === 'remember') {
-        ReviewPool.markCorrect(entry.word);
-        showToast('✓ Marked as remembered! Next review scheduled.', 'success');
-      } else {
-        ReviewPool.markIncorrect(entry.word);
-        showToast('✗ Will show this word again sooner.', 'info');
-      }
+      const quality = parseInt(btn.dataset.quality, 10);
+      ReviewPool.review(entry.word, quality);
+
+      const qualityLabels = { 0: 'Again', 2: 'Hard', 4: 'Good', 5: 'Easy' };
+      showToast(`Marked as \"${qualityLabels[quality]}\" — next review scheduled.`, 'success');
+
       // Refresh the review list
       openReviewScreen();
     });
@@ -1275,6 +1352,311 @@ function escHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+/* =========================================================
+   Built-in Vocabulary — Loading & Selection
+   ========================================================= */
+
+/**
+ * Load the vocabulary index and populate the list in the source modal
+ */
+async function loadBuiltinVocabList() {
+  const listEl = DOM.builtinVocabList;
+  if (!listEl) return;
+
+  // Show loading
+  listEl.innerHTML = '<div class="builtin-loading-panel"><div class="spinner spinner-sm"></div><span>Loading word lists...</span></div>';
+
+  try {
+    const resp = await fetch('vocabulary/index.json');
+    if (!resp.ok) throw new Error('Failed to load vocabulary index');
+    const data = await resp.json();
+
+    if (!data.vocabularies || data.vocabularies.length === 0) {
+      listEl.innerHTML = '<p class="form-hint">No built-in vocabulary found.</p>';
+      return;
+    }
+
+    const currentId = State.builtinVocabId || BuiltinVocab.get();
+    let html = '';
+    data.vocabularies.forEach(v => {
+      const checked = v.id === currentId ? 'checked' : '';
+      html += `
+        <label class="builtin-vocab-item">
+          <input type="radio" name="builtinVocab" value="${v.id}" ${checked} />
+          <div class="builtin-vocab-card">
+            <div class="builtin-vocab-name">${escHtml(v.nameCn) || escHtml(v.name)}</div>
+            <div class="builtin-vocab-meta">
+              <span class="builtin-vocab-level">${escHtml(v.name)}</span>
+              <span class="builtin-vocab-desc">${escHtml(v.description)}</span>
+            </div>
+          </div>
+        </label>
+      `;
+    });
+
+    listEl.innerHTML = html;
+  } catch (err) {
+    listEl.innerHTML = `<p class="form-hint" style="color:var(--color-danger)">Failed to load: ${escHtml(err.message)}</p>`;
+  }
+}
+
+/**
+ * Load vocabulary data for a given vocab ID
+ * @param {string} vocabId - e.g. 'cet4'
+ */
+async function loadBuiltinVocabData(vocabId) {
+  try {
+    const resp = await fetch(`vocabulary/${vocabId}.json`);
+    if (!resp.ok) throw new Error(`Failed to load ${vocabId}.json`);
+    const data = await resp.json();
+    State.builtinVocabData = data;
+    State.builtinVocabId = vocabId;
+    console.log(`Loaded ${data.length} words from ${vocabId}`);
+  } catch (err) {
+    console.error('Failed to load built-in vocab:', err);
+    showToast('Failed to load vocabulary data: ' + err.message, 'error');
+  }
+}
+
+/* =========================================================
+   Review — SM-2 Difficulty Buttons (override)
+   ========================================================= */
+
+/**
+ * Enhanced review detail with SM-2 difficulty buttons
+ */
+function showSM2ReviewDetail(word) {
+  const entry = ReviewPool.getWord(word);
+  if (!entry) return;
+
+  DOM.reviewList.innerHTML = '';
+
+  const detailEl = document.createElement('div');
+  detailEl.className = 'review-detail';
+
+  // Get definition from cache
+  let defText = '';
+  const detail = State.wordDetails.find(d => d.word?.toLowerCase() === word.toLowerCase());
+  if (detail && detail.definition) {
+    defText = escHtml(detail.definition);
+    if (detail.pronunciation) defText = `<span class="review-detail-pronunciation">${escHtml(detail.pronunciation)}</span><br>` + defText;
+  } else {
+    defText = 'Click a difficulty button to record your progress.';
+  }
+
+  detailEl.innerHTML = `
+    <span class="review-detail-word">
+      ${escHtml(entry.word)}
+      <button class="review-detail-speak" data-word="${escHtml(entry.word)}">🔊</button>
+    </span>
+    <span class="review-detail-pronunciation">EF: ${entry.ef.toFixed(2)} | Rep: ${entry.repetition} | Interval: ${entry.interval}d</span>
+    <p class="review-detail-def">${defText}</p>
+    <div class="review-detail-actions">
+      <button class="btn btn-forget" data-quality="0">Again</button>
+      <button class="btn btn-ghost" data-quality="2" style="border-color:var(--color-text-muted)">Hard</button>
+      <button class="btn btn-remember" data-quality="4">Good</button>
+      <button class="btn btn-remember" data-quality="5" style="border-color:var(--color-primary)">Easy</button>
+    </div>
+  `;
+
+  DOM.reviewList.appendChild(detailEl);
+
+  // Wire up speak
+  detailEl.querySelector('.review-detail-speak')?.addEventListener('click', () => {
+    TTS.speakWord(entry.word);
+  });
+
+  // Wire up difficulty buttons
+  detailEl.querySelectorAll('.review-detail-actions .btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const quality = parseInt(btn.dataset.quality, 10);
+      ReviewPool.review(entry.word, quality);
+
+      const qualityLabels = { 0: 'Again', 2: 'Hard', 4: 'Good', 5: 'Easy' };
+      showToast(`Marked as "${qualityLabels[quality]}" — next review scheduled.`, 'success');
+
+      // Refresh the review list
+      openReviewScreen();
+    });
+  });
+}
+
+/* =========================================================
+   Reading Mode
+   ========================================================= */
+
+function openReadingMode() {
+  State.readingExtractedWords = [];
+  State.readingUnknownWords = [];
+  State.readingUnknownSet = new Set();
+  DOM.readingInputArea.style.display = 'block';
+  DOM.readingArticleArea.style.display = 'none';
+  DOM.readingTextarea.value = '';
+  DOM.readingWordCount.textContent = '';
+  showScreen('reading');
+}
+
+async function handleExtractWords() {
+  const text = DOM.readingTextarea.value.trim();
+  if (!text) {
+    showToast('Please paste an article first.', 'error');
+    return;
+  }
+
+  // Extract words
+  const allWords = extractWordsFromText(text);
+  State.readingExtractedWords = allWords;
+
+  if (allWords.length === 0) {
+    showToast('No English words found in the text.', 'info');
+    return;
+  }
+
+  // Build vocab lookup from built-in data
+  let vocabLookup = new Map();
+  if (State.builtinVocabData && Array.isArray(State.builtinVocabData)) {
+    vocabLookup = buildVocabLookup(State.builtinVocabData);
+  }
+
+  // Build known word set from review pool
+  const knownWords = new Set();
+  const masteredWords = ReviewPool.getMasteredWords();
+  masteredWords.forEach(e => knownWords.add(e.word));
+
+  // Find unknown words
+  const { unknown, details } = findUnknownWords(allWords, vocabLookup, knownWords);
+  State.readingUnknownWords = unknown;
+  State.readingUnknownSet = new Set(unknown.map(w => w.toLowerCase()));
+
+  // Try to fetch definitions from API or from vocab data
+  const wordDetails = [];
+  unknown.forEach(w => {
+    const lower = w.toLowerCase();
+    // Check built-in vocab first
+    const fromBuiltin = vocabLookup.get(lower);
+    if (fromBuiltin) {
+      wordDetails.push(fromBuiltin);
+    } else {
+      wordDetails.push({ word: w, pronunciation: '', partOfSpeech: '', definition: '', chineseDef: '', example: '' });
+    }
+  });
+
+  // Try API fallback if key available
+  const apiKey = Settings.getApiKey();
+  if (apiKey) {
+    const missingDefs = unknown.filter((w, i) => !wordDetails[i]?.definition);
+    if (missingDefs.length > 0) {
+      try {
+        const apiDefs = await fetchDefinitionsFromAPI(apiKey, missingDefs);
+        apiDefs.forEach(def => {
+          const idx = unknown.findIndex(w => w.toLowerCase() === def.word?.toLowerCase());
+          if (idx >= 0) wordDetails[idx] = def;
+        });
+      } catch (_) {}
+    }
+  }
+
+  // Render article with highlights
+  const articleHTML = renderArticleWithHighlights(text, State.readingUnknownSet);
+  DOM.readingArticle.innerHTML = articleHTML;
+
+  // Render word list
+  renderReadingWordList(unknown, wordDetails);
+
+  // Show counts
+  DOM.readingWordCount.textContent = `${allWords.length} words extracted`;
+  DOM.readingExtractedCount.textContent = `${unknown.length} new`;
+
+  // Switch to article view
+  DOM.readingInputArea.style.display = 'none';
+  DOM.readingArticleArea.style.display = 'block';
+
+  // Wire up click handlers for unknown words
+  DOM.readingArticle.querySelectorAll('.reading-unknown-word').forEach(el => {
+    el.addEventListener('click', (e) => {
+      const word = el.dataset.word;
+      const idx = unknown.findIndex(w => w.toLowerCase() === word);
+      const detail = idx >= 0 ? wordDetails[idx] : null;
+      showReadingPopup(e, word, detail);
+    });
+  });
+}
+
+function renderReadingWordList(unknownWords, wordDetails) {
+  const listEl = DOM.readingWords;
+  listEl.innerHTML = unknownWords.map((w, i) => {
+    const d = wordDetails[i] || {};
+    const def = d.chineseDef || d.definition || '';
+    return `<div class="reading-word-item" data-word="${escHtml(w)}">
+      <span class="reading-word-text">${escHtml(w)}</span>
+      ${d.pronunciation ? `<span class="reading-word-phonetic">${escHtml(d.pronunciation)}</span>` : ''}
+      <span class="reading-word-def">${escHtml(def)}</span>
+      <button class="btn btn-sm btn-ghost reading-word-add" data-word="${escHtml(w)}">+</button>
+    </div>`;
+  }).join('');
+
+  // Wire up add buttons
+  listEl.querySelectorAll('.reading-word-add').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const word = btn.dataset.word;
+      ReviewPool.addWord(word);
+      btn.textContent = '✓';
+      btn.style.color = 'var(--color-success)';
+      showToast(`Added "${word}" to review pool.`, 'success');
+    });
+  });
+}
+
+function showReadingPopup(event, word, detail) {
+  // Remove any existing popup
+  document.querySelectorAll('.reading-popup').forEach(p => p.remove());
+
+  const popup = document.createElement('div');
+  popup.className = 'reading-popup';
+  popup.innerHTML = renderWordPopup(word, detail);
+
+  // Position near the clicked word
+  const rect = event.target.getBoundingClientRect();
+  popup.style.position = 'fixed';
+  popup.style.left = Math.min(rect.left, window.innerWidth - 320) + 'px';
+  popup.style.top = (rect.bottom + 8) + 'px';
+
+  document.body.appendChild(popup);
+
+  // Wire up add button
+  popup.querySelector('.reading-popup-add')?.addEventListener('click', () => {
+    const w = popup.querySelector('.reading-popup-add').dataset.word;
+    ReviewPool.addWord(w);
+    showToast(`Added "${w}" to review pool.`, 'success');
+    popup.remove();
+  });
+
+  // Close on click outside
+  setTimeout(() => {
+    document.addEventListener('click', function closePopup(e) {
+      if (!popup.contains(e.target)) {
+        popup.remove();
+        document.removeEventListener('click', closePopup);
+      }
+    });
+  }, 10);
+}
+
+function handleReadingAddAll() {
+  if (State.readingUnknownWords.length === 0) {
+    showToast('No unknown words to add.', 'info');
+    return;
+  }
+  ReviewPool.addWords(State.readingUnknownWords);
+  showToast(`Added ${State.readingUnknownWords.length} words to review pool.`, 'success');
+
+  // Update button states
+  DOM.readingWords.querySelectorAll('.reading-word-add').forEach(btn => {
+    btn.textContent = '✓';
+    btn.style.color = 'var(--color-success)';
+  });
 }
 
 /* =========================================================

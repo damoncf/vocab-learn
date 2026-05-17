@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>VocabLearn</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
   <!-- ===== Top Navigation ===== -->
@@ -14,6 +17,10 @@
       <span class="session-info" id="sessionInfo"></span>
     </div>
     <div class="header-right">
+      <button class="btn btn-ghost" id="btnReading" title="Reading mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Read
+      </button>
       <button class="btn btn-ghost" id="btnSource" title="Change vocabulary source">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         Source
@@ -48,12 +55,15 @@
           <button class="btn btn-secondary btn-large" id="btnLoadFile">
             Load from File
           </button>
+          <button class="btn btn-secondary btn-large" id="btnBuiltin">
+            📚 Built-in Vocab
+          </button>
           <button class="btn btn-secondary btn-large" id="btnReview" style="display:none">
             Review <span id="reviewBadge"></span>
           </button>
         </div>
         <input type="file" id="fileInput" accept=".txt" multiple style="display:none" />
-        <p class="welcome-hint" id="welcomeHint">No API key? <a href="#" id="linkSettings">Configure settings</a> first.</p>
+        <p class="welcome-hint" id="welcomeHint">No API key? <a href="#" id="linkSettings">Configure settings</a> or use the <strong>Built-in Vocab</strong> library above.</p>
         <p class="welcome-hint" id="reviewDueHint" style="display:none"></p>
       </div>
     </section>
@@ -152,6 +162,42 @@
 
   </main>
 
+    <!-- === SCREEN: Reading === -->
+    <section id="screenReading" class="screen">
+      <div class="reading-toolbar">
+        <div class="reading-toolbar-left">
+          <button class="btn btn-ghost" id="btnReadingBack">← Back</button>
+          <h2>Reading Mode</h2>
+        </div>
+        <div class="reading-toolbar-right">
+          <span class="reading-word-count" id="readingWordCount"></span>
+        </div>
+      </div>
+      <div class="reading-content">
+        <!-- Input area -->
+        <div class="reading-input-area" id="readingInputArea">
+          <textarea id="readingTextarea" placeholder="Paste an English article here..." rows="8"></textarea>
+          <div class="reading-input-actions">
+            <button class="btn btn-primary" id="btnExtractWords">🔍 Extract Words</button>
+          </div>
+        </div>
+
+        <!-- Article display area (hidden initially) -->
+        <div class="reading-article-area" id="readingArticleArea" style="display:none">
+          <h3>Article</h3>
+          <div class="reading-article" id="readingArticle"></div>
+          
+          <h3>Extracted Words <span id="readingExtractedCount" class="reading-extracted-badge"></span></h3>
+          <div class="reading-words" id="readingWords"></div>
+          
+          <div class="reading-actions">
+            <button class="btn btn-primary" id="btnAddAllToReview">📚 Add All to Review Pool</button>
+            <button class="btn btn-secondary" id="btnReadingBackToInput">← Edit Text</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
   <!-- ===== Settings Modal ===== -->
   <div class="modal-backdrop" id="modalSettings" style="display:none">
     <div class="modal">
@@ -218,11 +264,29 @@
               </div>
             </div>
           </label>
+          <label class="source-option" id="srcBuiltin">
+            <input type="radio" name="source" value="builtin" />
+            <div class="source-card">
+              <div class="source-icon">📚</div>
+              <div class="source-info">
+                <strong>Built-in Vocabulary</strong>
+                <span>Choose from curated word lists (no API key needed)</span>
+              </div>
+            </div>
+          </label>
         </div>
         <div id="fileSourcePanel" style="display:none" class="file-source-panel">
           <button class="btn btn-secondary" id="btnChooseFiles">Choose File(s)</button>
           <span id="fileSourceStatus" class="form-hint"></span>
           <input type="file" id="fileInputSource" accept=".txt" multiple style="display:none" />
+        </div>
+        <div id="builtinSourcePanel" style="display:none" class="builtin-source-panel">
+          <div id="builtinVocabList" class="builtin-vocab-list">
+            <div class="builtin-loading-panel">
+              <div class="spinner spinner-sm"></div>
+              <span>Loading word lists...</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -239,6 +303,19 @@
   <script src="review.js"></script>
   <script src="quiz.js"></script>
   <script src="tts.js"></script>
+  <script src="reading.js"></script>
   <script src="app.js"></script>
+  <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('sw.js').then(function(reg) {
+          console.log('SW registered:', reg.scope);
+        }, function(err) {
+          console.log('SW registration failed:', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
