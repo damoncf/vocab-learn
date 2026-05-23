@@ -434,6 +434,14 @@ function wireEvents() {
         openReadingMode();
         return;
       }
+      if (target === 'dictation') {
+        openDictationScreen();
+        return;
+      }
+      if (target === 'cloze') {
+        openClozeScreen();
+        return;
+      }
       if (target === 'welcome') {
         showScreen('welcome');
         updateReviewBadge();
@@ -584,6 +592,24 @@ function handleKeyboardShortcut(e) {
       if (activeId === 'screenWelcome') {
         e.preventDefault();
         DOM.btnReview.click();
+      }
+      break;
+
+    case 'd':
+    case 'D':
+      // D: Open dictation (done screen only)
+      if (activeId === 'screenDone') {
+        e.preventDefault();
+        DOM.btnDictation.click();
+      }
+      break;
+
+    case 'c':
+    case 'C':
+      // C: Open cloze (done screen only)
+      if (activeId === 'screenDone') {
+        e.preventDefault();
+        DOM.btnCloze.click();
       }
       break;
   }
