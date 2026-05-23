@@ -1693,17 +1693,32 @@ function renderWordGrid(words) {
       chip.classList.add('familiar');
     }
 
-    if (clickBehavior === 'peek') {
-      // Click → show peek popup
-      chip.addEventListener('click', (e) => {
-        // Close any other popup first
-        hidePeekPopup();
-        showPeekPopup(e, word);
-      });
-    } else {
-      // Click → direct toggle mark
-      chip.addEventListener('click', () => toggleMark(chip, origIdx));
-    }
+    // v7.5: Use pointer events (unified desktop+mobile) with distance-based tap detection
+    chip.addEventListener('pointerdown', (e) => {
+      chip.dataset.tapX = e.clientX;
+      chip.dataset.tapY = e.clientY;
+      chip.dataset.tapCancelled = 'false';
+    });
+    chip.addEventListener('pointermove', (e) => {
+      if (chip.dataset.tapCancelled === 'false') {
+        const dx = Math.abs(e.clientX - parseFloat(chip.dataset.tapX));
+        const dy = Math.abs(e.clientY - parseFloat(chip.dataset.tapY));
+        if (dx > 10 || dy > 10) {
+          chip.dataset.tapCancelled = 'true';
+        }
+      }
+    });
+    chip.addEventListener('pointerup', (e) => {
+      if (chip.dataset.tapCancelled !== 'true') {
+        if (clickBehavior === 'peek') {
+          hidePeekPopup();
+          showPeekPopup(e, word);
+        } else {
+          toggleMark(chip, origIdx);
+        }
+      }
+      chip.dataset.tapCancelled = 'true';
+    });
 
     // v6.5: Long-press (400ms) → direct mark unfamiliar (no popup)
     addLongPressListener(chip, word);
@@ -1804,31 +1819,43 @@ function updateGridProgress() {
 /**
  * v6.5: Long press (400ms) → direct mark unfamiliar, no popup
  */
-let _longPressTimer = null;
-
 function addLongPressListener(chip, word) {
-  const startLongPress = (e) => {
-    _longPressTimer = setTimeout(() => {
-      _longPressTimer = null;
-      // Long press detected — mark unfamiliar directly
+  let _lpStartX = 0, _lpStartY = 0;
+
+  chip.addEventListener('pointerdown', (e) => {
+    _lpStartX = e.clientX;
+    _lpStartY = e.clientY;
+    chip._longPressTimer = setTimeout(() => {
+      chip._longPressTimer = null;
       markUnfamiliar(word, chip);
       showToast(`✗ 已标记 "${word}" 为不熟悉`, 'info', 1500);
     }, 400);
-  };
-  const cancelLongPress = () => {
-    if (_longPressTimer) {
-      clearTimeout(_longPressTimer);
-      _longPressTimer = null;
+  });
+
+  chip.addEventListener('pointermove', (e) => {
+    if (chip._longPressTimer) {
+      const dx = Math.abs(e.clientX - _lpStartX);
+      const dy = Math.abs(e.clientY - _lpStartY);
+      if (dx > 5 || dy > 5) {
+        clearTimeout(chip._longPressTimer);
+        chip._longPressTimer = null;
+      }
     }
-  };
+  });
 
-  chip.addEventListener('pointerdown', startLongPress);
-  chip.addEventListener('pointerup', cancelLongPress);
-  chip.addEventListener('pointerleave', cancelLongPress);
+  chip.addEventListener('pointerup', () => {
+    if (chip._longPressTimer) {
+      clearTimeout(chip._longPressTimer);
+      chip._longPressTimer = null;
+    }
+  });
 
-  chip.addEventListener('touchstart', startLongPress, { passive: true });
-  chip.addEventListener('touchend', cancelLongPress);
-  chip.addEventListener('touchmove', cancelLongPress);
+  chip.addEventListener('pointerleave', () => {
+    if (chip._longPressTimer) {
+      clearTimeout(chip._longPressTimer);
+      chip._longPressTimer = null;
+    }
+  });
 }
 
 /* =========================================================
@@ -2117,10 +2144,23 @@ function renderDetailCards(details) {
     `;
     DOM.detailGrid.appendChild(card);
 
-    // Touch swipe support for each card
+    // v7.5: Touch swipe support — angle detection to prevent vertical scroll conflicts
     card.addEventListener('touchstart', e => {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    card.addEventListener('touchmove', e => {
+      if (!touchStartX) return;
+      const moveX = e.touches[0].clientX;
+      const moveY = e.touches[0].clientY;
+      const dx = Math.abs(moveX - touchStartX);
+      const dy = Math.abs(moveY - touchStartY);
+      // If vertical movement clearly dominates, cancel swipe tracking
+      if (dy > dx * 1.5 && dy > 10) {
+        touchStartX = 0;
+        touchStartY = 0;
+      }
     }, { passive: true });
 
     card.addEventListener('touchend', e => {
@@ -2130,8 +2170,8 @@ function renderDetailCards(details) {
       const diffX = endX - touchStartX;
       const diffY = endY - touchStartY;
 
-      // Only horizontal swipes, ignore vertical scrolling
-      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+      // Only horizontal swipes where |dx| > |dy| * 1.5, ignore vertical scrolling
+      if (Math.abs(diffX) > Math.abs(diffY) * 1.5 && Math.abs(diffX) > 50) {
         e.preventDefault();
         const currentIdx = parseInt(card.dataset.index);
         if (diffX < 0 && currentIdx < details.length - 1) {
@@ -4813,6 +4853,15 @@ function showPeekPopup(e, word) {
   peekPopupWord = word;
   peekPopupVisible = true;
 
+  // v7.5: Mobile bottom-sheet overlay
+  const isMobile = window.innerWidth < 480;
+  if (isMobile && !document.querySelector('.peek-bottom-sheet-overlay')) {
+    const overlay = document.createElement('div');
+    overlay.className = 'peek-bottom-sheet-overlay';
+    overlay.addEventListener('click', hidePeekPopup);
+    document.body.appendChild(overlay);
+  }
+
   const lower = word.toLowerCase();
   let detail = null;
 
@@ -4909,6 +4958,9 @@ function hidePeekPopup() {
   popup.style.display = 'none';
   peekPopupWord = null;
   peekPopupVisible = false;
+  // v7.5: Remove bottom-sheet overlay
+  const overlay = document.querySelector('.peek-bottom-sheet-overlay');
+  if (overlay) overlay.remove();
 }
 
 /* =========================================================
