@@ -428,12 +428,27 @@ function init() {
   const btnGoalEdit = document.getElementById('btnEditGoal');
   if (btnGoalEdit) btnGoalEdit.addEventListener('click', showGoalEditor);
 
+  // v6.0: 徽章行点击打开详情
+  const badgesRow = document.getElementById('badgesRow');
+  if (badgesRow) badgesRow.addEventListener('click', showBadgeDetailModal);
+
   // v6.0: Show onboarding for first-time users
   if (!Onboarding.isDone()) {
     setTimeout(() => {
       Onboarding.show();
     }, 500);
   }
+
+  // v6.0: Badge notification consumer
+  _badgePollTimer = setInterval(() => {
+    const notifs = BadgeManager.consumeNotifications();
+    notifs.forEach(badge => {
+      showBadgeUnlockToast(badge);
+    });
+  }, 500);
+
+  // v6.0: Initial badges update
+  updateBadgesSection();
 
   // Show keyboard shortcut hint on first visit
   if (s.showShortcuts !== false && !localStorage.getItem('vocab_shortcuts_hint_shown')) {
@@ -1773,6 +1788,14 @@ function finalizeAndDone(unfamiliarWords) {
 
   showScreen('done');
 
+  // v6.0: Track used modes for toolbox badge
+  _trackUsedMode('batch');
+
+  // v6.0: Check badges
+  checkBadges({ action: 'batch' });
+  checkBadges({ action: 'daily_update' });
+  setTimeout(updateBadgesSection, 500);
+
   // Auto-sync after batch completion
   autoSyncIfEnabled();
 }
@@ -1829,6 +1852,10 @@ function openReviewScreen() {
   } else {
     renderReviewList(dueWords, true);
   }
+
+  // v6.0: Badge check for review
+  _trackUsedMode('review');
+  checkBadges({ action: 'review' });
 
   showScreen('review');
 }
@@ -2311,6 +2338,10 @@ function renderQuizResult() {
     </div>
   `;
 
+  _trackUsedMode('quiz');
+  // v6.0: Check quiz badges
+  checkBadges({ action: 'quiz', score: qs.score, total: qs.questions.length });
+
   DOM.quizScore.textContent = `${qs.score} / ${total}`;
 
   document.getElementById('quizRetry')?.addEventListener('click', openQuizScreen);
@@ -2441,6 +2472,118 @@ function animateStreakBounce(element) {
 }
 
 /* =========================================================
+   v6.0 — Badges UI
+   ========================================================= */
+let _badgePollTimer = null;
+
+/**
+ * 更新欢迎页徽章区域
+ */
+function updateBadgesSection() {
+  const rowEl = document.getElementById('badgesRow');
+  const countEl = document.getElementById('badgesCount');
+  if (!rowEl) return;
+
+  const unlocked = BadgeManager.getUnlocked();
+  const allBadges = BadgeManager.getAll();
+  const unlockedIds = new Set(Object.keys(unlocked));
+
+  if (countEl) {
+    countEl.textContent = `${unlockedIds.size}/${allBadges.length}`;
+  }
+
+  const unlockedBadges = allBadges.filter(b => unlockedIds.has(b.id));
+  if (unlockedBadges.length === 0) {
+    rowEl.innerHTML = '<div class="badges-placeholder">还没有解锁徽章，快去学习吧！</div>';
+    return;
+  }
+
+  // 展示最近解锁的 6 个徽章
+  const sorted = unlockedBadges.sort((a, b) => (unlocked[b.id] || 0) - (unlocked[a.id] || 0));
+  const recent = sorted.slice(0, 6);
+  rowEl.innerHTML = recent.map(b => `
+    <div class="badge-chip unlocked">
+      <span class="badge-chip-icon">${b.icon}</span>
+      <span class="badge-chip-name">${b.name}</span>
+    </div>
+  `).join('');
+}
+
+/**
+ * 徽章解锁 toast 通知
+ */
+function showBadgeUnlockToast(badge) {
+  const toast = document.createElement('div');
+  toast.className = 'badge-unlock-toast';
+  toast.innerHTML = `
+    <span class="badge-unlock-icon">${badge.icon}</span>
+    <span class="badge-unlock-text">🏅 解锁成就：<span class="badge-unlock-name">${escHtml(badge.name)}</span></span>
+  `;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(-20px)';
+    toast.style.transition = 'all 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+
+  // 同时更新欢迎页
+  setTimeout(updateBadgesSection, 100);
+}
+
+/**
+ * 徽章详情弹窗
+ */
+function showBadgeDetailModal() {
+  // 移除已有弹窗
+  const existing = document.querySelector('.badge-detail-backdrop');
+  if (existing) return;
+
+  const unlocked = BadgeManager.getUnlocked();
+  const allBadges = BadgeManager.getAll();
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop badge-detail-backdrop';
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) backdrop.remove();
+  });
+
+  const formatTime = (ts) => {
+    if (!ts) return '';
+    const d = new Date(ts);
+    return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  };
+
+  backdrop.innerHTML = `
+    <div class="modal">
+      <div class="modal-header">
+        <h3>🏆 成就列表 (${Object.keys(unlocked).length}/${allBadges.length})</h3>
+        <button class="modal-close" id="closeBadgeDetail">✕</button>
+      </div>
+      <div class="modal-body">
+        ${allBadges.map(b => {
+          const isUnlocked = !!unlocked[b.id];
+          return `
+            <div class="badge-detail-item ${isUnlocked ? 'unlocked' : 'locked'}">
+              <span class="badge-detail-icon">${b.icon}</span>
+              <div class="badge-detail-info">
+                <div class="badge-detail-name">${escHtml(b.name)}</div>
+                <div class="badge-detail-desc">${escHtml(b.desc)}</div>
+              </div>
+              ${isUnlocked ? `<span class="badge-detail-time">${formatTime(unlocked[b.id])}</span>` : '<span class="badge-detail-time" style="color:var(--color-text-muted)">🔒</span>'}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(backdrop);
+  backdrop.querySelector('#closeBadgeDetail').addEventListener('click', () => backdrop.remove());
+}
+
+/* =========================================================
    v6.0 — Daily Goal Editor
    ========================================================= */
 function showGoalEditor() {
@@ -2507,6 +2650,23 @@ function showGoalEditor() {
   popup.addEventListener('click', (e) => {
     if (e.target === popup) popup.remove();
   });
+}
+
+/* =========================================================
+   v6.0 — Toolbox tracking
+   ========================================================= */
+const USED_MODES_KEY = 'vocab_used_modes';
+
+function _trackUsedMode(mode) {
+  let modes;
+  try {
+    modes = JSON.parse(localStorage.getItem(USED_MODES_KEY) || '[]');
+  } catch (_) { modes = []; }
+  if (!modes.includes(mode)) {
+    modes.push(mode);
+    localStorage.setItem(USED_MODES_KEY, JSON.stringify(modes));
+  }
+  checkBadges({ action: 'toolbox_check', usedModes: modes });
 }
 
 /* =========================================================
@@ -3009,6 +3169,10 @@ async function handleExtractWords() {
   DOM.readingWordCount.textContent = `${allWords.length} words extracted`;
   DOM.readingExtractedCount.textContent = `${unknown.length} new`;
 
+  // v6.0: Badge check for reading
+  _trackUsedMode('reading');
+  checkBadges({ action: 'reading' });
+
   // Switch to article view
   DOM.readingInputArea.style.display = 'none';
   DOM.readingArticleArea.style.display = 'block';
@@ -3413,6 +3577,10 @@ function renderDictationResult() {
 
   DOM.dictationScore.textContent = `${ds.score} / ${total}`;
 
+  _trackUsedMode('dictation');
+  // v6.0: Badge check
+  checkBadges({ action: 'quiz', score: ds.score, total: ds.questions.length });
+
   document.getElementById('dictationRetry')?.addEventListener('click', openDictationScreen);
   document.getElementById('dictationBack')?.addEventListener('click', () => showScreen('done'));
 }
@@ -3683,6 +3851,10 @@ function renderClozeResult() {
 
   DOM.clozeScore.textContent = `${cs.score} / ${total}`;
 
+  _trackUsedMode('cloze');
+  // v6.0: Badge check
+  checkBadges({ action: 'quiz', score: cs.score, total: cs.questions.length });
+
   document.getElementById('clozeRetry')?.addEventListener('click', openClozeScreen);
   document.getElementById('clozeBack')?.addEventListener('click', () => showScreen('done'));
 }
@@ -3816,6 +3988,9 @@ async function handleSyncTest() {
     DOM.syncStatus.textContent = '✅ ' + result.message;
     DOM.syncStatus.style.color = 'var(--color-success)';
     showToast('WebDAV connection successful!', 'success');
+    // v6.0: Badge for sync
+    checkBadges({ action: 'sync' });
+    setTimeout(updateBadgesSection, 1000);
   } else {
     DOM.syncStatus.textContent = '❌ ' + result.message;
     DOM.syncStatus.style.color = 'var(--color-danger)';

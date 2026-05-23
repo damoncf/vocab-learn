@@ -2760,6 +2760,186 @@ input:focus, select:focus {
 /* =========================================================
    RESPONSIVE — Mobile Expanded (v3.0)
    ========================================================= */
+/* =========================================================
+   v6.0 — BADGES / ACHIEVEMENTS
+   ========================================================= */
+.badges-section {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.badges-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.badges-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.badges-count {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+
+.badges-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+.badges-placeholder {
+  width: 100%;
+  text-align: center;
+  padding: 16px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.badge-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 10px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  min-width: 72px;
+  flex-shrink: 0;
+  transition: border-color var(--transition), background var(--transition);
+  cursor: default;
+  position: relative;
+}
+
+.badge-chip.unlocked {
+  border-color: var(--color-primary);
+  background: rgba(91, 110, 245, 0.06);
+}
+
+.badge-chip.locked {
+  opacity: 0.4;
+  filter: grayscale(0.8);
+}
+
+.badge-chip-icon {
+  font-size: 1.3rem;
+}
+
+.badge-chip-name {
+  font-size: 0.65rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Badge unlock toast */
+.badge-unlock-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2100;
+  padding: 12px 24px;
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 30px rgba(91, 110, 245, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: badgeUnlockAnim 0.5s ease;
+  white-space: nowrap;
+}
+
+@keyframes badgeUnlockAnim {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+.badge-unlock-icon {
+  font-size: 1.5rem;
+}
+
+.badge-unlock-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.badge-unlock-name {
+  color: var(--color-primary);
+}
+
+/* Badges detail modal */
+.badge-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+}
+
+.badge-detail-item.unlocked {
+  border-color: var(--color-primary);
+  background: rgba(91, 110, 245, 0.06);
+}
+
+.badge-detail-item.locked {
+  opacity: 0.5;
+}
+
+.badge-detail-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.badge-detail-info {
+  flex: 1;
+}
+
+.badge-detail-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.badge-detail-desc {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.badge-detail-time {
+  font-size: 0.7rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
 @media (max-width: 600px) {
   .mobile-nav {
     display: flex !important;
