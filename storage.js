@@ -41,19 +41,29 @@ const Settings = {
   getSourceType()         { return localStorage.getItem(STORAGE_KEYS.SOURCE_TYPE) || 'ai'; },
   setSourceType(v)        { localStorage.setItem(STORAGE_KEYS.SOURCE_TYPE, v); },
 
+  getAutoPronounce()      { return localStorage.getItem('vocab_auto_pronounce') !== 'false'; },
+  setAutoPronounce(v)     { localStorage.setItem('vocab_auto_pronounce', v ? 'true' : 'false'); },
+
+  getShowShortcuts()      { return localStorage.getItem('vocab_show_shortcuts') !== 'false'; },
+  setShowShortcuts(v)     { localStorage.setItem('vocab_show_shortcuts', v ? 'true' : 'false'); },
+
   getAll() {
     return {
       apiKey:        this.getApiKey(),
       wordsPerBatch: this.getWordsPerBatch(),
       difficulty:    this.getDifficulty(),
       sourceType:    this.getSourceType(),
+      autoPronounce: this.getAutoPronounce(),
+      showShortcuts: this.getShowShortcuts(),
     };
   },
 
-  saveAll({ apiKey, wordsPerBatch, difficulty }) {
-    if (apiKey       !== undefined) this.setApiKey(apiKey);
+  saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts }) {
+    if (apiKey        !== undefined) this.setApiKey(apiKey);
     if (wordsPerBatch !== undefined) this.setWordsPerBatch(wordsPerBatch);
-    if (difficulty   !== undefined) this.setDifficulty(difficulty);
+    if (difficulty    !== undefined) this.setDifficulty(difficulty);
+    if (autoPronounce !== undefined) this.setAutoPronounce(autoPronounce);
+    if (showShortcuts !== undefined) this.setShowShortcuts(showShortcuts);
   },
 };
 

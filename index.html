@@ -32,6 +32,30 @@
     </div>
   </header>
 
+  <!-- ===== Mobile Bottom Navigation (visible ≤ 600px) ===== -->
+  <nav class="mobile-nav" id="mobileNav">
+    <button class="mobile-nav-btn active" data-target="welcome">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Learn</span>
+    </button>
+    <button class="mobile-nav-btn" data-target="review">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Review</span>
+    </button>
+    <button class="mobile-nav-btn" data-target="quiz">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span>Quiz</span>
+    </button>
+    <button class="mobile-nav-btn" data-target="reading">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span>Reading</span>
+    </button>
+    <button class="mobile-nav-btn" data-target="settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+      <span>Settings</span>
+    </button>
+  </nav>
+
   <!-- ===== Main Content Area ===== -->
   <main id="mainContent">
 
@@ -65,6 +89,12 @@
         <input type="file" id="fileInput" accept=".txt" multiple style="display:none" />
         <p class="welcome-hint" id="welcomeHint">No API key? <a href="#" id="linkSettings">Configure settings</a> or use the <strong>Built-in Vocab</strong> library above.</p>
         <p class="welcome-hint" id="reviewDueHint" style="display:none"></p>
+        <!-- Learning Calendar / Heatmap -->
+        <div class="heatmap-section" id="heatmapSection" style="display:none; margin-top: 24px;">
+          <h3 style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:8px">📊 学习日历 (近60天)</h3>
+          <div class="heatmap-grid" id="heatmapGrid"></div>
+          <div class="heatmap-legend" id="heatmapLegend"></div>
+        </div>
       </div>
     </section>
 
@@ -83,8 +113,13 @@
           <span class="progress-badge" id="batchLabel">Batch 1</span>
           <span class="word-count" id="wordCountLabel">100 words</span>
         </div>
+        <div class="grid-progress-bar" id="gridProgressBar">
+          <div class="grid-progress-fill" id="gridProgressFill"></div>
+        </div>
         <div class="grid-toolbar-right">
           <span class="selection-hint">Click words you <strong>don't know</strong></span>
+          <button class="btn btn-ghost" id="btnSelectAll" title="Mark all as unfamiliar">Mark all</button>
+          <button class="btn btn-ghost" id="btnDeselectAll" title="Unmark all">Unmark all</button>
           <button class="btn btn-primary" id="btnNext">
             Next →
           </button>
@@ -228,6 +263,25 @@
             <option value="business">Business English</option>
           </select>
         </div>
+        <div class="form-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="inputAutoPronounce" />
+            <span>Auto-pronounce on word detail</span>
+          </label>
+          <span class="form-hint">Automatically read aloud when entering detail page</span>
+        </div>
+        <div class="form-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="inputShowShortcuts" checked />
+            <span>Show keyboard shortcut hints</span>
+          </label>
+        </div>
+        <hr style="border-color:var(--color-border);margin:20px 0" />
+        <div class="form-group danger-zone">
+          <label style="color:var(--color-danger);font-weight:600">⚠ Danger Zone</label>
+          <p class="form-hint" style="margin-bottom:10px">This will erase all your learning data, review pool, and settings. This action cannot be undone.</p>
+          <button class="btn btn-danger" id="btnClearAllData">🗑 Clear All Data</button>
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary" id="btnSaveSettings">Save Settings</button>
@@ -295,8 +349,31 @@
     </div>
   </div>
 
-  <!-- ===== Toast Notification ===== -->
-  <div id="toast" class="toast" style="display:none"></div>
+  <!-- ===== Keyboard Shortcut Help Button ===== -->
+  <button class="btn-shortcut-help" id="btnShortcutHelp" title="Keyboard shortcuts">?</button>
+
+  <!-- ===== Keyboard Shortcut Modal ===== -->
+  <div class="modal-backdrop" id="modalShortcuts" style="display:none">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h3>⌨ Keyboard Shortcuts</h3>
+        <button class="modal-close" id="closeShortcuts">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcut-list">
+          <div class="shortcut-item"><kbd>Space</kbd><span>Start learning / Next batch</span></div>
+          <div class="shortcut-item"><kbd>Enter</kbd><span>Confirm / Next (on grid/detail)</span></div>
+          <div class="shortcut-item"><kbd>Esc</kbd><span>Close modal / Go back</span></div>
+          <div class="shortcut-item"><kbd>R</kbd><span>Open Review (on welcome)</span></div>
+          <div class="shortcut-item"><kbd>←</kbd><span>Previous word (in review)</span></div>
+          <div class="shortcut-item"><kbd>→</kbd><span>Next word (in review)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Toast Notification (stackable) ===== -->
+  <div id="toastContainer" class="toast-container"></div>
 
   <script src="storage.js"></script>
   <script src="api.js"></script>

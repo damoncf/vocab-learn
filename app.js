@@ -133,16 +133,36 @@ const DOM = {
   fileInputSource:  document.getElementById('fileInputSource'),
   fileSourceStatus: document.getElementById('fileSourceStatus'),
   btnApplySource:   document.getElementById('btnApplySource'),
+  builtinSourcePanel: document.getElementById('builtinSourcePanel'),
+  builtinVocabList:   document.getElementById('builtinVocabList'),
 
   // Toast
   toast: document.getElementById('toast'),
+  toastContainer: document.getElementById('toastContainer'),
+
+  // v3.0 new elements
+  btnSelectAll: document.getElementById('btnSelectAll'),
+  btnDeselectAll: document.getElementById('btnDeselectAll'),
+  gridProgressBar: document.getElementById('gridProgressBar'),
+  gridProgressFill: document.getElementById('gridProgressFill'),
+  mobileNav: document.getElementById('mobileNav'),
+  mobileNavBtns: document.querySelectorAll('.mobile-nav-btn'),
+  inputAutoPronounce: document.getElementById('inputAutoPronounce'),
+  inputShowShortcuts: document.getElementById('inputShowShortcuts'),
+  btnClearAllData: document.getElementById('btnClearAllData'),
+  btnShortcutHelp: document.getElementById('btnShortcutHelp'),
+  modalShortcuts: document.getElementById('modalShortcuts'),
+  closeShortcuts: document.getElementById('closeShortcuts'),
+  heatmapSection: document.getElementById('heatmapSection'),
+  heatmapGrid: document.getElementById('heatmapGrid'),
+  heatmapLegend: document.getElementById('heatmapLegend'),
 };
 
 /* =========================================================
    Screen Management
    ========================================================= */
 function showScreen(name) {
-  ['screenWelcome','screenLoading','screenGrid','screenDetail','screenDone','screenReview','screenQuiz'].forEach(id => {
+  ['screenWelcome','screenLoading','screenGrid','screenDetail','screenDone','screenReview','screenQuiz','screenReading'].forEach(id => {
     document.getElementById(id).classList.remove('active');
   });
   document.getElementById('screen' + capitalize(name)).classList.add('active');
@@ -153,14 +173,35 @@ function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 /* =========================================================
    Toast Notifications
    ========================================================= */
-let toastTimeout = null;
+/**
+ * Stacked toast — supports multiple simultaneous notifications
+ */
 function showToast(message, type = 'info', duration = 3500) {
-  const el = DOM.toast;
-  el.textContent = message;
-  el.className = `toast ${type}`;
-  el.style.display = 'block';
-  if (toastTimeout) clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => { el.style.display = 'none'; }, duration);
+  // Use the old simple toast for basic notifications
+  if (!DOM.toastContainer) {
+    const el = DOM.toast;
+    if (!el) return;
+    el.textContent = message;
+    el.className = `toast ${type}`;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, duration);
+    return;
+  }
+
+  // Stacked toast
+  const item = document.createElement('div');
+  item.className = `toast-item ${type}`;
+  item.textContent = message;
+  DOM.toastContainer.appendChild(item);
+
+  // Remove after duration
+  setTimeout(() => {
+    if (item.parentNode) {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(8px)';
+      setTimeout(() => item.remove(), 300);
+    }
+  }, duration);
 }
 
 /* =========================================================
@@ -176,6 +217,8 @@ function init() {
   DOM.inputApiKey.value        = s.apiKey;
   DOM.inputWordsPerBatch.value = s.wordsPerBatch;
   DOM.inputDifficulty.value    = s.difficulty;
+  DOM.inputAutoPronounce.checked = s.autoPronounce !== false;
+  DOM.inputShowShortcuts.checked = s.showShortcuts !== false;
 
   State.sourceType = s.sourceType || 'ai';
   State.fileWordPool = FileWords.get();
@@ -200,6 +243,18 @@ function init() {
 
   // Check for due reviews on first load
   checkDueReviews();
+
+  // Show heatmap if there's history
+  renderHeatmap();
+
+  // Show keyboard shortcut hint on first visit
+  const shortcutPref = Settings.getAll();
+  if (shortcutPref.showShortcuts !== false && !localStorage.getItem('vocab_shortcuts_hint_shown')) {
+    setTimeout(() => {
+      showToast('⌨ Press ? for keyboard shortcuts', 'info', 5000);
+      localStorage.setItem('vocab_shortcuts_hint_shown', '1');
+    }, 1000);
+  }
 }
 
 function updateSessionInfo() {
@@ -266,6 +321,90 @@ function wireEvents() {
 
   // Quiz
   DOM.btnQuizBack.addEventListener('click', () => { showScreen('done'); });
+
+  // Reading mode
+  const btnReading = document.getElementById('btnReading');
+  const btnReadingBack = document.getElementById('btnReadingBack');
+  const btnExtractWords = document.getElementById('btnExtractWords');
+  const btnAddAllToReview = document.getElementById('btnAddAllToReview');
+  const btnReadingBackToInput = document.getElementById('btnReadingBackToInput');
+  
+  if (btnReading) btnReading.addEventListener('click', openReadingMode);
+  if (btnReadingBack) btnReadingBack.addEventListener('click', () => showScreen('welcome'));
+  if (btnExtractWords) btnExtractWords.addEventListener('click', handleExtractWords);
+  if (btnAddAllToReview) btnAddAllToReview.addEventListener('click', handleReadingAddAll);
+  if (btnReadingBackToInput) btnReadingBackToInput.addEventListener('click', () => {
+    document.getElementById('readingInputArea').style.display = 'block';
+    document.getElementById('readingArticleArea').style.display = 'none';
+  });
+
+  // Clear all data
+  DOM.btnClearAllData.addEventListener('click', () => {
+    if (confirm('⚠ Are you sure? This will erase ALL learning data, review pool, and settings. This cannot be undone!')) {
+      if (confirm('Really? All your progress will be lost. Click OK to confirm.')) {
+        localStorage.clear();
+        showToast('All data cleared. Refreshing...', 'error', 3000);
+        setTimeout(() => location.reload(), 2000);
+      }
+    }
+  });
+
+  // Shortcut help modal
+  DOM.btnShortcutHelp.addEventListener('click', () => {
+    DOM.modalShortcuts.style.display = 'flex';
+  });
+  DOM.closeShortcuts.addEventListener('click', () => {
+    closeModal(DOM.modalShortcuts);
+  });
+  DOM.modalShortcuts.addEventListener('click', e => {
+    if (e.target === DOM.modalShortcuts) closeModal(DOM.modalShortcuts);
+  });
+
+  // Mobile nav
+  DOM.mobileNavBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      if (target === 'settings') {
+        openSettings();
+        return;
+      }
+      if (target === 'review') {
+        DOM.btnReview.click();
+        return;
+      }
+      if (target === 'quiz') {
+        openQuizScreen();
+        return;
+      }
+      if (target === 'reading') {
+        openReadingMode();
+        return;
+      }
+      if (target === 'welcome') {
+        showScreen('welcome');
+        updateReviewBadge();
+        return;
+      }
+    });
+  });
+
+  // Select all / Deselect all on grid
+  DOM.btnSelectAll.addEventListener('click', () => {
+    State.currentWords.forEach((_, i) => {
+      State.markedIndices.add(i);
+      const chip = DOM.wordGrid.querySelector(`[data-index="${i}"]`);
+      if (chip) chip.classList.add('marked');
+    });
+    updateMarkedCount();
+    updateGridProgress();
+  });
+
+  DOM.btnDeselectAll.addEventListener('click', () => {
+    State.markedIndices.clear();
+    DOM.wordGrid.querySelectorAll('.word-chip').forEach(chip => chip.classList.remove('marked'));
+    updateMarkedCount();
+    updateGridProgress();
+  });
 
   // Settings modal
   DOM.btnSettings.addEventListener('click', openSettings);
@@ -350,7 +489,8 @@ function handleKeyboardShortcut(e) {
       } else if (activeId === 'screenDetail') {
         DOM.btnBackToGrid.click();
       } else if (activeId === 'screenReading') {
-        DOM.btnReadingBack.click();
+        const readingBackBtn = document.getElementById('btnReadingBack');
+        if (readingBackBtn) readingBackBtn.click();
       }
       break;
 
@@ -376,8 +516,10 @@ function saveSettings() {
   const apiKey        = DOM.inputApiKey.value.trim();
   const wordsPerBatch = parseInt(DOM.inputWordsPerBatch.value, 10) || 100;
   const difficulty    = DOM.inputDifficulty.value;
+  const autoPronounce = DOM.inputAutoPronounce.checked;
+  const showShortcuts = DOM.inputShowShortcuts.checked;
 
-  Settings.saveAll({ apiKey, wordsPerBatch, difficulty });
+  Settings.saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts });
   closeModal(DOM.modalSettings);
   showToast('Settings saved.', 'success');
 }
@@ -562,6 +704,15 @@ function updateMarkedCount() {
   DOM.markedCount.style.color = n > 0
     ? 'var(--color-accent)'
     : 'var(--color-text-muted)';
+  updateGridProgress();
+}
+
+function updateGridProgress() {
+  if (!DOM.gridProgressFill) return;
+  const total = State.currentWords.length;
+  const marked = State.markedIndices.size;
+  const pct = total > 0 ? (marked / total) * 100 : 0;
+  DOM.gridProgressFill.style.width = pct + '%';
 }
 
 /* =========================================================
@@ -648,9 +799,13 @@ function renderDetailSkeletons(count) {
 
 function renderDetailCards(details) {
   DOM.detailGrid.innerHTML = '';
-  details.forEach(d => {
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  details.forEach((d, idx) => {
     const card = document.createElement('div');
     card.className = 'detail-card';
+    card.dataset.index = idx;
     card.innerHTML = `
       <div class="detail-card-header">
         <span class="detail-word">${escHtml(d.word)}</span>
@@ -665,6 +820,39 @@ function renderDetailCards(details) {
       </p>` : ''}
     `;
     DOM.detailGrid.appendChild(card);
+
+    // Touch swipe support for each card
+    card.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    card.addEventListener('touchend', e => {
+      if (!touchStartX) return;
+      const endX = e.changedTouches[0].clientX;
+      const endY = e.changedTouches[0].clientY;
+      const diffX = endX - touchStartX;
+      const diffY = endY - touchStartY;
+
+      // Only horizontal swipes, ignore vertical scrolling
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+        e.preventDefault();
+        const currentIdx = parseInt(card.dataset.index);
+        if (diffX < 0 && currentIdx < details.length - 1) {
+          // Swipe left → next
+          card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Actually scroll to the next card
+          const nextCard = DOM.detailGrid.children[currentIdx + 1];
+          if (nextCard) nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else if (diffX > 0 && currentIdx > 0) {
+          // Swipe right → previous
+          const prevCard = DOM.detailGrid.children[currentIdx - 1];
+          if (prevCard) prevCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      touchStartX = 0;
+      touchStartY = 0;
+    }, { passive: false });
   });
 
   // Wire up pronunciation buttons
@@ -676,6 +864,13 @@ function renderDetailCards(details) {
       if (sentence) TTS.speakSentence(sentence);
     });
   });
+
+  // Auto-pronounce first word if setting enabled
+  const s = Settings.getAll();
+  if (s.autoPronounce !== false && details.length > 0) {
+    const firstWord = details[0].word;
+    setTimeout(() => TTS.speakWord(firstWord), 500);
+  }
 }
 
 /* =========================================================
@@ -810,6 +1005,7 @@ function renderReviewList(words, isDue) {
   const total = ReviewPool.getTotalCount();
   const mastered = ReviewPool.getMasteredWords().length;
   const unmastered = total - mastered;
+  const consecutive = ReviewPool.getConsecutiveCorrect();
   statsEl.innerHTML = `
     <div class="stat-pill">
       <span class="stat-value">${words.length}</span>
@@ -829,7 +1025,25 @@ function renderReviewList(words, isDue) {
     </div>
   `;
 
-  progressEl.textContent = `${words.length} word${words.length > 1 ? 's' : ''} to review`;
+  // Show consecutive correct streak
+  if (consecutive > 0) {
+    progressEl.innerHTML = `${words.length} word${words.length > 1 ? 's' : ''} to review · 🔥 ${consecutive} streak`;
+  } else {
+    progressEl.textContent = `${words.length} word${words.length > 1 ? 's' : ''} to review`;
+  }
+
+  // Add difficult words ranking
+  const difficultWords = getDifficultWords();
+  if (difficultWords.length > 0) {
+    const diffSection = document.createElement('div');
+    diffSection.className = 'difficult-words-section';
+    diffSection.innerHTML = `<h4>😰 常错词 TOP ${Math.min(10, difficultWords.length)}</h4>
+      ${difficultWords.slice(0, 10).map(w =>
+        `<div class="difficult-word-item"><span class="word">${escHtml(w.word)}</span><span class="error-count">错${w.errorCount}次</span></div>`
+      ).join('')}
+    `;
+    statsEl.appendChild(diffSection);
+  }
 
   // List
   listEl.innerHTML = '';
@@ -1355,6 +1569,128 @@ function escHtml(str) {
 }
 
 /* =========================================================
+   HEATMAP — Learning Calendar (v3.0)
+   ========================================================= */
+function renderHeatmap() {
+  const gridEl = DOM.heatmapGrid;
+  const sectionEl = DOM.heatmapSection;
+  const legendEl = DOM.heatmapLegend;
+  if (!gridEl || !sectionEl) return;
+
+  // Collect last 60 days of data
+  const dayData = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('vocab_record_')) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        const dateStr = key.replace('vocab_record_', '');
+        const total = (data.familiarWords?.length || 0) + (data.unfamiliarWords?.length || 0);
+        dayData[dateStr] = total;
+      } catch(_) {}
+    }
+  }
+
+  // Also check today's session
+  const today = State.sessionDate;
+  const todayFamiliar = Session.getFamiliarWords().length;
+  const todayUnfamiliar = Session.getUnfamiliarWords().length;
+  if (todayFamiliar + todayUnfamiliar > 0) {
+    dayData[today] = todayFamiliar + todayUnfamiliar;
+  }
+
+  if (Object.keys(dayData).length === 0) {
+    sectionEl.style.display = 'none';
+    return;
+  }
+
+  sectionEl.style.display = 'block';
+
+  // Build 60-day grid (rows of 7)
+  const todayDate = new Date();
+  const cells = [];
+  for (let i = 59; i >= 0; i--) {
+    const d = new Date(todayDate);
+    d.setDate(d.getDate() - i);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const key = `${yyyy}${mm}${dd}`;
+    const count = dayData[key] || 0;
+    let level = 0;
+    if (count > 0) level = 1;
+    if (count > 10) level = 2;
+    if (count > 30) level = 3;
+    if (count > 50) level = 4;
+    cells.push({ date: key, count, level });
+  }
+
+  let html = '';
+  // Day headers
+  ['Mon','','Wed','','Fri','','Sun'].forEach(d => {
+    html += `<div style="font-size:0.6rem;color:var(--color-text-muted);text-align:center">${d}</div>`;
+  });
+  cells.forEach(c => {
+    html += `<div class="heatmap-cell level-${c.level}" title="${c.date.slice(0,4)}-${c.date.slice(4,6)}-${c.date.slice(6,8)}: ${c.count} words"></div>`;
+  });
+  gridEl.innerHTML = html;
+
+  // Legend
+  legendEl.innerHTML = `
+    <span>Less</span>
+    <span class="legend-swatch"></span>
+    <span class="legend-swatch s1"></span>
+    <span class="legend-swatch s2"></span>
+    <span class="legend-swatch s3"></span>
+    <span class="legend-swatch s4"></span>
+    <span>More</span>
+  `;
+}
+
+/* =========================================================
+   CELEBRATION ANIMATIONS (v3.0)
+   ========================================================= */
+function triggerCelebration(level) {
+  if (level === 'star') {
+    showToast('⭐ 5 in a row! Keep it up!', 'success');
+  } else if (level === 'medium') {
+    showToast('🌟 10 in a row! You\'re on fire!', 'success');
+    // Simple pulse animation on the review content
+    const content = DOM.reviewContent;
+    if (content) {
+      content.classList.remove('celebration-pulse');
+      void content.offsetWidth;
+      content.classList.add('celebration-pulse');
+    }
+  } else if (level === 'large') {
+    showToast('🎉 20 in a row! Amazing!', 'success');
+    // Confetti effect
+    createConfetti();
+  }
+}
+
+function createConfetti() {
+  const container = document.createElement('div');
+  container.className = 'celebration-confetti';
+  container.style.left = '50%';
+  container.style.top = '50%';
+  const colors = ['#f56565', '#f0c040', '#3ecf8e', '#5b6ef5', '#a78bfa', '#ff6b6b'];
+  for (let i = 0; i < 30; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'celebration-confetti-piece';
+    piece.style.background = colors[i % colors.length];
+    piece.style.left = (Math.random() * 200 - 100) + 'px';
+    piece.style.top = (Math.random() * 200 - 100) + 'px';
+    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+    piece.style.width = (6 + Math.random() * 6) + 'px';
+    piece.style.height = (6 + Math.random() * 6) + 'px';
+    container.appendChild(piece);
+  }
+  document.body.appendChild(container);
+  setTimeout(() => container.remove(), 2500);
+}
+
+/* =========================================================
    Built-in Vocabulary — Loading & Selection
    ========================================================= */
 
@@ -1418,6 +1754,24 @@ async function loadBuiltinVocabData(vocabId) {
     console.error('Failed to load built-in vocab:', err);
     showToast('Failed to load vocabulary data: ' + err.message, 'error');
   }
+}
+
+/* =========================================================
+   DIFFICULT WORDS — From SM-2 quality history (v3.0)
+   ========================================================= */
+function getDifficultWords() {
+  const pool = ReviewPool.getAll();
+  const wordErrors = [];
+  pool.forEach(entry => {
+    if (entry.qualityHistory && entry.qualityHistory.length > 0) {
+      const errors = entry.qualityHistory.filter(q => q < 3).length;
+      if (errors > 0) {
+        wordErrors.push({ word: entry.word, errorCount: errors });
+      }
+    }
+  });
+  wordErrors.sort((a, b) => b.errorCount - a.errorCount);
+  return wordErrors;
 }
 
 /* =========================================================

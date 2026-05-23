@@ -1816,3 +1816,466 @@ input:focus, select:focus {
   font-size: 0.78rem;
   color: var(--color-text-muted);
 }
+
+/* =========================================================
+   MOBILE BOTTOM NAVIGATION (v3.0)
+   ========================================================= */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  z-index: 200;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.mobile-nav-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color var(--transition);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  line-height: 1;
+  min-width: 48px;
+}
+
+.mobile-nav-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.mobile-nav-btn.active {
+  color: var(--color-primary);
+}
+
+.mobile-nav-btn:hover {
+  color: var(--color-text);
+}
+
+/* =========================================================
+   GRID PROGRESS BAR (v3.0)
+   ========================================================= */
+.grid-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--color-surface-2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 0 4px 0;
+}
+
+.grid-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), #a78bfa);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+/* =========================================================
+   HEATMAP / LEARNING CALENDAR (v3.0)
+   ========================================================= */
+.heatmap-section {
+  text-align: left;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.heatmap-cell {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  transition: background var(--transition);
+}
+
+.heatmap-cell.level-1 { background: #1a3a2a; border-color: #1a3a2a; }
+.heatmap-cell.level-2 { background: #2d6a3e; border-color: #2d6a3e; }
+.heatmap-cell.level-3 { background: #3ecf8e; border-color: #3ecf8e; }
+.heatmap-cell.level-4 { background: #5be0a8; border-color: #5be0a8; }
+
+.heatmap-tooltip {
+  position: absolute;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  z-index: 300;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
+.heatmap-legend .legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+}
+
+.heatmap-legend .legend-swatch.s1 { background: #1a3a2a; }
+.heatmap-legend .legend-swatch.s2 { background: #2d6a3e; }
+.heatmap-legend .legend-swatch.s3 { background: #3ecf8e; }
+.heatmap-legend .legend-swatch.s4 { background: #5be0a8; }
+
+/* =========================================================
+   TOAST STACKING (v3.0)
+   ========================================================= */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+  max-width: 340px;
+}
+
+.toast-item {
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-card);
+  animation: toastIn 0.25s ease;
+  word-break: break-word;
+}
+
+.toast-item.success {
+  background: rgba(62, 207, 142, 0.15);
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.toast-item.error {
+  background: rgba(245, 101, 101, 0.15);
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+}
+
+.toast-item.info {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+/* =========================================================
+   KEYBOARD SHORTCUT HELP (v3.0)
+   ========================================================= */
+.btn-shortcut-help {
+  position: fixed;
+  bottom: 72px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), color var(--transition);
+  font-family: var(--font-sans);
+}
+
+.btn-shortcut-help:hover {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.modal-sm {
+  max-width: 360px;
+}
+
+.shortcut-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shortcut-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.shortcut-item kbd {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  min-width: 48px;
+  text-align: center;
+  color: var(--color-accent);
+}
+
+/* =========================================================
+   DANGER ZONE (v3.0)
+   ========================================================= */
+.danger-zone {
+  padding: 16px;
+  border: 1px solid rgba(245, 101, 101, 0.3);
+  border-radius: var(--radius-md);
+  background: rgba(245, 101, 101, 0.05);
+}
+
+.btn-danger {
+  background: rgba(245, 101, 101, 0.15);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(245, 101, 101, 0.3);
+}
+
+/* Toggle switch style */
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.toggle-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.toggle-label span {
+  flex: 1;
+}
+
+/* =========================================================
+   CELEBRATION ANIMATIONS (v3.0)
+   ========================================================= */
+@keyframes starBurst {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-200px) rotate(720deg); opacity: 0; }
+}
+
+@keyframes celebrationPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.celebration-star {
+  display: inline-block;
+  animation: starBurst 0.6s ease-out forwards;
+  font-size: 1.5rem;
+}
+
+.celebration-confetti {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  z-index: 5000;
+}
+
+.celebration-confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  animation: confetti 1.5s ease-out forwards;
+}
+
+.celebration-pulse {
+  animation: celebrationPulse 0.5s ease 2;
+}
+
+/* =========================================================
+   DIFFICULT WORDS RANKING (v3.0)
+   ========================================================= */
+.difficult-words-section {
+  margin-top: 16px;
+}
+
+.difficult-words-section h4 {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.difficult-word-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+  font-size: 0.82rem;
+}
+
+.difficult-word-item .word {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.difficult-word-item .error-count {
+  color: var(--color-danger);
+  font-size: 0.75rem;
+}
+
+/* =========================================================
+   RESPONSIVE — Mobile Expanded (v3.0)
+   ========================================================= */
+@media (max-width: 600px) {
+  .mobile-nav {
+    display: flex !important;
+  }
+
+  /* Hide header-right buttons on mobile */
+  .header-right {
+    display: none !important;
+  }
+
+  /* Add bottom padding for nav bar */
+  main {
+    padding-bottom: 64px;
+  }
+
+  /* Touch improvements */
+  .word-chip {
+    min-height: 48px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .word-grid {
+    gap: 12px !important;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Review mobile improvements */
+  .review-detail-actions {
+    flex-wrap: wrap;
+  }
+
+  .review-detail-actions .btn {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  /* Quiz mobile improvements */
+  .quiz-question {
+    padding: 20px;
+  }
+
+  .quiz-options {
+    gap: 8px;
+  }
+
+  .quiz-option {
+    padding: 14px 16px;
+    font-size: 0.95rem;
+  }
+
+  /* Reading mobile */
+  .reading-words {
+    grid-template-columns: 1fr !important;
+  }
+
+  .reading-content {
+    padding: 16px;
+  }
+
+  /* Bottom nav offset for toast */
+  .toast-container {
+    bottom: 80px !important;
+  }
+
+  .btn-shortcut-help {
+    bottom: 72px !important;
+  }
+
+  .done-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .review-toolbar {
+    flex-wrap: wrap;
+  }
+
+  .review-content {
+    padding: 16px;
+  }
+
+  /* Detail screen swipe hints */
+  .detail-card {
+    touch-action: pan-x;
+  }
+}
+
+@media (max-width: 380px) {
+  .word-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .mobile-nav-btn {
+    padding: 4px 6px;
+    min-width: 40px;
+  }
+
+  .mobile-nav-btn span {
+    font-size: 0.6rem;
+  }
+}

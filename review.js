@@ -253,6 +253,26 @@ const ReviewPool = {
     entry.qualityHistory.push(quality);
 
     this._save(pool);
+
+    // Track consecutive correct answers for celebration effects
+    if (quality >= 3) {
+      // Correct answer
+      const consecutive = this.getConsecutiveCorrect() + 1;
+      this._setConsecutiveCorrect(consecutive);
+
+      // Trigger celebrations (global function from app.js)
+      if (consecutive === 5 && typeof triggerCelebration === 'function') {
+        triggerCelebration('star');
+      } else if (consecutive === 10 && typeof triggerCelebration === 'function') {
+        triggerCelebration('medium');
+      } else if (consecutive === 20 && typeof triggerCelebration === 'function') {
+        triggerCelebration('large');
+      }
+    } else {
+      // Wrong answer - reset counter
+      this._setConsecutiveCorrect(0);
+    }
+
     return entry;
   },
 
@@ -332,6 +352,22 @@ const ReviewPool = {
    */
   getTotalCount() {
     return this.getAll().length;
+  },
+
+  /**
+   * 获取连续答对次数（用于庆祝动画）
+   * @returns {number}
+   */
+  getConsecutiveCorrect() {
+    return parseInt(localStorage.getItem('vocab_consecutive_correct') || '0', 10);
+  },
+
+  _setConsecutiveCorrect(n) {
+    localStorage.setItem('vocab_consecutive_correct', String(n));
+  },
+
+  resetConsecutiveCorrect() {
+    this._setConsecutiveCorrect(0);
   },
 
   /**
