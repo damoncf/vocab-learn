@@ -159,11 +159,13 @@ const DOM = {
   btnSettings:     document.getElementById('btnSettings'),
   modalSettings:   document.getElementById('modalSettings'),
   closeSettings:   document.getElementById('closeSettings'),
-  inputApiKey:     document.getElementById('inputApiKey'),
-  toggleApiKey:    document.getElementById('toggleApiKey'),
+  inputApiKey:        document.getElementById('inputApiKey'),
+  toggleApiKey:       document.getElementById('toggleApiKey'),
   inputWordsPerBatch: document.getElementById('inputWordsPerBatch'),
-  inputDifficulty:  document.getElementById('inputDifficulty'),
-  btnSaveSettings:  document.getElementById('btnSaveSettings'),
+  inputDifficulty:    document.getElementById('inputDifficulty'),
+  btnSaveSettings:    document.getElementById('btnSaveSettings'),
+  inputDailyGoal:     document.getElementById('inputDailyGoal'),
+  inputAdaptiveBatch: document.getElementById('inputAdaptiveBatch'),
 
   // Source modal
   btnSource:        document.getElementById('btnSource'),
@@ -424,6 +426,8 @@ function init() {
   DOM.inputShowShortcuts.checked = s.showShortcuts !== false;
   DOM.inputTheme.value         = s.theme;
   DOM.inputClickBehavior.value = s.clickBehavior || 'peek';
+  if (DOM.inputDailyGoal) DOM.inputDailyGoal.value = s.dailyGoal || 50;
+  if (DOM.inputAdaptiveBatch) DOM.inputAdaptiveBatch.checked = s.adaptiveBatch;
 
   State.sourceType = s.sourceType || 'ai';
   State.fileWordPool = FileWords.get();
@@ -1230,6 +1234,8 @@ function wireEvents() {
   // -------------------------------------------------------
   if (DOM.btnExportAnki) DOM.btnExportAnki.addEventListener('click', () => showAnkiExportModal());
   if (DOM.btnExportAnkiWelcome) DOM.btnExportAnkiWelcome.addEventListener('click', () => showAnkiExportModal());
+  const btnSettingsExportAnki = document.getElementById('btnSettingsExportAnki');
+  if (btnSettingsExportAnki) btnSettingsExportAnki.addEventListener('click', () => showAnkiExportModal());
 
   // -------------------------------------------------------
   // Sync
@@ -1410,7 +1416,42 @@ function handleKeyboardShortcut(e) {
 /* =========================================================
    Modals
    ========================================================= */
-function openSettings() { DOM.modalSettings.style.display = 'flex'; }
+function openSettings() {
+  DOM.modalSettings.style.display = 'flex';
+  updateSettingsDataSummary();
+  // Show last sync time
+  const syncCfg = SyncSettings.getAll();
+  const lastSyncEl = document.getElementById('syncLastTime');
+  if (lastSyncEl && syncCfg) {
+    const lastSync = syncCfg.lastSyncTime;
+    if (lastSync && lastSync > 0) {
+      const d = new Date(lastSync);
+      lastSyncEl.textContent = `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+    } else {
+      lastSyncEl.textContent = '--';
+    }
+  }
+}
+
+/**
+ * v7.6 — Update settings data summary card
+ */
+function updateSettingsDataSummary() {
+  const familiar = Session.getFamiliarWords();
+  const unfamiliar = Session.getUnfamiliarWords();
+  const learnedCount = familiar.length + unfamiliar.length;
+  const masteredCount = ReviewPool.getMasteredWords().length;
+  const streak = calcContinuousStreak();
+  const dueCount = ReviewPool.getDueCount();
+
+  const items = document.querySelectorAll('#settingsDataSummary .data-value');
+  if (items.length >= 4) {
+    items[0].textContent = learnedCount;
+    items[1].textContent = masteredCount;
+    items[2].textContent = streak;
+    items[3].textContent = dueCount;
+  }
+}
 function openSource()   { DOM.modalSource.style.display   = 'flex'; }
 function closeModal(el) { el.style.display = 'none'; }
 
@@ -1422,8 +1463,10 @@ function saveSettings() {
   const showShortcuts = DOM.inputShowShortcuts.checked;
   const theme         = DOM.inputTheme.value;
   const clickBehavior = DOM.inputClickBehavior.value;
+  const dailyGoal     = parseInt(DOM.inputDailyGoal?.value, 10) || 50;
+  const adaptiveBatch = DOM.inputAdaptiveBatch?.checked || false;
 
-  Settings.saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts, clickBehavior });
+  Settings.saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts, clickBehavior, dailyGoal, adaptiveBatch });
   Settings.setTheme(theme);
   applyTheme(theme);
 
@@ -1438,6 +1481,9 @@ function saveSettings() {
   }
 
   closeModal(DOM.modalSettings);
+
+  // Update welcome daily card with new goal
+  updateWelcomeDailyCard();
 
   // v6.5: Update selection hint based on click behavior
   if (DOM.selectionHint) {

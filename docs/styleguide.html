@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VocabLearn — 小米风格设计系统</title>
+<style>
+/* ===== Design Tokens (Xiaomi-Inspired) ===== */
+:root {
+  /* 小米品牌色 — 活力橙 */
+  --mi-orange: #FF6900;
+  --mi-orange-light: #FF8A33;
+  --mi-orange-glow: rgba(255, 105, 0, 0.2);
+
+  /* 深色主题 */
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #1e1e1e;
+  --color-border: #2a2a2a;
+  --color-text: #f5f5f5;
+  --color-text-muted: #888888;
+  --color-primary: var(--mi-orange);
+  --color-primary-h: var(--mi-orange-light);
+  --color-primary-glow: var(--mi-orange-glow);
+  --color-accent: #FFD700;
+  --color-success: #34C759;
+  --color-danger: #FF3B30;
+  --color-warning: #FF9500;
+  --color-word-known: #34C759;
+  --color-word-unknown: var(--mi-orange);
+  --color-word-mastered: #248A3D;
+
+  /* 小米标志性大圆角 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* 柔和阴影 */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 0 3px var(--mi-orange-glow);
+
+  /* 间距体系 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* 字体 — 小米使用 MiSans */
+  --font-sans: 'MiSans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.825rem;
+  --text-base: 0.925rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3rem;
+
+  /* 过渡 */
+  --transition-fast: 100ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-base: 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-slow: 400ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===== 浅色主题 ===== */
+[data-theme="light"] {
+  --color-bg: #f8f8f8;
+  --color-surface: #ffffff;
+  --color-surface-2: #f0f0f0;
+  --color-border: #e0e0e0;
+  --color-text: #1a1a1a;
+  --color-text-muted: #999999;
+  --color-primary: var(--mi-orange);
+  --color-primary-glow: rgba(255, 105, 0, 0.12);
+  --color-success: #34C759;
+  --color-danger: #FF3B30;
+  --color-word-known: #34C759;
+  --color-word-unknown: var(--mi-orange);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+/* ===== Reset & Base ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: var(--space-10);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Typography ===== */
+h1 { font-size: var(--text-3xl); font-weight: 700; margin-bottom: var(--space-2); letter-spacing: -0.02em; }
+h2 {
+  font-size: var(--text-2xl); font-weight: 700;
+  margin: var(--space-10) 0 var(--space-4);
+  letter-spacing: -0.01em;
+}
+h3 { font-size: var(--text-xl); font-weight: 600; margin: var(--space-6) 0 var(--space-3); color: var(--color-primary); }
+
+/* ===== Utility ===== */
+.section { margin-bottom: var(--space-10); }
+.flex-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+.flex-col { display: flex; flex-direction: column; gap: var(--space-3); }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--space-4); }
+.grid-6 { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--space-3); }
+.label { font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: var(--space-1); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ===== Cards (小米大圆角) ===== */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: all var(--transition-base);
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+}
+
+/* ===== Elevated Card ===== */
+.card-elevated {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+}
+.card-elevated:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== Buttons (小米风格) ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 20px; border-radius: var(--radius-md);
+  font-size: var(--text-sm); font-weight: 500;
+  font-family: var(--font-sans); cursor: pointer;
+  border: none;
+  transition: all var(--transition-base);
+  white-space: nowrap; line-height: 1.2;
+  position: relative;
+  overflow: hidden;
+}
+.btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn:active { transform: translateY(0) scale(0.98); }
+.btn-primary {
+  background: linear-gradient(135deg, var(--mi-orange), var(--mi-orange-light));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 105, 0, 0.3);
+}
+.btn-secondary {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+}
+.btn-ghost:hover { background: var(--color-surface-2); color: var(--color-text); }
+.btn-danger {
+  background: var(--color-danger);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+}
+.btn-link {
+  background: transparent;
+  color: var(--color-primary);
+  padding: 0;
+}
+.btn-sm { padding: 6px 14px; font-size: 0.75rem; border-radius: var(--radius-sm); }
+.btn-lg { padding: 14px 28px; font-size: 1rem; border-radius: var(--radius-lg); }
+
+/* ===== Inputs ===== */
+.input {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: var(--text-base);
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  outline: none;
+  transition: all var(--transition-base);
+}
+.input:focus { border-color: var(--color-primary); box-shadow: var(--shadow-glow); }
+
+/* ===== Word Chips ===== */
+.word-chip {
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px 16px; min-height: 48px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.875rem; font-weight: 500;
+  text-align: center;
+  transition: all var(--transition-base);
+  user-select: none;
+  line-height: 1.3;
+}
+.word-chip:hover { border-color: var(--color-primary); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+.word-chip.unknown {
+  background: rgba(255, 105, 0, 0.1);
+  border-color: var(--mi-orange);
+  color: var(--mi-orange);
+}
+.word-chip.known {
+  background: rgba(52, 199, 89, 0.1);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+/* ===== Badges ===== */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 12px; border-radius: var(--radius-full);
+  font-size: var(--text-xs); font-weight: 600;
+  border: 1px solid;
+  background: var(--mi-orange-glow);
+  color: var(--mi-orange);
+  border-color: var(--mi-orange);
+}
+.badge-success {
+  background: rgba(52, 199, 89, 0.1);
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+.badge-accent {
+  background: rgba(255, 215, 0, 0.1);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* ===== Progress ===== */
+.progress-bar {
+  width: 100%; height: 6px;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mi-orange), var(--mi-orange-light));
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+/* ===== Frosted Glass (小米毛玻璃) ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+}
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ===== Modal ===== */
+.modal-sample {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-6);
+  max-width: 420px;
+}
+
+/* ===== Empty State ===== */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-4);
+  padding: var(--space-10); text-align: center;
+  color: var(--color-text-muted);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+.empty-state .icon { font-size: 2.5rem; }
+
+/* ===== Daily Card ===== */
+.daily-card {
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-2) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  max-width: 420px;
+}
+
+/* ===== Swatch ===== */
+.swatch { width: 100%; height: 48px; border-radius: var(--radius-md); border: 1px solid var(--color-border); margin-bottom: var(--space-1); }
+
+/* ===== Theme Toggle ===== */
+.theme-toggle {
+  position: fixed; top: var(--space-4); right: var(--space-4);
+  padding: 10px 20px; border-radius: var(--radius-full);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text); cursor: pointer;
+  font-size: var(--text-sm); font-family: var(--font-sans);
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+/* ===== Token Name ===== */
+.token-name { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">🌗 切换主题</button>
+
+<!-- ===== Header ===== -->
+<div style="text-align: center; padding: var(--space-12) 0; max-width: 600px; margin: 0 auto;">
+  <span style="background: var(--mi-orange-glow); color: var(--mi-orange); padding: 4px 14px; border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Xiaomi Design Language</span>
+  <h1 style="margin-top: var(--space-4);">VocabLearn 设计系统</h1>
+  <p style="color: var(--color-text-muted); font-size: var(--text-base); max-width: 480px; margin: var(--space-3) auto 0;">基于小米设计语言（HyperOS）的视觉规范。<br>大圆角、活力橙、毛玻璃、干净排版。</p>
+</div>
+
+<!-- ===== 色板 ===== -->
+<h2>🎨 色板</h2>
+<div class="grid-4">
+  <div class="card"><div class="swatch" style="background: var(--color-bg);"></div><div class="label">背景</div><div class="token-name">--color-bg</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-surface);"></div><div class="label">表面</div><div class="token-name">--color-surface</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-surface-2);"></div><div class="label">表面-2</div><div class="token-name">--color-surface-2</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-border);"></div><div class="label">边框</div><div class="token-name">--color-border</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-text);"></div><div class="label">正文</div><div class="token-name">--color-text</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-text-muted);"></div><div class="label">辅助文字</div><div class="token-name">--color-text-muted</div></div>
+  <div class="card"><div class="swatch" style="background: var(--mi-orange);"></div><div class="label">小米橙 (主色)</div><div class="token-name">--mi-orange / --color-primary</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-success);"></div><div class="label">成功</div><div class="token-name">--color-success</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-danger);"></div><div class="label">危险</div><div class="token-name">--color-danger</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-warning);"></div><div class="label">警告</div><div class="token-name">--color-warning</div></div>
+  <div class="card"><div class="swatch" style="background: var(--color-accent);"></div><div class="label">强调</div><div class="token-name">--color-accent</div></div>
+</div>
+
+<!-- ===== 字体层级 ===== -->
+<h2>🔤 字体层级</h2>
+<div class="grid-4">
+  <div class="card"><div style="font-size: var(--text-2xl); font-weight: 700;">--text-2xl 2rem</div><div class="token-name">大标题</div></div>
+  <div class="card"><div style="font-size: var(--text-xl); font-weight: 700;">--text-xl 1.5rem</div><div class="token-name">页面标题</div></div>
+  <div class="card"><div style="font-size: var(--text-lg); font-weight: 600;">--text-lg 1.25rem</div><div class="token-name">卡片标题</div></div>
+  <div class="card"><div style="font-size: var(--text-md); font-weight: 500;">--text-md 1rem</div><div class="token-name">小标题/词块</div></div>
+  <div class="card"><div style="font-size: var(--text-base);">--text-base 0.925rem</div><div class="token-name">正文</div></div>
+  <div class="card"><div style="font-size: var(--text-sm); color: var(--color-text-muted);">--text-sm 0.825rem</div><div class="token-name">辅助文字</div></div>
+  <div class="card"><div style="font-size: var(--text-xs); color: var(--color-text-muted);">--text-xs 0.75rem</div><div class="token-name">标签/徽章</div></div>
+  <div class="card"><div style="font-family: var(--font-mono); font-size: var(--text-sm);">等宽字体</div><div class="token-name">--font-mono</div></div>
+</div>
+
+<!-- ===== 圆角 ===== -->
+<h2>🟣 圆角体系（小米标志性大圆角）</h2>
+<div class="flex-row">
+  <div class="card" style="border-radius: var(--radius-sm); padding: 12px 20px;"><div class="label">sm 8px</div></div>
+  <div class="card" style="border-radius: var(--radius-md); padding: 12px 20px;"><div class="label">md 12px</div></div>
+  <div class="card" style="border-radius: var(--radius-lg); padding: 12px 20px;"><div class="label">lg 16px</div></div>
+  <div class="card" style="border-radius: var(--radius-xl); padding: 12px 24px;"><div class="label">xl 20px</div></div>
+  <div class="card" style="border-radius: var(--radius-full); padding: 12px 28px;"><div class="label">full 圆</div></div>
+</div>
+
+<!-- ===== 按钮 ===== -->
+<h2>🔘 按钮体系</h2>
+<h3>类型</h3>
+<div class="flex-row">
+  <button class="btn btn-primary">开始学习</button>
+  <button class="btn btn-secondary">选择词库</button>
+  <button class="btn btn-ghost">取消</button>
+  <button class="btn btn-danger">删除数据</button>
+  <button class="btn btn-link">查看详情</button>
+</div>
+<h3>尺寸</h3>
+<div class="flex-row">
+  <button class="btn btn-primary btn-sm">小按钮</button>
+  <button class="btn btn-primary">默认</button>
+  <button class="btn btn-primary btn-lg">大按钮</button>
+</div>
+<h3>SM-2 四色复习按钮</h3>
+<div class="flex-row">
+  <button class="btn" style="background:#FF3B30;color:#fff;border-radius:var(--radius-lg);">完全忘了</button>
+  <button class="btn" style="background:#FF9500;color:#fff;border-radius:var(--radius-lg);">有点印象</button>
+  <button class="btn" style="background:var(--mi-orange);color:#fff;border-radius:var(--radius-lg);">记住了</button>
+  <button class="btn" style="background:#34C759;color:#fff;border-radius:var(--radius-lg);">太简单了</button>
+</div>
+
+<!-- ===== 输入框 ===== -->
+<h2>⌨️ 输入框</h2>
+<div class="flex-row">
+  <input class="input" placeholder="搜索单词..." style="width: 240px;">
+  <select class="input" style="width: 180px;">
+    <option>随机排列</option>
+    <option>A-Z 排序</option>
+    <option>按难度排序</option>
+  </select>
+</div>
+
+<!-- ===== 词块 ===== -->
+<h2>📦 词块（Word Chip）</h2>
+<div class="flex-row">
+  <div class="word-chip">ephemeral</div>
+  <div class="word-chip unknown">ubiquitous</div>
+  <div class="word-chip known">abandon</div>
+</div>
+<div class="flex-row" style="margin-top: var(--space-2);">
+  <span style="font-size:var(--text-xs);color:var(--color-text-muted);">默认</span>
+  <span style="font-size:var(--text-xs);color:var(--mi-orange);">不认识（橙色）</span>
+  <span style="font-size:var(--text-xs);color:var(--color-success);">认识（绿色）</span>
+</div>
+
+<!-- ===== 卡片体系 ===== -->
+<h2>🃏 卡片体系</h2>
+<div class="grid-4">
+  <div class="card"><div class="label">基础卡</div><div>默认表面 + 1px 边框 + 16px 圆角</div></div>
+  <div class="card card-hover"><div class="label">高亮卡</div><div>hover 上浮 2px + 阴影</div></div>
+  <div class="card-elevated"><div class="label">阴影卡</div><div>预设阴影 + hover 加深</div></div>
+  <div class="card glass"><div class="label">毛玻璃卡</div><div>backdrop-filter: blur(20px)</div></div>
+</div>
+
+<!-- ===== 毛玻璃效果 ===== -->
+<h2>🧊 毛玻璃（Frosted Glass）</h2>
+<div class="glass" style="padding: var(--space-6); max-width: 400px;">
+  <div class="label">Glassmorphism</div>
+  <div style="font-size: var(--text-sm); color: var(--color-text);">小米 HyperOS 标志性设计语言。<br>半透明背景 + 20px 模糊 + 微边框。</div>
+</div>
+
+<!-- ===== 模态框 ===== -->
+<h2>📋 模态框</h2>
+<div class="modal-sample">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-5);">
+    <span style="font-weight:700;font-size:var(--text-lg);">设置</span>
+    <span style="color:var(--color-text-muted);cursor:pointer;font-size:var(--text-xl);">✕</span>
+  </div>
+  <div class="flex-col">
+    <div>
+      <div class="label">DeepSeek API Key</div>
+      <input class="input" type="password" placeholder="sk-..." style="width:100%;">
+    </div>
+    <div>
+      <div class="label">每批词数</div>
+      <input class="input" type="number" value="100" style="width:120px;">
+    </div>
+  </div>
+  <div style="margin-top:var(--space-5);display:flex;justify-content:flex-end;gap:var(--space-3);">
+    <button class="btn btn-ghost">取消</button>
+    <button class="btn btn-primary" style="min-width:120px;">保存设置</button>
+  </div>
+</div>
+
+<!-- ===== 徽章 ===== -->
+<h2>🏷️ 徽章</h2>
+<div class="flex-row">
+  <span class="badge">3 待复习</span>
+  <span class="badge badge-success">已掌握 87%</span>
+  <span class="badge badge-accent">🔥 连续 7 天</span>
+  <span class="badge" style="background:rgba(255,59,48,0.1);color:#FF3B30;border-color:#FF3B30;">⚠️ 10 词将到期</span>
+</div>
+
+<!-- ===== 进度条 ===== -->
+<h2>📊 进度条</h2>
+<div class="flex-col" style="max-width: 400px;">
+  <div class="progress-bar"><div class="progress-fill" style="width: 67%;"></div></div>
+  <div style="display:flex;justify-content:space-between;">
+    <span style="font-size:var(--text-sm);color:var(--color-text-muted);">67/100 词</span>
+    <span style="font-size:var(--text-sm);color:var(--mi-orange);font-weight:600;">67%</span>
+  </div>
+</div>
+
+<!-- ===== 空状态 ===== -->
+<h2>📭 空状态</h2>
+<div class="empty-state" style="max-width: 400px;">
+  <div class="icon">📭</div>
+  <div style="font-size: var(--text-base); font-weight: 500;">还没有待复习的词</div>
+  <div style="font-size: var(--text-sm);">先去学习一批新词吧</div>
+  <button class="btn btn-primary btn-lg" style="margin-top: var(--space-2);">去学习</button>
+</div>
+
+<!-- ===== 每日学习卡片 ===== -->
+<h2>📅 每日学习卡片</h2>
+<div class="daily-card">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4);">
+    <span style="font-weight:700;font-size:var(--text-md);">📅 今日学习</span>
+    <span class="badge">目标 50 词</span>
+  </div>
+  <div class="progress-bar" style="margin-bottom:var(--space-3);height:8px;">
+    <div class="progress-fill" style="width:46%;"></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-4);">
+    <span style="font-size:var(--text-sm);color:var(--color-text-muted);">23/50 词</span>
+    <span style="font-size:var(--text-sm);color:var(--mi-orange);font-weight:600;">46%</span>
+  </div>
+  <div style="display:flex;gap:var(--space-6);padding-top:var(--space-3);border-top:1px solid var(--color-border);">
+    <div><span style="font-weight:600;">🔥</span> <span style="font-size:var(--text-sm);color:var(--color-text-muted);">连续 5 天</span></div>
+    <div><span style="font-weight:600;">📚</span> <span style="font-size:var(--text-sm);color:var(--color-text-muted);">12 词待复习</span></div>
+    <div><span style="font-weight:600;">⏰</span> <span style="font-size:var(--text-sm);color:var(--color-text-muted);">昨天 15:30</span></div>
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+}
+</script>
+</body>
+</html>

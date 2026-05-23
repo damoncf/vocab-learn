@@ -46,6 +46,12 @@ const Settings = {
 
   getShowShortcuts()      { return localStorage.getItem('vocab_show_shortcuts') !== 'false'; },
 
+  getDailyGoal()     { return parseInt(localStorage.getItem('vocab_daily_goal') || '50', 10); },
+  setDailyGoal(v)    { localStorage.setItem('vocab_daily_goal', String(v)); },
+
+  getAdaptiveBatch() { return localStorage.getItem('vocab_adaptive_batch') === 'true'; },
+  setAdaptiveBatch(v){ localStorage.setItem('vocab_adaptive_batch', v ? 'true' : 'false'); },
+
   getTheme()              { return localStorage.getItem('vocab_theme') || 'system'; },
   setTheme(v)             { localStorage.setItem('vocab_theme', v); },
   setShowShortcuts(v)     { localStorage.setItem('vocab_show_shortcuts', v ? 'true' : 'false'); },
@@ -65,17 +71,19 @@ const Settings = {
     };
   },
 
-  saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts, clickBehavior }) {
+  saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts, clickBehavior, dailyGoal, adaptiveBatch }) {
     if (apiKey        !== undefined) this.setApiKey(apiKey);
     if (wordsPerBatch !== undefined) this.setWordsPerBatch(wordsPerBatch);
     if (difficulty    !== undefined) this.setDifficulty(difficulty);
     if (autoPronounce !== undefined) this.setAutoPronounce(autoPronounce);
     if (showShortcuts !== undefined) this.setShowShortcuts(showShortcuts);
     if (clickBehavior !== undefined) this.setClickBehavior(clickBehavior);
+    if (dailyGoal !== undefined) this.setDailyGoal(dailyGoal);
+    if (adaptiveBatch !== undefined) this.setAdaptiveBatch(adaptiveBatch);
   },
 
   getAllExtended() {
-    return { ...this.getAll(), theme: this.getTheme() };
+    return { ...this.getAll(), theme: this.getTheme(), dailyGoal: this.getDailyGoal(), adaptiveBatch: this.getAdaptiveBatch() };
   },
 };
 

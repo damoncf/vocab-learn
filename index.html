@@ -511,66 +511,96 @@
 
   <!-- ===== Settings Modal ===== -->
   <div class="modal-backdrop" id="modalSettings" style="display:none">
-    <div class="modal">
+    <div class="modal modal-settings">
       <div class="modal-header">
         <h3>Settings</h3>
         <button class="modal-close" id="closeSettings">✕</button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <label for="inputApiKey">DeepSeek API Key</label>
-          <div class="input-with-toggle">
-            <input type="password" id="inputApiKey" placeholder="sk-..." autocomplete="off" />
-            <button class="btn-toggle-pw" id="toggleApiKey" type="button">Show</button>
+
+        <!-- 🎯 Learning -->
+        <div class="settings-card">
+          <div class="settings-card-header">🎯 Learning</div>
+          <div class="form-group">
+            <label>每日目标</label>
+            <input type="number" id="inputDailyGoal" min="5" max="500" value="50" style="width:100px" />
           </div>
-          <span class="form-hint">Stored locally in your browser. Never sent anywhere except DeepSeek.</span>
+          <div class="form-group">
+            <label for="inputWordsPerBatch">每批词数</label>
+            <input type="number" id="inputWordsPerBatch" min="10" max="500" value="100" />
+          </div>
+          <div class="form-group">
+            <label for="inputDifficulty">词汇难度</label>
+            <select id="inputDifficulty">
+              <option value="beginner">Beginner (A1–A2)</option>
+              <option value="intermediate" selected>Intermediate (B1–B2)</option>
+              <option value="advanced">Advanced (C1–C2)</option>
+              <option value="academic">Academic / GRE</option>
+              <option value="business">Business English</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="inputAdaptiveBatch" />
+              <span>自适应批次大小</span>
+            </label>
+            <span class="form-hint">根据历史标记率自动调整每批词数</span>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="inputWordsPerBatch">Words per batch</label>
-          <input type="number" id="inputWordsPerBatch" min="10" max="500" value="100" />
+
+        <!-- 🧠 Interaction -->
+        <div class="settings-card">
+          <div class="settings-card-header">🧠 Interaction</div>
+          <div class="form-group">
+            <label for="inputClickBehavior">单击行为</label>
+            <select id="inputClickBehavior">
+              <option value="peek">单击查看释义</option>
+              <option value="mark">单击直接标记</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="inputAutoPronounce" />
+              <span>进入详情页自动朗读</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="inputShowShortcuts" checked />
+              <span>显示快捷键提示</span>
+            </label>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="inputDifficulty">Vocabulary level</label>
-          <select id="inputDifficulty">
-            <option value="beginner">Beginner (A1–A2)</option>
-            <option value="intermediate" selected>Intermediate (B1–B2)</option>
-            <option value="advanced">Advanced (C1–C2)</option>
-            <option value="academic">Academic / GRE</option>
-            <option value="business">Business English</option>
-          </select>
+
+        <!-- 🎨 Appearance -->
+        <div class="settings-card">
+          <div class="settings-card-header">🎨 Appearance</div>
+          <div class="form-group">
+            <label for="inputTheme">主题</label>
+            <select id="inputTheme">
+              <option value="dark">深色</option>
+              <option value="light">浅色</option>
+              <option value="system">跟随系统</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="toggle-label">
-            <input type="checkbox" id="inputAutoPronounce" />
-            <span>Auto-pronounce on word detail</span>
-          </label>
-          <span class="form-hint">Automatically read aloud when entering detail page</span>
+
+        <!-- 🔌 API -->
+        <div class="settings-card">
+          <div class="settings-card-header">🔌 API</div>
+          <div class="form-group">
+            <label for="inputApiKey">DeepSeek API Key</label>
+            <div class="input-with-toggle">
+              <input type="password" id="inputApiKey" placeholder="sk-..." autocomplete="off" />
+              <button class="btn-toggle-pw" id="toggleApiKey" type="button">Show</button>
+            </div>
+            <span class="form-hint">存于本地浏览器，仅用于调用 DeepSeek API</span>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="inputClickBehavior">单击行为</label>
-          <select id="inputClickBehavior">
-            <option value="peek">单击查看释义</option>
-            <option value="mark">单击直接标记</option>
-          </select>
-          <span class="form-hint">单击词块时弹出释义浮窗，或直接标记为陌生</span>
-        </div>
-        <div class="form-group">
-          <label class="toggle-label">
-            <input type="checkbox" id="inputShowShortcuts" checked />
-            <span>Show keyboard shortcut hints</span>
-          </label>
-        </div>
-        <div class="form-group">
-          <label for="inputTheme">Theme</label>
-          <select id="inputTheme">
-            <option value="dark">Dark</option>
-            <option value="light">Light</option>
-            <option value="system">Follow System</option>
-          </select>
-        </div>
-        <hr style="border-color:var(--color-border);margin:20px 0" />
-        <div class="sync-section" id="syncSection">
-          <h4 style="font-size:0.95rem;font-weight:600;margin-bottom:12px;color:var(--color-text)">🔄 WebDAV Sync</h4>
+
+        <!-- 🔄 Sync -->
+        <div class="settings-card">
+          <div class="settings-card-header">🔄 Sync</div>
           <div class="form-group">
             <label for="inputSyncUrl">WebDAV Server URL</label>
             <input type="text" id="inputSyncUrl" placeholder="https://example.com/remote.php/dav/files/user/" />
@@ -585,13 +615,17 @@
               <input type="password" id="inputSyncPass" placeholder="App password" autocomplete="off" />
               <button class="btn-toggle-pw" id="toggleSyncPass" type="button">Show</button>
             </div>
-            <span class="form-hint">Stored locally in your browser. Use an app-specific password for security.</span>
+            <span class="form-hint">存于本地浏览器，建议使用应用专用密码</span>
           </div>
           <div class="form-group">
             <label class="toggle-label">
               <input type="checkbox" id="inputAutoSync" />
-              <span>Auto-sync after each batch</span>
+              <span>每批结束后自动同步</span>
             </label>
+          </div>
+          <div class="form-group">
+            <label>上次同步</label>
+            <span style="color:var(--color-text-muted);font-size:var(--text-sm)" id="syncLastTime">--</span>
           </div>
           <div class="sync-buttons">
             <button class="btn btn-secondary" id="btnSyncTest">🔌 Test Connection</button>
@@ -600,12 +634,22 @@
           </div>
           <p class="form-hint" id="syncStatus">Not synced yet.</p>
         </div>
-        <hr style="border-color:var(--color-border);margin:20px 0" />
-        <div class="form-group danger-zone">
-          <label style="color:var(--color-danger);font-weight:600">⚠ Danger Zone</label>
-          <p class="form-hint" style="margin-bottom:10px">This will erase all your learning data, review pool, and settings. This action cannot be undone.</p>
-          <button class="btn btn-danger" id="btnClearAllData">🗑 Clear All Data</button>
+
+        <!-- 📊 Data -->
+        <div class="settings-card">
+          <div class="settings-card-header">📊 Data</div>
+          <div class="data-summary" id="settingsDataSummary">
+            <div class="data-item"><span class="data-value">0</span><span class="data-label">已学</span></div>
+            <div class="data-item"><span class="data-value">0</span><span class="data-label">已掌握</span></div>
+            <div class="data-item"><span class="data-value">0</span><span class="data-label">连续天</span></div>
+            <div class="data-item"><span class="data-value">0</span><span class="data-label">待复习</span></div>
+          </div>
+          <div class="data-actions">
+            <button class="btn btn-secondary" id="btnSettingsExportAnki">📤 导出 Anki</button>
+            <button class="btn btn-danger" id="btnClearAllData">🗑 清除所有数据</button>
+          </div>
         </div>
+
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary" id="btnSaveSettings">Save Settings</button>
