@@ -906,7 +906,31 @@ function wireEvents() {
   // -------------------------------------------------------
   if (DOM.btnQSC) {
     DOM.btnQSC.addEventListener('click', () => {
-      // Continue learning: same as startSession but check source type first
+      // v6.0: Continue learning — check for snapshot first, then last vocab
+      if (SessionSnapshot.hasValidSnapshot()) {
+        const snap = SessionSnapshot.load();
+        if (snap) {
+          // Restore from snapshot
+          State.batchIndex = snap.batchIndex;
+          State.currentWords = snap.currentWords;
+          State.markedIndices = new Set(snap.markedIndices);
+          State.sourceType = snap.sourceType;
+          if (snap.vocabId) {
+            State.builtinVocabId = snap.vocabId;
+            BuiltinVocab.set(snap.vocabId);
+            if (!State.builtinVocabData) {
+              loadBuiltinVocabData(snap.vocabId);
+            }
+          }
+          renderWordGrid(State.currentWords);
+          updateSessionInfo();
+          showScreen('grid');
+          showToast('批次已恢复', 'info', 2000);
+          return;
+        }
+      }
+
+      // No snapshot: start new batch from last used vocab
       if (State.sourceType === 'ai' && !Settings.getApiKey()) {
         showToast('请先在设置中添加 API Key。', 'info', 3000);
         openSettings();
@@ -1433,6 +1457,9 @@ async function startSession() {
     renderWordGrid(words);
     DOM.historySection.style.display = 'none';
     updateSessionInfo();
+
+    // v6.0: Preload next batch data
+    _preloadNextBatch();
   } catch (err) {
     document.querySelectorAll('.grid-skeleton').forEach(el => el.remove());
     showScreen('welcome');
@@ -1494,6 +1521,9 @@ function renderWordGrid(words) {
     addPeekListener(chip, word);
     DOM.wordGrid.appendChild(chip);
   });
+
+  // v6.0: Preload detail data in background
+  _preloadCurrentBatchDetails();
 }
 
 function toggleMark(chip, index) {
@@ -1791,6 +1821,9 @@ function finalizeAndDone(unfamiliarWords) {
   // v6.0: Track used modes for toolbox badge
   _trackUsedMode('batch');
 
+  // v6.0: Preload next batch data
+  _preloadNextBatch();
+
   // v6.0: Check badges
   checkBadges({ action: 'batch' });
   checkBadges({ action: 'daily_update' });
@@ -1819,6 +1852,23 @@ function handleManualDownload() {
    Next Batch / Restart
    ========================================================= */
 async function handleNextBatch() {
+  // v6.0: Use preloaded next batch if available
+  if (_preloadedNextBatch && _preloadedNextBatch.length > 0) {
+    State.batchIndex = Session.incrementBatchIndex();
+    updateSessionInfo();
+    State.currentWords = _preloadedNextBatch;
+    State.markedIndices = new Set();
+    _preloadedNextBatch = null;
+    renderWordGrid(State.currentWords);
+    DOM.historySection.style.display = 'none';
+    updateSessionInfo();
+    showScreen('grid');
+    // Preload next batch and details
+    _preloadCurrentBatchDetails();
+    _preloadNextBatch();
+    return;
+  }
+
   State.batchIndex = Session.incrementBatchIndex();
   updateSessionInfo();
   await startSession();
@@ -2650,6 +2700,103 @@ function showGoalEditor() {
   popup.addEventListener('click', (e) => {
     if (e.target === popup) popup.remove();
   });
+}
+
+/* =========================================================
+   v6.0 — Preloading (核心流程极致优化)
+   ========================================================= */
+
+/** 缓存的下一批词数据 */
+let _preloadedNextBatch = null;
+
+/**
+ * 预加载下一批词数据
+ */
+function _preloadNextBatch() {
+  _preloadedNextBatch = null;
+
+  const apiKey = Settings.getApiKey();
+  const wordsPerBatch = Settings.getWordsPerBatch();
+
+  setTimeout(async () => {
+    try {
+      if (State.sourceType === 'builtin' && State.builtinVocabData) {
+        const usedWords = new Set(BuiltinVocab.getUsedWords());
+        const available = State.builtinVocabData.filter(entry => !usedWords.has(entry.word));
+        if (available.length > 0) {
+          _preloadedNextBatch = available.slice(0, wordsPerBatch).map(e => e.word);
+        }
+      } else if (State.sourceType === 'file' && State.fileWordPool.length > 0) {
+        const usedSet = new Set(Session.getUsedWords());
+        const pool = State.fileWordPool.filter(w => !usedSet.has(w));
+        if (pool.length > 0) {
+          _preloadedNextBatch = pool.slice(0, wordsPerBatch);
+        }
+      }
+    } catch (_) {}
+  }, 100);
+}
+
+/**
+ * 预加载当前批次所有词的详情数据
+ */
+function _preloadCurrentBatchDetails() {
+  if (!State.currentWords || State.currentWords.length === 0) return;
+
+  // 如果是内置词库，直接建立映射
+  if (State.builtinVocabData && Array.isArray(State.builtinVocabData)) {
+    const builtinMap = new Map();
+    State.builtinVocabData.forEach(entry => {
+      if (entry && entry.word) builtinMap.set(entry.word.toLowerCase(), entry);
+    });
+    const missing = State.currentWords.filter(w => !builtinMap.has(w.toLowerCase()));
+    if (missing.length === 0) {
+      // 全部有详情，不用加载
+      return;
+    }
+  }
+
+  // 有 API Key 时后台加载详情
+  const apiKey = Settings.getApiKey();
+  if (apiKey) {
+    setTimeout(async () => {
+      try {
+        const details = await getWordDetailsBatched(apiKey, State.currentWords, 15);
+        // 合并到 wordDetails
+        const existingWords = new Set((State.wordDetails || []).map(d => d.word?.toLowerCase()));
+        details.forEach(d => {
+          if (!existingWords.has(d.word?.toLowerCase())) {
+            State.wordDetails.push(d);
+          }
+        });
+      } catch (_) {}
+    }, 500);
+  }
+}
+
+/**
+ * 使用预加载下一批数据
+ */
+async function _startNextBatchWithPreload() {
+  State.batchIndex = Session.incrementBatchIndex();
+  updateSessionInfo();
+
+  if (_preloadedNextBatch && _preloadedNextBatch.length > 0) {
+    State.currentWords = _preloadedNextBatch;
+    State.markedIndices = new Set();
+    _preloadedNextBatch = null;
+    renderWordGrid(State.currentWords);
+    DOM.historySection.style.display = 'none';
+    updateSessionInfo();
+    showScreen('grid');
+    // Preload details
+    _preloadCurrentBatchDetails();
+    _preloadNextBatch();
+    return;
+  }
+
+  // Fallback: normal start
+  await startSession();
 }
 
 /* =========================================================
