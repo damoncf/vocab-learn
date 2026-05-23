@@ -1916,6 +1916,255 @@ input:focus, select:focus {
 }
 
 /* =========================================================
+   v5.5 — PEEK POPUP
+   ========================================================= */
+.peek-popup {
+  position: fixed;
+  z-index: 1500;
+  background: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  min-width: 200px;
+  max-width: 320px;
+  box-shadow: var(--shadow-modal);
+  backdrop-filter: blur(12px);
+  animation: peekIn 0.2s ease;
+}
+
+@keyframes peekIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.peek-popup-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.peek-word {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1.2;
+}
+
+.peek-pronunciation {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.peek-chinese {
+  font-size: 0.88rem;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.peek-definition {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+
+.peek-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.peek-actions .btn {
+  flex: 1;
+  justify-content: center;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 480px) {
+  .peek-popup {
+    left: 16px !important;
+    right: 16px !important;
+    max-width: unset;
+    width: auto;
+    min-width: unset;
+    top: auto !important;
+    bottom: 16px;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.3);
+  }
+}
+
+/* =========================================================
+   v5.5 — PRACTICE TABBED SCREEN
+   ========================================================= */
+#screenPractice {
+  padding: 0;
+}
+
+.practice-tabs {
+  display: flex;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.practice-tab {
+  flex: 1;
+  padding: 12px 8px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition), border-color var(--transition);
+  text-align: center;
+}
+
+.practice-tab:hover {
+  color: var(--color-text);
+}
+
+.practice-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.practice-content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.practice-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   v5.5 — QUICK TEST (Done Screen)
+   ========================================================= */
+.quick-test-section {
+  margin: 16px auto;
+  max-width: 440px;
+  width: 100%;
+}
+
+.quick-test-header {
+  margin-bottom: 8px;
+}
+
+.quick-test-header .btn {
+  width: 100%;
+  justify-content: center;
+  gap: 8px;
+}
+
+.quick-test-arrow {
+  font-size: 0.8rem;
+  transition: transform var(--transition);
+}
+
+.quick-test-body {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.quick-test-question {
+  text-align: center;
+}
+
+.quick-test-word {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+
+.quick-test-prompt {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+
+.quick-test-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.quick-test-feedback {
+  margin-bottom: 8px;
+}
+
+.quick-test-progress {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.quick-test-result {
+  text-align: center;
+  padding: 8px;
+}
+
+.quick-test-score {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.quick-test-missed {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+/* =========================================================
+   v5.5 — SNAPSHOT RESTORE
+   ========================================================= */
+.snapshot-restore {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.snapshot-restore p {
+  font-size: 0.85rem;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.snapshot-restore-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.snapshot-restore-actions .btn {
+  padding: 6px 18px;
+  font-size: 0.82rem;
+  justify-content: center;
+}
+
+/* =========================================================
    SYNC PANEL
    ========================================================= */
 .sync-section {

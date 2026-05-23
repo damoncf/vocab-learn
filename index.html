@@ -44,17 +44,11 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
       <span>Review</span>
     </button>
-    <button class="mobile-nav-btn" data-target="quiz">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      <span>Quiz</span>
-    </button>
-    <button class="mobile-nav-btn" data-target="dictation">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 10v-2a7 7 0 0 0-14 0v2"/><line x1="12" y1="12" x2="12" y2="17"/><path d="M8 17h8v2a4 4 0 0 1-8 0z"/></svg>
-      <span>Listen</span>
-    </button>
-    <button class="mobile-nav-btn" data-target="cloze">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="12" y1="12" x2="12" y2="18"/></svg>
-      <span>Cloze</span>
+    <button class="mobile-nav-btn" data-target="practice">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+      <span>Practice</span>
     </button>
     <button class="mobile-nav-btn" data-target="settings">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
@@ -97,6 +91,14 @@
           <!-- Empty state guide (shown when no data) -->
           <div class="daily-empty-guide" id="dailyEmptyGuide" style="display:none">
             <p>今天还没开始学习，现在开始？</p>
+          </div>
+          <!-- Session snapshot restore hint -->
+          <div class="snapshot-restore" id="snapshotRestore" style="display:none">
+            <p>📌 有未完成的批次（Batch <span id="snapshotBatchNum">0</span>），是否继续？</p>
+            <div class="snapshot-restore-actions">
+              <button class="btn btn-primary" id="snapshotResume">继续</button>
+              <button class="btn btn-ghost" id="snapshotDiscard">放弃</button>
+            </div>
           </div>
         </div>
 
@@ -238,6 +240,20 @@
         <div class="done-icon">✓</div>
         <h2>Batch Complete!</h2>
         <div class="done-stats" id="doneStats"></div>
+        <!-- Quick Test (embedded) -->
+        <div class="quick-test-section" id="quickTestSection" style="display:none">
+          <div class="quick-test-header" id="quickTestHeader">
+            <button class="btn btn-ghost" id="btnToggleQuickTest">
+              <span class="quick-test-arrow" id="quickTestArrow">▶</span>
+              📝 快速测验（本批 5 题）
+            </button>
+          </div>
+          <div class="quick-test-body" id="quickTestBody" style="display:none">
+            <div id="quickTestContent"></div>
+            <div class="quick-test-result" id="quickTestResult" style="display:none"></div>
+          </div>
+        </div>
+
         <div class="done-actions">
           <button class="btn btn-primary btn-large" id="btnNextBatch">Next 100 Words →</button>
           <button class="btn btn-secondary btn-large" id="btnStartQuiz">Start Quiz</button>
@@ -271,85 +287,116 @@
       </div>
     </section>
 
-    <!-- === SCREEN: Quiz === -->
-    <section id="screenQuiz" class="screen">
-      <div class="quiz-toolbar">
-        <div class="quiz-toolbar-left">
-          <button class="btn btn-ghost" id="btnQuizBack">← Back</button>
-          <h2>Quiz</h2>
-        </div>
-        <div class="quiz-toolbar-right">
-          <span class="quiz-score" id="quizScore">0 / 10</span>
-        </div>
-      </div>
-      <div class="quiz-content" id="quizContent"></div>
+    <!-- === SCREEN: Quiz (legacy — replaced by Practice tab) === -->
+    <section id="screenQuiz" class="screen" style="display:none">
     </section>
 
   </main>
 
-    <!-- === SCREEN: Dictation === -->
-    <section id="screenDictation" class="screen">
-      <div class="dictation-toolbar">
-        <div class="dictation-toolbar-left">
-          <button class="btn btn-ghost" id="btnDictationBack">← Back</button>
-          <h2>Dictation</h2>
-        </div>
-        <div class="dictation-toolbar-right">
-          <span class="dictation-score" id="dictationScore">0 / 10</span>
-        </div>
-      </div>
-      <div class="dictation-content" id="dictationContent"></div>
+    <!-- === SCREEN: Dictation (legacy — replaced by Practice tab) === -->
+    <section id="screenDictation" class="screen" style="display:none">
     </section>
 
-    <!-- === SCREEN: Cloze === -->
-    <section id="screenCloze" class="screen">
-      <div class="cloze-toolbar">
-        <div class="cloze-toolbar-left">
-          <button class="btn btn-ghost" id="btnClozeBack">← Back</button>
-          <h2>Cloze (Fill-in-the-Blank)</h2>
-        </div>
-        <div class="cloze-toolbar-right">
-          <span class="cloze-score" id="clozeScore">0 / 10</span>
-        </div>
-      </div>
-      <div class="cloze-content" id="clozeContent"></div>
+    <!-- === SCREEN: Cloze (legacy — replaced by Practice tab) === -->
+    <section id="screenCloze" class="screen" style="display:none">
     </section>
 
-    <!-- === SCREEN: Reading === -->
-    <section id="screenReading" class="screen">
-      <div class="reading-toolbar">
-        <div class="reading-toolbar-left">
-          <button class="btn btn-ghost" id="btnReadingBack">← Back</button>
-          <h2>Reading Mode</h2>
-        </div>
-        <div class="reading-toolbar-right">
-          <span class="reading-word-count" id="readingWordCount"></span>
-        </div>
+    <!-- === SCREEN: Practice (Tabbed) === -->
+    <section id="screenPractice" class="screen">
+      <div class="practice-tabs" id="practiceTabs">
+        <button class="practice-tab active" data-tab="quiz">🔤 Quiz</button>
+        <button class="practice-tab" data-tab="dictation">🎧 Dictation</button>
+        <button class="practice-tab" data-tab="cloze">📝 Cloze</button>
+        <button class="practice-tab" data-tab="reading">📖 Reading</button>
       </div>
-      <div class="reading-content">
-        <!-- Input area -->
-        <div class="reading-input-area" id="readingInputArea">
-          <textarea id="readingTextarea" placeholder="Paste an English article here..." rows="8"></textarea>
-          <div class="reading-input-actions">
-            <button class="btn btn-primary" id="btnExtractWords">🔍 Extract Words</button>
+      <div class="practice-content" id="practiceContent">
+        <!-- Quiz tab -->
+        <div class="practice-pane" data-tab="quiz">
+          <div class="quiz-toolbar">
+            <div class="quiz-toolbar-left">
+              <button class="btn btn-ghost" id="btnPracticeBack">← Back</button>
+              <h2>Quiz</h2>
+            </div>
+            <div class="quiz-toolbar-right">
+              <span class="quiz-score" id="quizScore">0 / 10</span>
+            </div>
+          </div>
+          <div class="quiz-content" id="quizContent"></div>
+        </div>
+        <!-- Dictation tab -->
+        <div class="practice-pane" data-tab="dictation" style="display:none">
+          <div class="dictation-toolbar">
+            <div class="dictation-toolbar-left">
+              <button class="btn btn-ghost" id="btnDictationBack">← Back</button>
+              <h2>Dictation</h2>
+            </div>
+            <div class="dictation-toolbar-right">
+              <span class="dictation-score" id="dictationScore">0 / 10</span>
+            </div>
+          </div>
+          <div class="dictation-content" id="dictationContent"></div>
+        </div>
+        <!-- Cloze tab -->
+        <div class="practice-pane" data-tab="cloze" style="display:none">
+          <div class="cloze-toolbar">
+            <div class="cloze-toolbar-left">
+              <button class="btn btn-ghost" id="btnClozeBack">← Back</button>
+              <h2>Cloze (Fill-in-the-Blank)</h2>
+            </div>
+            <div class="cloze-toolbar-right">
+              <span class="cloze-score" id="clozeScore">0 / 10</span>
+            </div>
+          </div>
+          <div class="cloze-content" id="clozeContent"></div>
+        </div>
+        <!-- Reading tab -->
+        <div class="practice-pane" data-tab="reading" style="display:none">
+          <div class="reading-toolbar">
+            <div class="reading-toolbar-left">
+              <h2>Reading Mode</h2>
+            </div>
+            <div class="reading-toolbar-right">
+              <span class="reading-word-count" id="readingWordCount"></span>
+            </div>
+          </div>
+          <div class="reading-content">
+            <div class="reading-input-area" id="readingInputArea">
+              <textarea id="readingTextarea" placeholder="Paste an English article here..." rows="8"></textarea>
+              <div class="reading-input-actions">
+                <button class="btn btn-primary" id="btnExtractWords">🔍 Extract Words</button>
+              </div>
+            </div>
+            <div class="reading-article-area" id="readingArticleArea" style="display:none">
+              <h3>Article</h3>
+              <div class="reading-article" id="readingArticle"></div>
+              <h3>Extracted Words <span id="readingExtractedCount" class="reading-extracted-badge"></span></h3>
+              <div class="reading-words" id="readingWords"></div>
+              <div class="reading-actions">
+                <button class="btn btn-primary" id="btnAddAllToReview">📚 Add All to Review Pool</button>
+                <button class="btn btn-secondary" id="btnReadingBackToInput">← Edit Text</button>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Article display area (hidden initially) -->
-        <div class="reading-article-area" id="readingArticleArea" style="display:none">
-          <h3>Article</h3>
-          <div class="reading-article" id="readingArticle"></div>
-          
-          <h3>Extracted Words <span id="readingExtractedCount" class="reading-extracted-badge"></span></h3>
-          <div class="reading-words" id="readingWords"></div>
-          
-          <div class="reading-actions">
-            <button class="btn btn-primary" id="btnAddAllToReview">📚 Add All to Review Pool</button>
-            <button class="btn btn-secondary" id="btnReadingBackToInput">← Edit Text</button>
-          </div>
-        </div>
       </div>
     </section>
+
+    <!-- === SCREEN: Reading (legacy — replaced by Practice tab) === -->
+    <section id="screenReading" class="screen" style="display:none">
+    </section>
+
+  <div class="peek-popup" id="peekPopup" style="display:none">
+    <div class="peek-popup-inner">
+      <div class="peek-word" id="peekWord"></div>
+      <div class="peek-pronunciation" id="peekPron"></div>
+      <div class="peek-chinese" id="peekChinese"></div>
+      <div class="peek-definition" id="peekDef"></div>
+      <div class="peek-actions">
+        <button class="btn btn-sm2-good" id="peekMarkFamiliar">✓ 认识</button>
+        <button class="btn btn-sm2-again" id="peekMarkUnfamiliar">✗ 不认识</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== Settings Modal ===== -->
   <div class="modal-backdrop" id="modalSettings" style="display:none">
@@ -520,13 +567,15 @@
       <div class="modal-body">
         <div class="shortcut-list">
           <div class="shortcut-item"><kbd>Space</kbd><span>Start learning / Next batch</span></div>
-          <div class="shortcut-item"><kbd>Enter</kbd><span>Confirm / Next (on grid/detail)</span></div>
+          <div class="shortcut-item"><kbd>Enter</kbd><span>Confirm / Next</span></div>
           <div class="shortcut-item"><kbd>Esc</kbd><span>Close modal / Go back</span></div>
           <div class="shortcut-item"><kbd>R</kbd><span>Open Review (on welcome)</span></div>
-          <div class="shortcut-item"><kbd>←</kbd><span>Previous word (in review)</span></div>
-          <div class="shortcut-item"><kbd>→</kbd><span>Next word (in review)</span></div>
-          <div class="shortcut-item"><kbd>D</kbd><span>Open Dictation (on done)</span></div>
-          <div class="shortcut-item"><kbd>C</kbd><span>Open Cloze (on done)</span></div>
+          <div class="shortcut-item"><kbd>M</kbd><span>Mark all words (on grid)</span></div>
+          <div class="shortcut-item"><kbd>←</kbd><span>Go back (detail/practice)</span></div>
+          <div class="shortcut-item"><kbd>→</kbd><span>Next card (detail)</span></div>
+          <div class="shortcut-item"><kbd>1/2/3/4</kbd><span>Again/Hard/Good/Easy (review)</span></div>
+          <div class="shortcut-item"><kbd>D</kbd><span>Dictation (on done/welcome)</span></div>
+          <div class="shortcut-item"><kbd>C</kbd><span>Cloze (on done/welcome)</span></div>
         </div>
       </div>
     </div>
@@ -545,6 +594,7 @@
   <script src="cloze.js"></script>
   <script src="sync.js"></script>
   <script src="reading.js"></script>
+  <script src="practice.js"></script>
   <script src="app.js"></script>
   <script>
     // Register Service Worker

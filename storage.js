@@ -323,6 +323,73 @@ function parseWordFile(text) {
  * Read multiple File objects and merge words.
  * Returns a Promise<string[]>.
  */
+/* -------------------------------------------------------
+   Session Snapshot — mid-batch progress persistence
+   ------------------------------------------------------- */
+const SessionSnapshot = {
+  /**
+   * Save the current session snapshot
+   * @param {object} state - State object with batchIndex, currentWords, markedIndices, sourceType
+   */
+  save(state) {
+    const snapshot = {
+      batchIndex: state.batchIndex,
+      currentWords: state.currentWords,
+      markedIndices: [...state.markedIndices],
+      sourceType: state.sourceType,
+      vocabId: BuiltinVocab.get() || '',
+      timestamp: Date.now(),
+    };
+    localStorage.setItem('vocab_snapshot', JSON.stringify(snapshot));
+  },
+
+  /**
+   * Load the saved snapshot
+   * @returns {object|null}
+   */
+  load() {
+    try {
+      const raw = localStorage.getItem('vocab_snapshot');
+      return raw ? JSON.parse(raw) : null;
+    } catch (_) {
+      return null;
+    }
+  },
+
+  /**
+   * Clear the snapshot
+   */
+  clear() {
+    localStorage.removeItem('vocab_snapshot');
+  },
+
+  /**
+   * Check if a valid (non-expired) snapshot exists
+   * 24h expiry
+   * @returns {boolean}
+   */
+  hasValidSnapshot() {
+    const s = this.load();
+    if (!s) return false;
+    return (Date.now() - s.timestamp) < 24 * 60 * 60 * 1000;
+  },
+
+  /**
+   * Get the remaining time before expiry as a human-readable string
+   * @returns {string}
+   */
+  getExpiryInfo() {
+    const s = this.load();
+    if (!s) return '';
+    const elapsed = Date.now() - s.timestamp;
+    const remaining = 24 * 60 * 60 * 1000 - elapsed;
+    if (remaining <= 0) return '已过期';
+    const hours = Math.floor(remaining / (60 * 60 * 1000));
+    const mins = Math.floor((remaining % (60 * 60 * 1000)) / (60 * 1000));
+    return `${hours}小时${mins}分钟后过期`;
+  },
+};
+
 function readWordFiles(fileList) {
   const readers = Array.from(fileList).map(file =>
     new Promise((resolve, reject) => {

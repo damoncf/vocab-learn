@@ -70,6 +70,7 @@ const DOM = {
   screenQuiz:    document.getElementById('screenQuiz'),
   screenDictation: document.getElementById('screenDictation'),
   screenCloze:   document.getElementById('screenCloze'),
+  screenPractice: document.getElementById('screenPractice'),
 
   // Header
   sessionInfo:   document.getElementById('sessionInfo'),
@@ -216,6 +217,26 @@ const DOM = {
   qaExportAnki: document.getElementById('qaExportAnki'),
   qaSettings: document.getElementById('qaSettings'),
   inputTheme: document.getElementById('inputTheme'),
+
+  // v5.5 new DOM
+  peekPopup: document.getElementById('peekPopup'),
+  peekWord: document.getElementById('peekWord'),
+  peekPron: document.getElementById('peekPron'),
+  peekChinese: document.getElementById('peekChinese'),
+  peekDef: document.getElementById('peekDef'),
+  peekMarkFamiliar: document.getElementById('peekMarkFamiliar'),
+  peekMarkUnfamiliar: document.getElementById('peekMarkUnfamiliar'),
+  snapshotRestore: document.getElementById('snapshotRestore'),
+  snapshotBatchNum: document.getElementById('snapshotBatchNum'),
+  snapshotResume: document.getElementById('snapshotResume'),
+  snapshotDiscard: document.getElementById('snapshotDiscard'),
+  quickTestSection: document.getElementById('quickTestSection'),
+  btnToggleQuickTest: document.getElementById('btnToggleQuickTest'),
+  quickTestBody: document.getElementById('quickTestBody'),
+  quickTestContent: document.getElementById('quickTestContent'),
+  quickTestResult: document.getElementById('quickTestResult'),
+  quickTestArrow: document.getElementById('quickTestArrow'),
+  btnPracticeBack: document.getElementById('btnPracticeBack'),
 };
 
 /* =========================================================
@@ -382,6 +403,9 @@ function init() {
 
   // Show heatmap if there's history
   renderHeatmap();
+
+  // v5.5: Check for session snapshot (mid-batch progress)
+  checkSnapshotRestore();
 
   // Init WebDAV sync
   initSync();
@@ -565,6 +589,22 @@ function collectHistoryRecords() {
 }
 
 /**
+ * v5.5 — Check for mid-batch session snapshot and show restore hint
+ */
+function checkSnapshotRestore() {
+  if (!DOM.snapshotRestore) return;
+  if (!SessionSnapshot.hasValidSnapshot()) return;
+
+  const snap = SessionSnapshot.load();
+  if (!snap) return;
+
+  if (DOM.snapshotBatchNum) {
+    DOM.snapshotBatchNum.textContent = snap.batchIndex;
+  }
+  DOM.snapshotRestore.style.display = 'block';
+}
+
+/**
  * v5.0 — Update quick start cards
  */
 function updateQSCards() {
@@ -645,12 +685,12 @@ function checkDueReviews() {
    Event Wiring
    ========================================================= */
 function wireEvents() {
-  // Welcome
-  DOM.btnStart.addEventListener('click', startSession);
-  DOM.btnLoadFile.addEventListener('click', () => DOM.fileInput.click());
-  DOM.fileInput.addEventListener('change', handleQuickFileLoad);
-  DOM.linkSettings.addEventListener('click', e => { e.preventDefault(); openSettings(); });
-  DOM.btnReview.addEventListener('click', openReviewScreen);
+  // Welcome (legacy — replaced by QS cards; keep null-safe)
+  if (DOM.btnStart) DOM.btnStart.addEventListener('click', startSession);
+  if (DOM.btnLoadFile) DOM.btnLoadFile.addEventListener('click', () => DOM.fileInput.click());
+  if (DOM.fileInput) DOM.fileInput.addEventListener('change', handleQuickFileLoad);
+  if (DOM.linkSettings) DOM.linkSettings.addEventListener('click', e => { e.preventDefault(); openSettings(); });
+  if (DOM.btnReview) DOM.btnReview.addEventListener('click', openReviewScreen);
 
   // Grid
   DOM.btnNext.addEventListener('click', handleNext);
@@ -670,7 +710,7 @@ function wireEvents() {
   DOM.btnReviewBack.addEventListener('click', () => { showScreen('welcome'); updateReviewBadge(); });
 
   // Quiz
-  DOM.btnQuizBack.addEventListener('click', () => { showScreen('done'); });
+  if (DOM.btnQuizBack) DOM.btnQuizBack.addEventListener('click', () => { showScreen('done'); });
 
   // Reading mode
   const btnReading = document.getElementById('btnReading');
@@ -719,23 +759,15 @@ function wireEvents() {
         return;
       }
       if (target === 'review') {
-        DOM.btnReview.click();
+        openReviewScreen();
         return;
       }
-      if (target === 'quiz') {
-        openQuizScreen();
-        return;
-      }
-      if (target === 'reading') {
-        openReadingMode();
-        return;
-      }
-      if (target === 'dictation') {
-        openDictationScreen();
-        return;
-      }
-      if (target === 'cloze') {
-        openClozeScreen();
+      if (target === 'practice') {
+        if (typeof Practice !== 'undefined' && Practice.showTab) {
+          Practice.showTab('quiz');
+        } else {
+          openQuizScreen();
+        }
         return;
       }
       if (target === 'welcome') {
@@ -904,22 +936,133 @@ function wireEvents() {
   }
 
   // -------------------------------------------------------
+  // Practice tab (v5.5)
+  // -------------------------------------------------------
+  if (DOM.btnPracticeBack) {
+    DOM.btnPracticeBack.addEventListener('click', () => showScreen('welcome'));
+  }
+  if (typeof Practice !== 'undefined' && Practice.initTabs) {
+    Practice.initTabs();
+  }
+
+  // -------------------------------------------------------
+  // Peek Popup (v5.5)
+  // -------------------------------------------------------
+  if (DOM.peekMarkFamiliar) {
+    DOM.peekMarkFamiliar.addEventListener('click', () => {
+      hidePeekPopup();
+      // Mark as familiar = remove from markedIndices if present
+      if (peekPopupWord) {
+        const idx = State.currentWords.findIndex(w => w.toLowerCase() === peekPopupWord.toLowerCase());
+        if (idx >= 0 && State.markedIndices.has(idx)) {
+          State.markedIndices.delete(idx);
+          const chip = DOM.wordGrid.querySelector(`[data-index="${idx}"]`);
+          if (chip) chip.classList.remove('marked');
+          updateMarkedCount();
+          SessionSnapshot.save(State);
+        }
+        showToast('✓ 已标记为认识', 'success', 2000);
+      }
+    });
+  }
+  if (DOM.peekMarkUnfamiliar) {
+    DOM.peekMarkUnfamiliar.addEventListener('click', () => {
+      hidePeekPopup();
+      if (peekPopupWord) {
+        const idx = State.currentWords.findIndex(w => w.toLowerCase() === peekPopupWord.toLowerCase());
+        if (idx >= 0 && !State.markedIndices.has(idx)) {
+          State.markedIndices.add(idx);
+          const chip = DOM.wordGrid.querySelector(`[data-index="${idx}"]`);
+          if (chip) chip.classList.add('marked');
+          updateMarkedCount();
+          SessionSnapshot.save(State);
+        }
+        showToast('✗ 已加入不熟悉列表', 'info', 2000);
+      }
+    });
+  }
+
+  // Close peek popup on click outside
+  document.addEventListener('click', (e) => {
+    const popup = DOM.peekPopup;
+    if (popup && popup.style.display !== 'none' && !popup.contains(e.target)) {
+      // Don't close if clicking a word chip (that starts a new peek)
+      if (!e.target.closest('.word-chip')) {
+        hidePeekPopup();
+      }
+    }
+  });
+
+  // -------------------------------------------------------
+  // Quick Test (v5.5)
+  // -------------------------------------------------------
+  if (DOM.btnToggleQuickTest) {
+    DOM.btnToggleQuickTest.addEventListener('click', () => {
+      const body = DOM.quickTestBody;
+      if (!body) return;
+      const isHidden = body.style.display === 'none';
+      body.style.display = isHidden ? 'block' : 'none';
+      if (DOM.quickTestArrow) {
+        DOM.quickTestArrow.textContent = isHidden ? '▼' : '▶';
+      }
+      if (isHidden && !_quickTestStarted) {
+        startQuickTest();
+      }
+    });
+  }
+
+  // -------------------------------------------------------
+  // Session Snapshot restore (v5.5)
+  // -------------------------------------------------------
+  if (DOM.snapshotResume) {
+    DOM.snapshotResume.addEventListener('click', () => {
+      const snap = SessionSnapshot.load();
+      if (!snap) return;
+      // Restore state
+      State.batchIndex = snap.batchIndex;
+      State.currentWords = snap.currentWords;
+      State.markedIndices = new Set(snap.markedIndices);
+      State.sourceType = snap.sourceType;
+      if (snap.vocabId) {
+        State.builtinVocabId = snap.vocabId;
+        BuiltinVocab.set(snap.vocabId);
+        // Load builtin vocab data if needed
+        if (!State.builtinVocabData) {
+          loadBuiltinVocabData(snap.vocabId);
+        }
+      }
+      DOM.snapshotRestore.style.display = 'none';
+      renderWordGrid(State.currentWords);
+      updateSessionInfo();
+      showScreen('grid');
+      showToast('批次已恢复', 'info', 2000);
+    });
+  }
+  if (DOM.snapshotDiscard) {
+    DOM.snapshotDiscard.addEventListener('click', () => {
+      SessionSnapshot.clear();
+      DOM.snapshotRestore.style.display = 'none';
+      showToast('已放弃恢复', 'info', 2000);
+    });
+  }
+
+  // -------------------------------------------------------
   // Dictation
   // -------------------------------------------------------
-  DOM.btnDictation.addEventListener('click', openDictationScreen);
-  DOM.btnDictationBack.addEventListener('click', () => showScreen('done'));
+  if (DOM.btnDictation) DOM.btnDictation.addEventListener('click', openDictationScreen);
+  if (DOM.btnDictationBack) DOM.btnDictationBack.addEventListener('click', () => showScreen('welcome'));
 
   // -------------------------------------------------------
   // Cloze
   // -------------------------------------------------------
-  DOM.btnCloze.addEventListener('click', openClozeScreen);
-  DOM.btnClozeBack.addEventListener('click', () => showScreen('done'));
+  if (DOM.btnCloze) DOM.btnCloze.addEventListener('click', openClozeScreen);
+  if (DOM.btnClozeBack) DOM.btnClozeBack.addEventListener('click', () => showScreen('welcome'));
 
   // -------------------------------------------------------
   // Anki Export
   // -------------------------------------------------------
-  DOM.btnExportAnki.addEventListener('click', () => showAnkiExportModal());
-  DOM.btnExportAnkiWelcome.addEventListener('click', () => showAnkiExportModal());
+  if (DOM.btnExportAnki) DOM.btnExportAnki.addEventListener('click', () => showAnkiExportModal());
+  if (DOM.btnExportAnkiWelcome) DOM.btnExportAnkiWelcome.addEventListener('click', () => showAnkiExportModal());
 
   // -------------------------------------------------------
   // Sync
@@ -947,22 +1090,27 @@ function handleKeyboardShortcut(e) {
 
   switch (e.key) {
     case ' ':
-      // Space: Start learning / next batch
+      // Space: Start learning / next batch / play pronunciation in review
       e.preventDefault();
       if (activeId === 'screenWelcome') {
-        DOM.btnStart.click();
+        if (DOM.btnQSC) DOM.btnQSC.click();
+        else DOM.btnStart.click();
       } else if (activeId === 'screenDone') {
         DOM.btnNextBatch.click();
       }
       break;
 
     case 'Enter':
-      // Enter: Confirm and continue (detail screen) or go next (grid)
+      // Enter: Confirm and continue / go next
       e.preventDefault();
       if (activeId === 'screenDetail') {
         DOM.btnConfirm.click();
       } else if (activeId === 'screenGrid') {
         DOM.btnNext.click();
+      } else if (activeId === 'screenPractice') {
+        // Submit quiz/dictation/cloze answer
+        const submitBtn = document.querySelector('#quizSpellingSubmit, #dictationSubmit');
+        if (submitBtn) submitBtn.click();
       }
       break;
 
@@ -973,45 +1121,121 @@ function handleKeyboardShortcut(e) {
       closeModal(DOM.modalSource);
       const historyBackdrop = document.querySelector('.history-backdrop');
       if (historyBackdrop) historyBackdrop.remove();
+      hidePeekPopup();
       if (activeId === 'screenReview') {
         DOM.btnReviewBack.click();
-      } else if (activeId === 'screenQuiz') {
-        // Only go back if on mode select, not mid-quiz
-        if (!State.quizState || State.quizState.currentIndex < 0) {
-          DOM.btnQuizBack.click();
-        }
+      } else if (activeId === 'screenPractice') {
+        if (DOM.btnPracticeBack) DOM.btnPracticeBack.click();
       } else if (activeId === 'screenDetail') {
         DOM.btnBackToGrid.click();
-      } else if (activeId === 'screenReading') {
-        const readingBackBtn = document.getElementById('btnReadingBack');
-        if (readingBackBtn) readingBackBtn.click();
       }
       break;
 
     case 'r':
     case 'R':
-      // R: Open review screen (welcome only)
+      // R: Open review screen
       if (activeId === 'screenWelcome') {
         e.preventDefault();
-        DOM.btnReview.click();
+        DOM.btnQSReview.click();
       }
       break;
 
     case 'd':
     case 'D':
-      // D: Open dictation (done screen only)
+      // D: Open dictation practice tab
       if (activeId === 'screenDone') {
         e.preventDefault();
         DOM.btnDictation.click();
+      }
+      if (activeId === 'screenWelcome') {
+        e.preventDefault();
+        if (typeof Practice !== 'undefined' && Practice.showTab) {
+          Practice.showTab('dictation');
+        }
       }
       break;
 
     case 'c':
     case 'C':
-      // C: Open cloze (done screen only)
+      // C: Open cloze practice tab
       if (activeId === 'screenDone') {
         e.preventDefault();
         DOM.btnCloze.click();
+      }
+      if (activeId === 'screenWelcome') {
+        e.preventDefault();
+        if (typeof Practice !== 'undefined' && Practice.showTab) {
+          Practice.showTab('cloze');
+        }
+      }
+      break;
+
+    case 'm':
+    case 'M':
+      // M: Mark current focus word (Grid screen)
+      if (activeId === 'screenGrid') {
+        e.preventDefault();
+        // Mark all — simpler approach
+        DOM.btnSelectAll.click();
+      }
+      break;
+
+    case '/':
+      // /: Focus search (if applicable — currently no search bar)
+      if (activeId === 'screenGrid') {
+        e.preventDefault();
+        // No search bar yet, but reserved
+      }
+      break;
+
+    case 'ArrowLeft':
+      // Left arrow: navigate back
+      if (activeId === 'screenDetail') {
+        e.preventDefault();
+        DOM.btnBackToGrid.click();
+      } else if (activeId === 'screenReview') {
+        // Previous word not directly supported
+      } else if (activeId === 'screenPractice') {
+        if (DOM.btnPracticeBack) DOM.btnPracticeBack.click();
+      }
+      break;
+
+    case 'ArrowRight':
+      // Right arrow: navigate forward
+      if (activeId === 'screenDetail') {
+        // Scroll to next card
+        const nextCard = DOM.detailGrid.querySelector('.detail-card:not(.skeleton)');
+        if (nextCard) nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      break;
+
+    // Review: 1/2/3/4 for Again/Hard/Good/Easy
+    case '1':
+      if (activeId === 'screenReview') {
+        e.preventDefault();
+        const btn = document.querySelector('.review-detail-actions .btn-sm2-again');
+        if (btn) btn.click();
+      }
+      break;
+    case '2':
+      if (activeId === 'screenReview') {
+        e.preventDefault();
+        const btn = document.querySelector('.review-detail-actions .btn-sm2-hard');
+        if (btn) btn.click();
+      }
+      break;
+    case '3':
+      if (activeId === 'screenReview') {
+        e.preventDefault();
+        const btn = document.querySelector('.review-detail-actions .btn-sm2-good');
+        if (btn) btn.click();
+      }
+      break;
+    case '4':
+      if (activeId === 'screenReview') {
+        e.preventDefault();
+        const btn = document.querySelector('.review-detail-actions .btn-sm2-easy');
+        if (btn) btn.click();
       }
       break;
   }
@@ -1134,87 +1358,27 @@ async function startSession() {
     return;
   }
 
-  showScreen('loading');
-  DOM.loadingMsg.textContent = State.sourceType === 'ai'
-    ? 'Generating vocabulary list...'
-    : State.sourceType === 'builtin'
-      ? 'Loading vocabulary...'
-      : 'Loading words from file...';
-
-  // v5.0: Show grid skeleton preview after 1s
-  const skeletonTimer = setTimeout(() => {
-    const gridPreview = document.querySelector('.loading-card');
-    if (gridPreview) {
-      const skeleton = document.createElement('div');
-      skeleton.className = 'grid-skeleton';
-      skeleton.style.marginTop = '24px';
-      for (let i = 0; i < 10; i++) {
-        const item = document.createElement('div');
-        item.className = 'grid-skeleton-item';
-        skeleton.appendChild(item);
-      }
-      gridPreview.appendChild(skeleton);
-    }
-  }, 1000);
-
-  // v5.0: Loading timeout messages
-  const timeout3s = setTimeout(() => {
-    const timeoutMsg = document.getElementById('loadingTimeout3s');
-    if (!timeoutMsg) {
-      const msg = document.createElement('p');
-      msg.id = 'loadingTimeout3s';
-      msg.className = 'loading-timeout';
-      msg.innerHTML = '正在为你的学习准备词汇...';
-      document.querySelector('.loading-card')?.appendChild(msg);
-    }
-  }, 3000);
-
-  const timeout8s = setTimeout(() => {
-    let timeoutMsg = document.getElementById('loadingTimeout8s');
-    if (!timeoutMsg) {
-      timeoutMsg = document.createElement('div');
-      timeoutMsg.id = 'loadingTimeout8s';
-      timeoutMsg.className = 'loading-timeout';
-      timeoutMsg.innerHTML = '<p>加载时间较长，<a href="#" id="switchToLocal">是否使用本地词库？</a></p>';
-      document.querySelector('.loading-card')?.appendChild(timeoutMsg);
-
-      document.getElementById('switchToLocal')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        closeModal(DOM.modalSettings);
-        State.sourceType = 'builtin';
-        Settings.setSourceType('builtin');
-        openSource();
-        setTimeout(() => {
-          document.querySelector('input[name="source"][value="builtin"]').click();
-        }, 100);
-        showToast('已切换至内置词库模式。', 'info');
-      });
-    }
-  }, 8000);
+  // v5.5: Skip loading screen — show grid with skeleton immediately
+  showScreen('grid');
+  renderGridSkeleton();
+  DOM.batchLabel.textContent = `Batch ${State.batchIndex}`;
+  DOM.wordCountLabel.textContent = '加载中...';
+  updateSessionInfo();
 
   try {
     const words = await fetchWordBatch(apiKey, wordsPerBatch);
 
-    // Clear timeout timers
-    clearTimeout(skeletonTimer);
-    clearTimeout(timeout3s);
-    clearTimeout(timeout8s);
-
     // Remove skeletons
-    document.querySelectorAll('.grid-skeleton, .loading-timeout').forEach(el => el.remove());
+    document.querySelectorAll('.grid-skeleton').forEach(el => el.remove());
     if (words.length === 0) throw new Error('No words returned. Check your settings and try again.');
 
     State.currentWords   = words;
     State.markedIndices  = new Set();
     renderWordGrid(words);
-    showScreen('grid');
-    updateSessionInfo();
     DOM.historySection.style.display = 'none';
+    updateSessionInfo();
   } catch (err) {
-    clearTimeout(skeletonTimer);
-    clearTimeout(timeout3s);
-    clearTimeout(timeout8s);
-    document.querySelectorAll('.grid-skeleton, .loading-timeout').forEach(el => el.remove());
+    document.querySelectorAll('.grid-skeleton').forEach(el => el.remove());
     showScreen('welcome');
     showToast(err.message, 'error', 6000);
   }
@@ -1270,6 +1434,8 @@ function renderWordGrid(words) {
     chip.textContent = word;
     chip.dataset.index = index;
     chip.addEventListener('click', () => toggleMark(chip, index));
+    // v5.5: Add long-press peek
+    addPeekListener(chip, word);
     DOM.wordGrid.appendChild(chip);
   });
 }
@@ -1292,6 +1458,8 @@ function toggleMark(chip, index) {
     setTimeout(() => chip.classList.remove('mark-anim'), 400);
   }
   updateMarkedCount();
+  // v5.5: Auto-save snapshot on each mark change
+  SessionSnapshot.save(State);
 }
 
 function updateMarkedCount() {
@@ -1483,6 +1651,9 @@ function handleConfirm() {
     ReviewPool.addWords(unfamiliarWords);
   }
 
+  // v5.5: Clear snapshot on completion
+  SessionSnapshot.clear();
+
   finalizeAndDone(unfamiliarWords);
 }
 
@@ -1547,6 +1718,17 @@ function finalizeAndDone(unfamiliarWords) {
 
   // Show history link
   DOM.historySection.style.display = 'block';
+
+  // v5.5: Show quick test section (if enough words)
+  if (DOM.quickTestSection && State.currentWords.length >= 2) {
+    DOM.quickTestSection.style.display = 'block';
+    // Reset quick test state
+    _quickTestStarted = false;
+    _quickTestState = null;
+    DOM.quickTestBody.style.display = 'none';
+    DOM.quickTestResult.style.display = 'none';
+    if (DOM.quickTestArrow) DOM.quickTestArrow.textContent = '▶';
+  }
 
   showScreen('done');
 
@@ -1772,7 +1954,12 @@ function escapeForReview(word) {
 function openQuizScreen() {
   // Reset quiz state
   State.quizState = null;
-  showScreen('quiz');
+  // v5.5: Route through Practice screen
+  if (typeof Practice !== 'undefined' && Practice.showTab) {
+    Practice.showTab('quiz');
+  } else {
+    showScreen('quiz');
+  }
   renderQuizModeSelect();
 }
 
@@ -1796,7 +1983,7 @@ function renderQuizModeSelect() {
         <div class="review-empty-icon">📝</div>
         <p>Not enough words yet!</p>
         <p>Complete a batch first to build up your word pool.</p>
-        <button class="btn btn-primary" onclick="document.getElementById('btnQuizBack').click()">← Back</button>
+        <button class="btn btn-primary" onclick="showScreen('welcome')">← Back</button>
       </div>
     `;
     return;
@@ -2505,7 +2692,12 @@ function openReadingMode() {
   DOM.readingArticleArea.style.display = 'none';
   DOM.readingTextarea.value = '';
   DOM.readingWordCount.textContent = '';
-  showScreen('reading');
+  // v5.5: Route through Practice screen
+  if (typeof Practice !== 'undefined' && Practice.showTab) {
+    Practice.showTab('reading');
+  } else {
+    showScreen('reading');
+  }
 }
 
 async function handleExtractWords() {
@@ -2678,7 +2870,12 @@ function handleReadingAddAll() {
  */
 function openDictationScreen() {
   State.dictationState = null;
-  showScreen('dictation');
+  // v5.5: Route through Practice screen
+  if (typeof Practice !== 'undefined' && Practice.showTab) {
+    Practice.showTab('dictation');
+  } else {
+    showScreen('dictation');
+  }
   renderDictationModeSelect();
 }
 
@@ -2704,7 +2901,7 @@ function renderDictationModeSelect() {
         <div class="review-empty-icon">🎧</div>
         <p>Not enough words yet!</p>
         <p>Complete a batch first to build up your word pool.</p>
-        <button class="btn btn-primary" onclick="document.getElementById('btnDictationBack').click()">← Back</button>
+        <button class="btn btn-primary" onclick="showScreen('welcome')">← Back</button>
       </div>
     `;
     return;
@@ -2991,7 +3188,12 @@ function renderDictationResult() {
  */
 function openClozeScreen() {
   State.clozeState = null;
-  showScreen('cloze');
+  // v5.5: Route through Practice screen
+  if (typeof Practice !== 'undefined' && Practice.showTab) {
+    Practice.showTab('cloze');
+  } else {
+    showScreen('cloze');
+  }
   renderClozeModeSelect();
 }
 
@@ -3016,7 +3218,7 @@ function renderClozeModeSelect() {
         <div class="review-empty-icon">📝</div>
         <p>Not enough words yet!</p>
         <p>Complete a batch first to build up your word pool.</p>
-        <button class="btn btn-primary" onclick="document.getElementById('btnClozeBack').click()">← Back</button>
+        <button class="btn btn-primary" onclick="showScreen('welcome')">← Back</button>
       </div>
     `;
     return;
@@ -3458,6 +3660,260 @@ async function autoSyncIfEnabled() {
   } catch (err) {
     console.warn('Auto-sync failed:', err);
   }
+}
+
+/* =========================================================
+   v5.5 — Grid Skeleton
+   ========================================================= */
+function renderGridSkeleton() {
+  DOM.wordGrid.innerHTML = '';
+  const skeleton = document.createElement('div');
+  skeleton.className = 'grid-skeleton';
+  for (let i = 0; i < 20; i++) {
+    const item = document.createElement('div');
+    item.className = 'grid-skeleton-item';
+    skeleton.appendChild(item);
+  }
+  DOM.wordGrid.appendChild(skeleton);
+}
+
+/* =========================================================
+   v5.5 — Peek Popup (long-press word chip)
+   ========================================================= */
+let peekPopupWord = null;
+let peekTimer = null;
+
+function addPeekListener(chip, word) {
+  chip.addEventListener('mousedown', (e) => {
+    peekTimer = setTimeout(() => {
+      showPeekPopup(e, word);
+    }, 500);
+  });
+  chip.addEventListener('mouseup', () => { clearTimeout(peekTimer); });
+  chip.addEventListener('mouseleave', () => { clearTimeout(peekTimer); });
+
+  chip.addEventListener('touchstart', (e) => {
+    peekTimer = setTimeout(() => {
+      showPeekPopup(e, word);
+    }, 500);
+  }, { passive: true });
+  chip.addEventListener('touchend', () => { clearTimeout(peekTimer); });
+  chip.addEventListener('touchmove', () => { clearTimeout(peekTimer); });
+}
+
+function showPeekPopup(e, word) {
+  const popup = DOM.peekPopup;
+  if (!popup) return;
+  peekPopupWord = word;
+
+  const lower = word.toLowerCase();
+  let detail = null;
+
+  if (State.builtinVocabData && Array.isArray(State.builtinVocabData)) {
+    detail = State.builtinVocabData.find(d => d.word && d.word.toLowerCase() === lower);
+  }
+  if (!detail) {
+    detail = State.wordDetails.find(d => d.word && d.word.toLowerCase() === lower);
+  }
+  if (!detail) {
+    try {
+      const cached = JSON.parse(localStorage.getItem('vocab_detail_cache') || '[]');
+      detail = cached.find(d => d.word && d.word.toLowerCase() === lower);
+    } catch (_) {}
+  }
+  if (!detail && State._detailMap) {
+    detail = State._detailMap[lower];
+  }
+
+  if (DOM.peekWord) DOM.peekWord.textContent = word;
+  if (DOM.peekPron) DOM.peekPron.textContent = (detail && detail.pronunciation) ? detail.pronunciation : '';
+  if (DOM.peekChinese) DOM.peekChinese.textContent = (detail && detail.chineseDef) ? detail.chineseDef : '';
+  if (DOM.peekDef) DOM.peekDef.textContent = (detail && detail.definition) ? detail.definition : '加载中...';
+
+  let clientX, clientY;
+  if (e.changedTouches) {
+    clientX = e.changedTouches[0].clientX;
+    clientY = e.changedTouches[0].clientY;
+  } else {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  }
+
+  popup.style.display = 'block';
+
+  requestAnimationFrame(() => {
+    const popupRect = popup.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    let left = clientX - popupRect.width / 2;
+    let top = clientY - popupRect.height - 16;
+
+    if (left < 8) left = 8;
+    if (left + popupRect.width > vw - 8) left = vw - popupRect.width - 8;
+    if (top < 8) top = clientY + 16;
+    if (top + popupRect.height > vh - 8) top = vh - popupRect.height - 8;
+
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+  });
+
+  setTimeout(() => {
+    hidePeekPopup();
+  }, 3000);
+}
+
+function hidePeekPopup() {
+  const popup = DOM.peekPopup;
+  if (!popup) return;
+  popup.style.display = 'none';
+  peekPopupWord = null;
+}
+
+/* =========================================================
+   v5.5 — Quick Test in Done Screen
+   ========================================================= */
+let _quickTestStarted = false;
+let _quickTestState = null;
+
+function startQuickTest() {
+  if (!DOM.quickTestContent) return;
+
+  const words = State.currentWords;
+  if (words.length < 2) {
+    DOM.quickTestContent.innerHTML = '<p style="color:var(--color-text-muted)">批次词太少，无法生成测验。</p>';
+    return;
+  }
+
+  _quickTestStarted = true;
+
+  let details = [];
+  if (State.builtinVocabData && Array.isArray(State.builtinVocabData)) {
+    details = State.builtinVocabData;
+  }
+  if (State.wordDetails && State.wordDetails.length > 0) {
+    details = [...details, ...State.wordDetails];
+  }
+
+  const shuffled = shuffleArray(words);
+  const selected = shuffled.slice(0, Math.min(5, shuffled.length));
+
+  const detailMap = {};
+  details.forEach(d => {
+    if (d && d.word) detailMap[d.word.toLowerCase()] = d;
+  });
+
+  const questions = selected.map(word => {
+    const detail = detailMap[word.toLowerCase()];
+    const correctDef = detail ? (detail.definition || detail.chineseDef || word) : word;
+    const distractors = [];
+    const others = shuffleArray(words.filter(w => w.toLowerCase() !== word.toLowerCase()));
+    for (const w of others) {
+      if (distractors.length >= 3) break;
+      const d = detailMap[w.toLowerCase()];
+      const def = d ? (d.definition || d.chineseDef || w) : w;
+      if (def !== correctDef && !distractors.includes(def)) {
+        distractors.push(def);
+      }
+    }
+    while (distractors.length < 3) {
+      distractors.push('—');
+    }
+    const options = shuffleArray([correctDef, ...distractors]);
+    return { word, correctAnswer: correctDef, options };
+  });
+
+  _quickTestState = {
+    questions,
+    currentIndex: 0,
+    score: 0,
+    wrongWords: [],
+  };
+
+  renderQuickTestQuestion();
+}
+
+function renderQuickTestQuestion() {
+  const qs = _quickTestState;
+  if (!qs || !DOM.quickTestContent) return;
+
+  if (qs.currentIndex >= qs.questions.length) {
+    renderQuickTestResult();
+    return;
+  }
+
+  const q = qs.questions[qs.currentIndex];
+  DOM.quickTestContent.innerHTML = `
+    <div class="quick-test-question">
+      <p class="quick-test-word">${escHtml(q.word)}</p>
+      <p class="quick-test-prompt">选择正确的中文释义</p>
+      <div class="quick-test-options">
+        ${q.options.map((opt, i) => `
+          <button class="quiz-option" data-value="${escHtml(opt)}">${escHtml(opt)}</button>
+        `).join('')}
+      </div>
+      <div class="quick-test-feedback" id="quickTestFeedback"></div>
+      <p class="quick-test-progress">${qs.currentIndex + 1} / ${qs.questions.length}</p>
+    </div>
+  `;
+
+  DOM.quickTestContent.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      handleQuickTestAnswer(q, btn.dataset.value);
+    });
+  });
+}
+
+function handleQuickTestAnswer(question, answer) {
+  const qs = _quickTestState;
+  if (!qs) return;
+
+  const isCorrect = answer === question.correctAnswer;
+  const feedbackEl = document.getElementById('quickTestFeedback');
+  const options = DOM.quickTestContent.querySelectorAll('.quiz-option');
+
+  if (isCorrect) {
+    qs.score++;
+    if (feedbackEl) feedbackEl.innerHTML = '<div class="quiz-feedback correct">✓ 正确！</div>';
+  } else {
+    qs.wrongWords.push(question.word);
+    if (feedbackEl) {
+      feedbackEl.innerHTML = `<div class="quiz-feedback wrong">✗ 错误。正确答案：${escHtml(question.correctAnswer)}</div>`;
+    }
+  }
+
+  options.forEach(btn => {
+    if (btn.dataset.value === question.correctAnswer) {
+      btn.classList.add('correct');
+    } else if (btn.dataset.value === answer && !isCorrect) {
+      btn.classList.add('wrong');
+    }
+    btn.disabled = true;
+  });
+
+  setTimeout(() => {
+    qs.currentIndex++;
+    renderQuickTestQuestion();
+  }, 1200);
+}
+
+function renderQuickTestResult() {
+  const qs = _quickTestState;
+  if (!qs || !DOM.quickTestContent || !DOM.quickTestResult) return;
+
+  if (qs.wrongWords.length > 0) {
+    ReviewPool.addWords(qs.wrongWords);
+  }
+
+  DOM.quickTestContent.innerHTML = '';
+  DOM.quickTestResult.style.display = 'block';
+  DOM.quickTestResult.innerHTML = `
+    <p class="quick-test-score">得分：<strong>${qs.score}</strong> / ${qs.questions.length}</p>
+    ${qs.wrongWords.length > 0
+      ? `<p class="quick-test-missed">错词（${qs.wrongWords.length}）已加入复习池</p>`
+      : '<p class="quick-test-missed" style="color:var(--color-success)">全部答对！🎉</p>'
+    }
+  `;
 }
 
 /* =========================================================
