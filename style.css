@@ -3375,6 +3375,243 @@ html.theme-switching {
   }
 }
 
+/* =========================================================
+   v6.0 — ONBOARDING (首次引导屏)
+   ========================================================= */
+.onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+.onboarding-out {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.onboarding-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-modal);
+  animation: modalIn 0.25s ease;
+  overflow: hidden;
+}
+
+.onboarding-slides {
+  position: relative;
+  min-height: 340px;
+}
+
+.onboarding-slide {
+  display: none;
+  padding: 40px 32px 24px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.onboarding-slide.active {
+  display: block;
+}
+
+.onboarding-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.onboarding-slide h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.onboarding-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+}
+
+.onboarding-features {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.onboarding-features span {
+  padding: 6px 16px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  font-size: 0.88rem;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.onboarding-desc {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-top: 16px;
+}
+
+.onboarding-demo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.onboarding-demo-chip {
+  padding: 10px 16px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.onboarding-demo-marked {
+  background: var(--color-marked-bg);
+  border-color: var(--color-marked-border);
+  color: var(--color-accent);
+}
+
+/* Third slide: vocab picker */
+.onboarding-vocab-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.onboarding-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  padding: 20px;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.onboarding-vocab-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.onboarding-vocab-item {
+  display: block;
+}
+
+.onboarding-vocab-item input[type="radio"] {
+  display: none;
+}
+
+.onboarding-vocab-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--color-surface-2);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.onboarding-vocab-item input[type="radio"]:checked + .onboarding-vocab-card {
+  border-color: var(--color-primary);
+  background: rgba(91, 110, 245, 0.08);
+}
+
+.onboarding-vocab-item:hover .onboarding-vocab-card {
+  border-color: var(--color-primary);
+}
+
+.onboarding-vocab-more .onboarding-vocab-card {
+  justify-content: center;
+  border-color: var(--color-primary);
+  border-style: dashed;
+}
+
+.onboarding-vocab-emoji {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.onboarding-vocab-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+/* Footer */
+.onboarding-footer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.onboarding-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.onboarding-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: background var(--transition), transform var(--transition);
+}
+
+.onboarding-dot.active {
+  background: var(--color-primary);
+  transform: scale(1.3);
+}
+
+.onboarding-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.onboarding-actions .btn {
+  padding: 10px 28px;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 480px) {
+  .onboarding-slide {
+    padding: 28px 20px 20px;
+  }
+  .onboarding-vocab-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .onboarding-vocab-card {
+    padding: 8px 10px;
+  }
+  .onboarding-vocab-name {
+    font-size: 0.78rem;
+  }
+}
+
 @media (max-width: 380px) {
   .daily-card {
     padding: 16px;

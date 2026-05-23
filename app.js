@@ -424,6 +424,13 @@ function init() {
     }
   }, 2000);
 
+  // v6.0: Show onboarding for first-time users
+  if (!Onboarding.isDone()) {
+    setTimeout(() => {
+      Onboarding.show();
+    }, 500);
+  }
+
   // Show keyboard shortcut hint on first visit
   if (s.showShortcuts !== false && !localStorage.getItem('vocab_shortcuts_hint_shown')) {
     setTimeout(() => {
