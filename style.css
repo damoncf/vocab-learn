@@ -774,6 +774,8 @@ main {
   border-radius: var(--radius-xl);
   width: 100%;
   max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
   box-shadow: var(--shadow-lg);
   animation: modalIn 0.2s ease;
 }
@@ -2280,7 +2282,7 @@ input:focus, select:focus {
 }
 
 /* Modal settings: wider for 6 cards */
-.modal-settings .modal {
+.modal.modal-settings {
   max-width: 700px;
 }
 
