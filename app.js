@@ -193,16 +193,110 @@ const DOM = {
   heatmapSection: document.getElementById('heatmapSection'),
   heatmapGrid: document.getElementById('heatmapGrid'),
   heatmapLegend: document.getElementById('heatmapLegend'),
+
+  // v5.0 new DOM
+  welcomeScroll: document.getElementById('screenWelcome')?.querySelector('.welcome-scroll'),
+  dailyProgressFill: document.getElementById('dailyProgressFill'),
+  dailyProgressLabel: document.getElementById('dailyProgressLabel'),
+  dailyStreak: document.getElementById('dailyStreak'),
+  dailyDueCount: document.getElementById('dailyDueCount'),
+  dailyLastTime: document.getElementById('dailyLastTime'),
+  dailyEmptyGuide: document.getElementById('dailyEmptyGuide'),
+  btnQSC: document.getElementById('btnQSC'),
+  btnQSReview: document.getElementById('btnQSReview'),
+  btnQSSource: document.getElementById('btnQSSource'),
+  btnQSGenerate: document.getElementById('btnQSGenerate'),
+  btnQSFile: document.getElementById('btnQSFile'),
+  btnQSBuiltin: document.getElementById('btnQSBuiltin'),
+  qsContinueDesc: document.getElementById('qsContinueDesc'),
+  qsReviewBadge: document.getElementById('qsReviewBadge'),
+  qsSourceDesc: document.getElementById('qsSourceDesc'),
+  qaCalendar: document.getElementById('qaCalendar'),
+  qaDifficult: document.getElementById('qaDifficult'),
+  qaExportAnki: document.getElementById('qaExportAnki'),
+  qaSettings: document.getElementById('qaSettings'),
+  inputTheme: document.getElementById('inputTheme'),
 };
 
 /* =========================================================
-   Screen Management
+   Screen Management — v5.0 with Transition Animations
    ========================================================= */
-function showScreen(name) {
-  ['screenWelcome','screenLoading','screenGrid','screenDetail','screenDone','screenReview','screenQuiz','screenDictation','screenCloze','screenReading'].forEach(id => {
-    document.getElementById(id).classList.remove('active');
-  });
-  document.getElementById('screen' + capitalize(name)).classList.add('active');
+
+/**
+ * Screen transition mapping: which animation class for each direction
+ */
+const TRANSITION_MAP = {
+  'welcome->loading':   { out: 'fade-in',         outMs: 300,  in: 'fade-in',         inMs: 300  },
+  'loading->grid':      { out: 'fade-in',         outMs: 200,  in: 'slide-up',        inMs: 400  },
+  'grid->detail':       { out: 'fade-in',         outMs: 150,  in: 'slide-left',      inMs: 350  },
+  'detail->grid':       { out: 'fade-in',         outMs: 150,  in: 'slide-right',     inMs: 350  },
+  'detail->done':       { out: 'fade-in',         outMs: 150,  in: 'scale-in',        inMs: 500  },
+  'done->grid':         { out: 'fade-in',         outMs: 150,  in: 'slide-up',        inMs: 300  },
+  'any->welcome':       { out: 'fade-in',         outMs: 150,  in: 'fade-in',         inMs: 250  },
+};
+
+let _prevScreen = null;
+let _screenTransitioning = false;
+
+function showScreen(name, transition = 'auto') {
+  const targetId = 'screen' + capitalize(name);
+  const targetEl = document.getElementById(targetId);
+  if (!targetEl) return;
+
+  // If a transition is already running, skip
+  if (_screenTransitioning) return;
+
+  const prevEl = document.querySelector('.screen.active');
+  const prevName = prevEl ? prevEl.id.replace('screen', '').toLowerCase() : null;
+
+  // Determine transition animation
+  let anim = null;
+  if (transition === 'auto' && prevName) {
+    const key1 = `${prevName}->${name}`;
+    const key2 = `any->${name}`;
+    anim = TRANSITION_MAP[key1] || TRANSITION_MAP[key2] || null;
+  } else if (transition && transition !== 'auto' && transition !== 'none') {
+    // Custom transition object with {out, outMs, in, inMs}
+    anim = transition;
+  }
+
+  if (anim && prevEl && prevEl !== targetEl) {
+    _screenTransitioning = true;
+
+    // 1. Apply outgoing animation on old screen
+    prevEl.classList.remove('slide-left', 'slide-right', 'slide-up', 'scale-in', 'transitioning');
+    void prevEl.offsetWidth; // force reflow
+    prevEl.classList.add('transitioning', anim.out);
+
+    setTimeout(() => {
+      // 2. Deactivate old screen
+      prevEl.classList.remove('active', 'transitioning', anim.out);
+
+      // 3. Prepare new screen (hidden with anim class)
+      targetEl.classList.add(anim.in);
+      targetEl.classList.remove('active', 'transitioning', 'slide-left', 'slide-right', 'slide-up', 'scale-in', 'fade-in');
+      targetEl.classList.add('active');
+
+      // 4. Trigger entrance animation
+      void targetEl.offsetWidth;
+      targetEl.classList.add('transitioning');
+
+      setTimeout(() => {
+        targetEl.classList.remove('transitioning', anim.in);
+        _screenTransitioning = false;
+      }, anim.inMs);
+
+    }, anim.outMs);
+
+  } else {
+    // No transition: instant swap
+    document.querySelectorAll('.screen').forEach(el => {
+      el.classList.remove('active', 'slide-left', 'slide-right', 'slide-up', 'scale-in', 'fade-in', 'transitioning');
+    });
+    targetEl.classList.add('active');
+  }
+
+  _prevScreen = name;
 }
 
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -250,12 +344,13 @@ function init() {
   State.batchIndex  = Session.getBatchIndex();
 
   // Apply saved settings to form fields
-  const s = Settings.getAll();
+  const s = Settings.getAllExtended();
   DOM.inputApiKey.value        = s.apiKey;
   DOM.inputWordsPerBatch.value = s.wordsPerBatch;
   DOM.inputDifficulty.value    = s.difficulty;
   DOM.inputAutoPronounce.checked = s.autoPronounce !== false;
   DOM.inputShowShortcuts.checked = s.showShortcuts !== false;
+  DOM.inputTheme.value         = s.theme;
 
   State.sourceType = s.sourceType || 'ai';
   State.fileWordPool = FileWords.get();
@@ -273,8 +368,12 @@ function init() {
     radioAI.checked = true;
   }
 
+  // v5.0: Apply theme
+  applyTheme(s.theme);
+
   updateSessionInfo();
   updateReviewBadge();
+  updateWelcomeDailyCard();
   showScreen('welcome');
   wireEvents();
 
@@ -302,12 +401,196 @@ function init() {
   }, 2000);
 
   // Show keyboard shortcut hint on first visit
-  const shortcutPref = Settings.getAll();
-  if (shortcutPref.showShortcuts !== false && !localStorage.getItem('vocab_shortcuts_hint_shown')) {
+  if (s.showShortcuts !== false && !localStorage.getItem('vocab_shortcuts_hint_shown')) {
     setTimeout(() => {
       showToast('⌨ Press ? for keyboard shortcuts', 'info', 5000);
       localStorage.setItem('vocab_shortcuts_hint_shown', '1');
     }, 1000);
+  }
+}
+
+/* =========================================================
+   v5.0 — Theme Management
+   ========================================================= */
+function applyTheme(theme) {
+  const html = document.documentElement;
+  if (theme === 'system') {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    // Listen for system changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+    });
+  } else {
+    html.setAttribute('data-theme', theme);
+  }
+}
+
+/**
+ * v5.0 — Update the daily learning card on welcome screen
+ */
+function updateWelcomeDailyCard() {
+  // 1. Today's progress
+  const familiar = Session.getFamiliarWords();
+  const unfamiliar = Session.getUnfamiliarWords();
+  const todayTotal = familiar.length + unfamiliar.length;
+
+  // 2. Continuous learning streak
+  const streak = calcContinuousStreak();
+
+  // 3. Due review count
+  const dueCount = ReviewPool.getDueCount();
+
+  // 4. Last learning time from localStorage
+  let lastTimeStr = '--';
+  const records = collectHistoryRecords();
+  if (records.length > 0) {
+    const last = records[0];
+    if (last.savedAt) {
+      const d = new Date(last.savedAt);
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      lastTimeStr = `${d.getMonth()+1}/${d.getDate()} ${hh}:${mm}`;
+    } else {
+      const ds = last.dateStr || '';
+      if (ds) {
+        lastTimeStr = `${ds.slice(0,4)}/${ds.slice(4,6)}/${ds.slice(6,8)}`;
+      }
+    }
+  } else {
+    // Check if there's any session activity today
+    if (todayTotal > 0) {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      lastTimeStr = `今天 ${hh}:${mm}`;
+    }
+  }
+
+  // 5. Update DOM
+  const totalExpected = Settings.getWordsPerBatch() * Math.max(1, State.batchIndex);
+  const pct = Math.min(100, Math.round((todayTotal / Math.max(1, totalExpected)) * 100));
+
+  if (DOM.dailyProgressFill) {
+    DOM.dailyProgressFill.style.width = pct + '%';
+  }
+  if (DOM.dailyProgressLabel) {
+    DOM.dailyProgressLabel.textContent = `${todayTotal} / ${totalExpected} 词`;
+  }
+  if (DOM.dailyStreak) {
+    DOM.dailyStreak.textContent = `${streak} 天`;
+  }
+  if (DOM.dailyDueCount) {
+    DOM.dailyDueCount.textContent = `${dueCount} 词`;
+  }
+  if (DOM.dailyLastTime) {
+    DOM.dailyLastTime.textContent = lastTimeStr;
+  }
+
+  // Empty state guide
+  if (DOM.dailyEmptyGuide) {
+    if (todayTotal === 0) {
+      DOM.dailyEmptyGuide.style.display = 'block';
+    } else {
+      DOM.dailyEmptyGuide.style.display = 'none';
+    }
+  }
+
+  // Update QS cards
+  updateQSCards();
+}
+
+/**
+ * v5.0 — Calculate consecutive learning streak (days)
+ */
+function calcContinuousStreak() {
+  const records = collectHistoryRecords();
+  let streak = 0;
+  const today = new Date();
+
+  // Check today first
+  const todayStr = State.sessionDate;
+  const hasToday = records.some(r => r.dateStr === todayStr) ||
+    (Session.getFamiliarWords().length + Session.getUnfamiliarWords().length > 0);
+
+  if (!hasToday) {
+    // Check if yesterday had activity
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yStr = `${yesterday.getFullYear()}${String(yesterday.getMonth()+1).padStart(2,'0')}${String(yesterday.getDate()).padStart(2,'0')}`;
+    const hasYesterday = records.some(r => r.dateStr === yStr);
+    if (!hasYesterday) return 0;
+  }
+
+  // Walk backwards through days
+  const dateSet = new Set(records.map(r => r.dateStr));
+  if (todayTotal() > 0) dateSet.add(todayStr);
+
+  for (let i = 0; ; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const ds = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+    if (dateSet.has(ds)) {
+      streak++;
+    } else if (i === 0) {
+      // Today's not counted yet
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+}
+
+function todayTotal() {
+  return Session.getFamiliarWords().length + Session.getUnfamiliarWords().length;
+}
+
+/**
+ * v5.0 — Collect all history records from localStorage
+ */
+function collectHistoryRecords() {
+  const records = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('vocab_record_')) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (data && data.dateStr) records.push(data);
+      } catch (_) {}
+    }
+  }
+  records.sort((a, b) => b.dateStr.localeCompare(a.dateStr));
+  return records;
+}
+
+/**
+ * v5.0 — Update quick start cards
+ */
+function updateQSCards() {
+  // Continue learning card
+  if (DOM.qsContinueDesc) {
+    const lastSession = { batch: State.batchIndex, source: State.sourceType };
+    const sourceLabels = { ai: 'AI 生成', file: '文件导入', builtin: '内置词库' };
+    const sl = sourceLabels[State.sourceType] || State.sourceType;
+    DOM.qsContinueDesc.textContent = `词库: ${sl} · 进度: Batch ${State.batchIndex}`;
+  }
+
+  // Review badge
+  if (DOM.qsReviewBadge) {
+    const dueCount = ReviewPool.getDueCount();
+    if (dueCount > 0) {
+      DOM.qsReviewBadge.textContent = `${dueCount}`;
+      DOM.qsReviewBadge.style.display = 'inline-block';
+    } else {
+      DOM.qsReviewBadge.style.display = 'none';
+    }
+  }
+
+  // Source description
+  if (DOM.qsSourceDesc) {
+    const sourceLabels = { ai: 'AI / 内置 / 文件导入', file: '文件模式 · ' + (State.fileWordPool.length || 0) + ' 词', builtin: '内置词库 · ' + (State.builtinVocabId || '') };
+    DOM.qsSourceDesc.textContent = sourceLabels[State.sourceType] || 'AI / 内置 / 文件导入';
   }
 }
 
@@ -325,11 +608,24 @@ function updateReviewBadge() {
   const badge = DOM.reviewBadge;
   const btn = DOM.btnReview;
 
-  if (dueCount > 0) {
-    btn.style.display = 'inline-flex';
-    badge.textContent = `${dueCount} due`;
-  } else {
-    btn.style.display = 'none';
+  // Legacy button (may not exist in new welcome page)
+  if (btn) {
+    if (dueCount > 0) {
+      btn.style.display = 'inline-flex';
+      badge.textContent = `${dueCount} due`;
+    } else {
+      btn.style.display = 'none';
+    }
+  }
+
+  // Also update QS review badge (v5.0)
+  if (DOM.qsReviewBadge) {
+    if (dueCount > 0) {
+      DOM.qsReviewBadge.textContent = `${dueCount}`;
+      DOM.qsReviewBadge.style.display = 'inline-block';
+    } else {
+      DOM.qsReviewBadge.style.display = 'none';
+    }
   }
 }
 
@@ -450,20 +746,36 @@ function wireEvents() {
     });
   });
 
-  // Select all / Deselect all on grid
+  // Select all / Deselect all on grid (with stagger animation)
   DOM.btnSelectAll.addEventListener('click', () => {
     State.currentWords.forEach((_, i) => {
       State.markedIndices.add(i);
       const chip = DOM.wordGrid.querySelector(`[data-index="${i}"]`);
-      if (chip) chip.classList.add('marked');
+      if (chip) {
+        setTimeout(() => {
+          chip.classList.add('marked', 'mark-anim');
+          setTimeout(() => chip.classList.remove('mark-anim'), 400);
+        }, i * 30); // 30ms stagger
+      }
     });
     updateMarkedCount();
     updateGridProgress();
   });
 
   DOM.btnDeselectAll.addEventListener('click', () => {
+    const chips = DOM.wordGrid.querySelectorAll('.word-chip.marked');
     State.markedIndices.clear();
-    DOM.wordGrid.querySelectorAll('.word-chip').forEach(chip => chip.classList.remove('marked'));
+    chips.forEach((chip, i) => {
+      setTimeout(() => {
+        chip.classList.remove('marked');
+      }, i * 30);
+    });
+    // Non-marked ones also lose any animation state
+    setTimeout(() => {
+      DOM.wordGrid.querySelectorAll('.word-chip').forEach(chip => {
+        chip.classList.remove('mark-anim');
+      });
+    }, chips.length * 30 + 100);
     updateMarkedCount();
     updateGridProgress();
   });
@@ -500,6 +812,96 @@ function wireEvents() {
 
   // Keyboard shortcuts
   document.addEventListener('keydown', handleKeyboardShortcut);
+
+  // -------------------------------------------------------
+  // v5.0: Welcome Page QS Cards & QA Buttons
+  // -------------------------------------------------------
+  if (DOM.btnQSC) {
+    DOM.btnQSC.addEventListener('click', () => {
+      // Continue learning: same as startSession but check source type first
+      if (State.sourceType === 'ai' && !Settings.getApiKey()) {
+        showToast('请先在设置中添加 API Key。', 'info', 3000);
+        openSettings();
+        return;
+      }
+      if (State.sourceType === 'file' && State.fileWordPool.length === 0) {
+        showToast('请先导入词库文件。', 'info');
+        return;
+      }
+      if (State.sourceType === 'builtin' && !State.builtinVocabData) {
+        showToast('请先选择内置词库。', 'info');
+        openSource();
+        return;
+      }
+      startSession();
+    });
+  }
+  if (DOM.btnQSReview) {
+    DOM.btnQSReview.addEventListener('click', () => {
+      openReviewScreen();
+    });
+  }
+  if (DOM.btnQSSource) {
+    DOM.btnQSSource.addEventListener('click', openSource);
+  }
+  if (DOM.btnQSGenerate) {
+    DOM.btnQSGenerate.addEventListener('click', () => {
+      // Switch to AI source if not already, then start
+      if (State.sourceType !== 'ai') {
+        State.sourceType = 'ai';
+        Settings.setSourceType('ai');
+        document.querySelector('input[name="source"][value="ai"]').checked = true;
+      }
+      if (!Settings.getApiKey()) {
+        showToast('请先在设置中添加 API Key。', 'info', 3000);
+        openSettings();
+        return;
+      }
+      startSession();
+    });
+  }
+  if (DOM.btnQSFile) {
+    DOM.btnQSFile.addEventListener('click', () => DOM.fileInput.click());
+  }
+  if (DOM.btnQSBuiltin) {
+    DOM.btnQSBuiltin.addEventListener('click', () => {
+      // Switch to builtin source
+      State.sourceType = 'builtin';
+      Settings.setSourceType('builtin');
+      openSource();
+      setTimeout(() => {
+        document.querySelector('input[name="source"][value="builtin"]').click();
+      }, 100);
+    });
+  }
+
+  // QA Buttons
+  if (DOM.qaCalendar) {
+    DOM.qaCalendar.addEventListener('click', () => {
+      if (DOM.heatmapSection) {
+        const isHidden = DOM.heatmapSection.style.display === 'none';
+        DOM.heatmapSection.style.display = isHidden ? 'block' : 'none';
+        if (isHidden) renderHeatmap();
+      }
+    });
+  }
+  if (DOM.qaDifficult) {
+    DOM.qaDifficult.addEventListener('click', () => {
+      const difficultWords = getDifficultWords();
+      if (difficultWords.length === 0) {
+        showToast('暂无常错词记录。', 'info');
+        return;
+      }
+      // Show in a modal-like overlay or navigate to review
+      openReviewScreen();
+    });
+  }
+  if (DOM.qaExportAnki) {
+    DOM.qaExportAnki.addEventListener('click', () => showAnkiExportModal());
+  }
+  if (DOM.qaSettings) {
+    DOM.qaSettings.addEventListener('click', openSettings);
+  }
 
   // -------------------------------------------------------
   // Dictation
@@ -628,8 +1030,11 @@ function saveSettings() {
   const difficulty    = DOM.inputDifficulty.value;
   const autoPronounce = DOM.inputAutoPronounce.checked;
   const showShortcuts = DOM.inputShowShortcuts.checked;
+  const theme         = DOM.inputTheme.value;
 
   Settings.saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts });
+  Settings.setTheme(theme);
+  applyTheme(theme);
 
   // Save sync settings too
   const syncUrl = DOM.inputSyncUrl.value.trim();
@@ -736,8 +1141,67 @@ async function startSession() {
       ? 'Loading vocabulary...'
       : 'Loading words from file...';
 
+  // v5.0: Show grid skeleton preview after 1s
+  const skeletonTimer = setTimeout(() => {
+    const gridPreview = document.querySelector('.loading-card');
+    if (gridPreview) {
+      const skeleton = document.createElement('div');
+      skeleton.className = 'grid-skeleton';
+      skeleton.style.marginTop = '24px';
+      for (let i = 0; i < 10; i++) {
+        const item = document.createElement('div');
+        item.className = 'grid-skeleton-item';
+        skeleton.appendChild(item);
+      }
+      gridPreview.appendChild(skeleton);
+    }
+  }, 1000);
+
+  // v5.0: Loading timeout messages
+  const timeout3s = setTimeout(() => {
+    const timeoutMsg = document.getElementById('loadingTimeout3s');
+    if (!timeoutMsg) {
+      const msg = document.createElement('p');
+      msg.id = 'loadingTimeout3s';
+      msg.className = 'loading-timeout';
+      msg.innerHTML = '正在为你的学习准备词汇...';
+      document.querySelector('.loading-card')?.appendChild(msg);
+    }
+  }, 3000);
+
+  const timeout8s = setTimeout(() => {
+    let timeoutMsg = document.getElementById('loadingTimeout8s');
+    if (!timeoutMsg) {
+      timeoutMsg = document.createElement('div');
+      timeoutMsg.id = 'loadingTimeout8s';
+      timeoutMsg.className = 'loading-timeout';
+      timeoutMsg.innerHTML = '<p>加载时间较长，<a href="#" id="switchToLocal">是否使用本地词库？</a></p>';
+      document.querySelector('.loading-card')?.appendChild(timeoutMsg);
+
+      document.getElementById('switchToLocal')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeModal(DOM.modalSettings);
+        State.sourceType = 'builtin';
+        Settings.setSourceType('builtin');
+        openSource();
+        setTimeout(() => {
+          document.querySelector('input[name="source"][value="builtin"]').click();
+        }, 100);
+        showToast('已切换至内置词库模式。', 'info');
+      });
+    }
+  }, 8000);
+
   try {
     const words = await fetchWordBatch(apiKey, wordsPerBatch);
+
+    // Clear timeout timers
+    clearTimeout(skeletonTimer);
+    clearTimeout(timeout3s);
+    clearTimeout(timeout8s);
+
+    // Remove skeletons
+    document.querySelectorAll('.grid-skeleton, .loading-timeout').forEach(el => el.remove());
     if (words.length === 0) throw new Error('No words returned. Check your settings and try again.');
 
     State.currentWords   = words;
@@ -747,6 +1211,10 @@ async function startSession() {
     updateSessionInfo();
     DOM.historySection.style.display = 'none';
   } catch (err) {
+    clearTimeout(skeletonTimer);
+    clearTimeout(timeout3s);
+    clearTimeout(timeout8s);
+    document.querySelectorAll('.grid-skeleton, .loading-timeout').forEach(el => el.remove());
     showScreen('welcome');
     showToast(err.message, 'error', 6000);
   }
@@ -807,12 +1275,21 @@ function renderWordGrid(words) {
 }
 
 function toggleMark(chip, index) {
+  // Press animation
+  chip.classList.add('press');
+  setTimeout(() => chip.classList.remove('press'), 150);
+
   if (State.markedIndices.has(index)) {
     State.markedIndices.delete(index);
     chip.classList.remove('marked');
+    // Unmark fade-out effect
+    chip.classList.add('unmark-anim');
   } else {
     State.markedIndices.add(index);
     chip.classList.add('marked');
+    // Mark flash effect (border ripple)
+    chip.classList.add('mark-anim');
+    setTimeout(() => chip.classList.remove('mark-anim'), 400);
   }
   updateMarkedCount();
 }
@@ -925,11 +1402,12 @@ function renderDetailCards(details) {
 
   details.forEach((d, idx) => {
     const card = document.createElement('div');
-    card.className = 'detail-card';
+    card.className = 'detail-card stagger-in';
+    card.style.animationDelay = (idx * 80) + 'ms';
     card.dataset.index = idx;
     card.innerHTML = `
       <div class="detail-card-header">
-        <span class="detail-word">${escHtml(d.word)}</span>
+        <span class="detail-word enter-anim" style="animation-delay:${(idx * 80 + 150)}ms">${escHtml(d.word)}</span>
         <button class="detail-speak-btn" data-word="${escHtml(d.word)}">🔊</button>
         ${d.pronunciation ? `<span class="detail-pronunciation">${escHtml(d.pronunciation)}</span>` : ''}
       </div>
@@ -1027,25 +1505,37 @@ function finalizeAndDone(unfamiliarWords) {
   // Save record snapshot
   Records.saveToLocalStorage(State.sessionDate, allFamiliar, allUnfamiliar);
 
-  // Render done screen (no auto-download)
+  // Render done screen with animated counting (v5.0)
+  const targets = [
+    { el: 'stat-familiar', val: familiarWords.length, cls: 'green' },
+    { el: 'stat-unfamiliar', val: unfamiliarWords.length, cls: 'yellow' },
+    { el: 'stat-batchsize', val: State.currentWords.length, cls: '' },
+    { el: 'stat-batchnum', val: State.batchIndex, cls: '' },
+  ];
   DOM.doneStats.innerHTML = `
     <div class="stat-pill">
-      <span class="stat-value green">${familiarWords.length}</span>
+      <span class="stat-value green" id="stat-familiar">0</span>
       <span class="stat-label">Familiar</span>
     </div>
     <div class="stat-pill">
-      <span class="stat-value yellow">${unfamiliarWords.length}</span>
+      <span class="stat-value yellow" id="stat-unfamiliar">0</span>
       <span class="stat-label">Unfamiliar</span>
     </div>
     <div class="stat-pill">
-      <span class="stat-value">${State.currentWords.length}</span>
+      <span class="stat-value" id="stat-batchsize">0</span>
       <span class="stat-label">This batch</span>
     </div>
     <div class="stat-pill">
-      <span class="stat-value">${State.batchIndex}</span>
+      <span class="stat-value" id="stat-batchnum">0</span>
       <span class="stat-label">Batch #</span>
     </div>
   `;
+
+  // Animate counting
+  animateCountUp('stat-familiar', familiarWords.length, 200);
+  setTimeout(() => animateCountUp('stat-unfamiliar', unfamiliarWords.length, 200), 250);
+  setTimeout(() => animateCountUp('stat-batchsize', State.currentWords.length, 200), 500);
+  setTimeout(() => animateCountUp('stat-batchnum', State.batchIndex, 200), 750);
 
   // Check if there are quiz-able words (familiar + unfamiliar)
   const quizWords = [...new Set([...allFamiliar, ...allUnfamiliar])];
@@ -1231,10 +1721,10 @@ function showReviewDetail(word) {
     <span class="review-detail-pronunciation">${pronDisplay}EF: ${entry.ef ? entry.ef.toFixed(2) : '2.50'} | Rep: ${entry.repetition || 0} | Interval: ${entry.interval || 1}d</span>
     <p class="review-detail-def">${defText}</p>
     <div class="review-detail-actions">
-      <button class="btn btn-forget" data-quality="0">Again</button>
-      <button class="btn btn-ghost" data-quality="2" style="border-color:var(--color-text-muted)">Hard</button>
-      <button class="btn btn-remember" data-quality="4">Good</button>
-      <button class="btn btn-remember" data-quality="5" style="border-color:var(--color-primary)">Easy</button>
+      <button class="btn btn-sm2-again" data-quality="0">Again</button>
+      <button class="btn btn-sm2-hard" data-quality="2">Hard</button>
+      <button class="btn btn-sm2-good" data-quality="4">Good</button>
+      <button class="btn btn-sm2-easy" data-quality="5">Easy</button>
     </div>
   `;
 
@@ -1681,6 +2171,48 @@ function openHistoryPanel() {
 }
 
 /* =========================================================
+   v5.0 — Animated Count Up
+   ========================================================= */
+function animateCountUp(elementId, target, delayMs = 200) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const start = 0;
+  const duration = Math.min(1200, target * delayMs);
+  const startTime = performance.now();
+
+  function step(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // Ease out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(start + (target - start) * eased);
+    el.textContent = current;
+    if (current !== target) {
+      // Pulse effect on change
+      el.classList.add('counting');
+      setTimeout(() => el.classList.remove('counting'), 300);
+    }
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      el.textContent = target;
+    }
+  }
+
+  requestAnimationFrame(step);
+}
+
+/* =========================================================
+   v5.0 — Streak Bounce Animation
+   ========================================================= */
+function animateStreakBounce(element) {
+  if (!element) return;
+  element.classList.remove('streak-bounce');
+  void element.offsetWidth;
+  element.classList.add('streak-bounce');
+}
+
+/* =========================================================
    Utilities
    ========================================================= */
 function escHtml(str) {
@@ -1932,10 +2464,10 @@ function showSM2ReviewDetail(word) {
     <span class="review-detail-pronunciation">EF: ${entry.ef.toFixed(2)} | Rep: ${entry.repetition} | Interval: ${entry.interval}d</span>
     <p class="review-detail-def">${defText}</p>
     <div class="review-detail-actions">
-      <button class="btn btn-forget" data-quality="0">Again</button>
-      <button class="btn btn-ghost" data-quality="2" style="border-color:var(--color-text-muted)">Hard</button>
-      <button class="btn btn-remember" data-quality="4">Good</button>
-      <button class="btn btn-remember" data-quality="5" style="border-color:var(--color-primary)">Easy</button>
+      <button class="btn btn-sm2-again" data-quality="0">Again</button>
+      <button class="btn btn-sm2-hard" data-quality="2">Hard</button>
+      <button class="btn btn-sm2-good" data-quality="4">Good</button>
+      <button class="btn btn-sm2-easy" data-quality="5">Easy</button>
     </div>
   `;
 

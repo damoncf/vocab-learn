@@ -45,6 +45,9 @@ const Settings = {
   setAutoPronounce(v)     { localStorage.setItem('vocab_auto_pronounce', v ? 'true' : 'false'); },
 
   getShowShortcuts()      { return localStorage.getItem('vocab_show_shortcuts') !== 'false'; },
+
+  getTheme()              { return localStorage.getItem('vocab_theme') || 'system'; },
+  setTheme(v)             { localStorage.setItem('vocab_theme', v); },
   setShowShortcuts(v)     { localStorage.setItem('vocab_show_shortcuts', v ? 'true' : 'false'); },
 
   getAll() {
@@ -64,6 +67,10 @@ const Settings = {
     if (difficulty    !== undefined) this.setDifficulty(difficulty);
     if (autoPronounce !== undefined) this.setAutoPronounce(autoPronounce);
     if (showShortcuts !== undefined) this.setShowShortcuts(showShortcuts);
+  },
+
+  getAllExtended() {
+    return { ...this.getAll(), theme: this.getTheme() };
   },
 };
 

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>VocabLearn</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
 </head>
@@ -65,43 +67,121 @@
 
     <!-- === SCREEN: Welcome === -->
     <section id="screenWelcome" class="screen active">
-      <div class="welcome-card">
-        <div class="welcome-icon">
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="8" y="4" width="48" height="56" rx="4"/>
-            <line x1="18" y1="18" x2="46" y2="18"/>
-            <line x1="18" y1="26" x2="46" y2="26"/>
-            <line x1="18" y1="34" x2="36" y2="34"/>
-          </svg>
+      <div class="welcome-scroll">
+        <!-- Top: Daily Learning Card -->
+        <div class="daily-card" id="dailyCard">
+          <div class="daily-card-header">
+            <span class="daily-card-title">📅 今日学习</span>
+          </div>
+          <div class="daily-progress-bar">
+            <div class="daily-progress-fill" id="dailyProgressFill" style="width:0%"></div>
+          </div>
+          <div class="daily-progress-label" id="dailyProgressLabel">0 / 0 词</div>
+          <div class="daily-stats">
+            <div class="daily-stat">
+              <span class="daily-stat-icon">🔥</span>
+              <span class="daily-stat-value" id="dailyStreak">0 天</span>
+              <span class="daily-stat-label">连续学习</span>
+            </div>
+            <div class="daily-stat">
+              <span class="daily-stat-icon">📚</span>
+              <span class="daily-stat-value" id="dailyDueCount">0 词</span>
+              <span class="daily-stat-label">待复习</span>
+            </div>
+            <div class="daily-stat">
+              <span class="daily-stat-icon">⏰</span>
+              <span class="daily-stat-value" id="dailyLastTime">--</span>
+              <span class="daily-stat-label">上次学习</span>
+            </div>
+          </div>
+          <!-- Empty state guide (shown when no data) -->
+          <div class="daily-empty-guide" id="dailyEmptyGuide" style="display:none">
+            <p>今天还没开始学习，现在开始？</p>
+          </div>
         </div>
-        <h2>Start Your Vocabulary Session</h2>
-        <p>Review 100 words at a time. Mark the ones you don't know for detailed study.</p>
-        <div class="welcome-actions">
-          <button class="btn btn-primary btn-large" id="btnStart">
-            Start Learning
+
+        <!-- Middle: Quick Start Area (2×3) -->
+        <div class="quick-start-grid" id="quickStartGrid">
+          <!-- 1. Continue Learning (primary, biggest) -->
+          <button class="qs-card qs-continue" id="btnQSC">
+            <div class="qs-icon">▶</div>
+            <div class="qs-info">
+              <span class="qs-title">继续学习</span>
+              <span class="qs-desc" id="qsContinueDesc">上次进度待加载</span>
+            </div>
           </button>
-          <button class="btn btn-secondary btn-large" id="btnLoadFile">
-            Load from File
+          <!-- 2. Review -->
+          <button class="qs-card" id="btnQSReview">
+            <div class="qs-icon">🔄</div>
+            <div class="qs-info">
+              <span class="qs-title">复习生词 <span class="qs-badge" id="qsReviewBadge"></span></span>
+              <span class="qs-desc">使用 SM-2 间隔重复</span>
+            </div>
           </button>
-          <button class="btn btn-secondary btn-large" id="btnBuiltin">
-            📚 Built-in Vocab
+          <!-- 3. Select Vocab -->
+          <button class="qs-card" id="btnQSSource">
+            <div class="qs-icon">📚</div>
+            <div class="qs-info">
+              <span class="qs-title">选择词库</span>
+              <span class="qs-desc" id="qsSourceDesc">AI / 内置 / 文件导入</span>
+            </div>
           </button>
-          <button class="btn btn-secondary btn-large" id="btnExportAnkiWelcome">
-            📤 Export to Anki
+          <!-- 4. AI Generate -->
+          <button class="qs-card" id="btnQSGenerate">
+            <div class="qs-icon">🤖</div>
+            <div class="qs-info">
+              <span class="qs-title">AI 生成</span>
+              <span class="qs-desc">用 DeepSeek 生成新词</span>
+            </div>
           </button>
-          <button class="btn btn-secondary btn-large" id="btnReview" style="display:none">
-            Review <span id="reviewBadge"></span>
+          <!-- 5. File Import -->
+          <button class="qs-card" id="btnQSFile">
+            <div class="qs-icon">📄</div>
+            <div class="qs-info">
+              <span class="qs-title">文件导入</span>
+              <span class="qs-desc">加载 .txt 单词文件</span>
+            </div>
+          </button>
+          <!-- 6. Start Built-in (placeholder for legacy btnBuiltin) -->
+          <button class="qs-card" id="btnQSBuiltin">
+            <div class="qs-icon">📖</div>
+            <div class="qs-info">
+              <span class="qs-title">内置词库</span>
+              <span class="qs-desc">无需 API Key</span>
+            </div>
           </button>
         </div>
         <input type="file" id="fileInput" accept=".txt" multiple style="display:none" />
-        <p class="welcome-hint" id="welcomeHint">No API key? <a href="#" id="linkSettings">Configure settings</a> or use the <strong>Built-in Vocab</strong> library above.</p>
-        <p class="welcome-hint" id="reviewDueHint" style="display:none"></p>
-        <!-- Learning Calendar / Heatmap -->
-        <div class="heatmap-section" id="heatmapSection" style="display:none; margin-top: 24px;">
-          <h3 style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:8px">📊 学习日历 (近60天)</h3>
+
+        <!-- Bottom: Quick Access -->
+        <div class="quick-access-bar">
+          <button class="qa-btn" id="qaCalendar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>学习日历</span>
+          </button>
+          <button class="qa-btn" id="qaDifficult">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <span>常错词榜</span>
+          </button>
+          <button class="qa-btn" id="qaExportAnki">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>导出 Anki</span>
+          </button>
+          <button class="qa-btn" id="qaSettings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+            <span>设置</span>
+          </button>
+        </div>
+
+        <!-- Heatmap -->
+        <div class="heatmap-section" id="heatmapSection" style="display:none; margin-top: 24px; max-width:480px; width:100%; margin-left:auto; margin-right:auto;">
+          <h3 style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:8px;text-align:center;">📊 学习日历（近60天）</h3>
           <div class="heatmap-grid" id="heatmapGrid"></div>
           <div class="heatmap-legend" id="heatmapLegend"></div>
         </div>
+
+        <!-- Legacy welcome hint for review due -->
+        <p class="welcome-hint" id="reviewDueHint" style="display:none"></p>
       </div>
     </section>
 
@@ -313,6 +393,14 @@
             <input type="checkbox" id="inputShowShortcuts" checked />
             <span>Show keyboard shortcut hints</span>
           </label>
+        </div>
+        <div class="form-group">
+          <label for="inputTheme">Theme</label>
+          <select id="inputTheme">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+            <option value="system">Follow System</option>
+          </select>
         </div>
         <hr style="border-color:var(--color-border);margin:20px 0" />
         <div class="sync-section" id="syncSection">
