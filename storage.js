@@ -324,6 +324,113 @@ function parseWordFile(text) {
  * Returns a Promise<string[]>.
  */
 /* -------------------------------------------------------
+   Daily Goal — 每日目标 (v6.0)
+   ------------------------------------------------------- */
+const DailyGoal = {
+  /** 默认每日目标词汇数 */
+  DEFAULT: 50,
+
+  /** 可选快速目标值 */
+  PRESETS: [10, 20, 50, 100, 200],
+
+  /** 获取今日目标 */
+  get() {
+    const val = localStorage.getItem('vocab_daily_goal');
+    if (val !== null) {
+      const n = parseInt(val, 10);
+      if (!isNaN(n) && n > 0) return n;
+    }
+    return this.DEFAULT;
+  },
+
+  /** 设置今日目标 */
+  set(count) {
+    localStorage.setItem('vocab_daily_goal', String(Math.max(1, count)));
+  },
+
+  /** 获取今日已学词数 */
+  getTodayLearnedCount() {
+    const familiar = Session.getFamiliarWords();
+    const unfamiliar = Session.getUnfamiliarWords();
+    return familiar.length + unfamiliar.length;
+  },
+
+  /** 获取今日进度百分比 (0-100) */
+  getTodayProgress() {
+    const learned = this.getTodayLearnedCount();
+    const goal = this.get();
+    return Math.min(100, Math.round((learned / Math.max(1, goal)) * 100));
+  },
+
+  /** 获取连续达标天数 */
+  getStreak() {
+    const records = collectHistoryRecordsGlobal();
+    let streak = 0;
+    const today = new Date();
+    const todayStr = Session.todayString();
+
+    // 检查今天
+    const hasToday = records.some(r => r.dateStr === todayStr);
+    if (!hasToday) {
+      // 如果今天已经学到了目标，也算今天达标
+      const ownTodayLearned = this.getTodayLearnedCount();
+      if (ownTodayLearned >= this.get()) {
+        // 今天在做学习中，算达标
+      } else {
+        // 检查昨天
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        const yStr = `${yesterday.getFullYear()}${String(yesterday.getMonth()+1).padStart(2,'0')}${String(yesterday.getDate()).padStart(2,'0')}`;
+        const hasYesterday = records.some(r => r.dateStr === yStr);
+        if (!hasYesterday) return 0;
+      }
+    }
+
+    // 向前计算连续天数
+    for (let i = 0; ; i++) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const ds = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+
+      const record = records.find(r => r.dateStr === ds);
+      if (record) {
+        const total = (record.familiarWords?.length || 0) + (record.unfamiliarWords?.length || 0);
+        if (total >= DailyGoal.DEFAULT) {
+          streak++;
+          continue;
+        }
+      } else if (i === 0) {
+        // 今天
+        const ownToday = this.getTodayLearnedCount();
+        if (ownToday >= this.get()) {
+          streak++;
+          continue;
+        }
+      }
+      break;
+    }
+
+    return streak;
+  },
+};
+
+/** 内部辅助：收集历史记录 */
+function collectHistoryRecordsGlobal() {
+  const records = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('vocab_record_')) {
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (data && data.dateStr) records.push(data);
+      } catch (_) {}
+    }
+  }
+  records.sort((a, b) => b.dateStr.localeCompare(a.dateStr));
+  return records;
+}
+
+/* -------------------------------------------------------
    Session Snapshot — mid-batch progress persistence
    ------------------------------------------------------- */
 const SessionSnapshot = {

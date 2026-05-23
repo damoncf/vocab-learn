@@ -424,6 +424,10 @@ function init() {
     }
   }, 2000);
 
+  // v6.0: Daily Goal 按钮事件
+  const btnGoalEdit = document.getElementById('btnEditGoal');
+  if (btnGoalEdit) btnGoalEdit.addEventListener('click', showGoalEditor);
+
   // v6.0: Show onboarding for first-time users
   if (!Onboarding.isDone()) {
     setTimeout(() => {
@@ -498,15 +502,45 @@ function updateWelcomeDailyCard() {
     }
   }
 
-  // 5. Update DOM
-  const totalExpected = Settings.getWordsPerBatch() * Math.max(1, State.batchIndex);
-  const pct = Math.min(100, Math.round((todayTotal / Math.max(1, totalExpected)) * 100));
+  // v6.0: Use DailyGoal for progress
+  const goal = DailyGoal.get();
+  const goalPct = Math.min(100, Math.round((todayTotal / Math.max(1, goal)) * 100));
 
   if (DOM.dailyProgressFill) {
-    DOM.dailyProgressFill.style.width = pct + '%';
+    DOM.dailyProgressFill.style.width = goalPct + '%';
   }
   if (DOM.dailyProgressLabel) {
-    DOM.dailyProgressLabel.textContent = `${todayTotal} / ${totalExpected} 词`;
+    DOM.dailyProgressLabel.textContent = `${todayTotal} / ${goal} 词`;
+  }
+
+  // v6.0: Update goal area
+  const goalValue = document.getElementById('dailyGoalValue');
+  if (goalValue) {
+    goalValue.textContent = `${goal} 词`;
+  }
+
+  // v6.0: Goal feedback
+  const goalFeedback = document.getElementById('dailyGoalFeedback');
+  if (goalFeedback) {
+    let showFeedback = false;
+    if (todayTotal >= goal && todayTotal > 0) {
+      if (todayTotal >= goal * 1.5) {
+        goalFeedback.className = 'daily-goal-feedback overtop';
+        goalFeedback.innerHTML = `🔥 超额完成！今日已学 ${todayTotal} / ${goal} 词`;
+        showFeedback = true;
+      } else if (todayTotal >= goal) {
+        goalFeedback.className = 'daily-goal-feedback complete';
+        goalFeedback.innerHTML = `🎉 今日目标达成！`;
+        showFeedback = true;
+        // 100% confetti
+        if (typeof createConfetti === 'function') createConfetti();
+      }
+    } else if (todayTotal >= goal * 0.5 && todayTotal > 0) {
+      goalFeedback.className = 'daily-goal-feedback halfway';
+      goalFeedback.innerHTML = `💪 完成一半了！继续加油！`;
+      showFeedback = true;
+    }
+    goalFeedback.style.display = showFeedback ? 'block' : 'none';
   }
   if (DOM.dailyStreak) {
     DOM.dailyStreak.textContent = `${streak} 天`;
@@ -2404,6 +2438,75 @@ function animateStreakBounce(element) {
   element.classList.remove('streak-bounce');
   void element.offsetWidth;
   element.classList.add('streak-bounce');
+}
+
+/* =========================================================
+   v6.0 — Daily Goal Editor
+   ========================================================= */
+function showGoalEditor() {
+  // 移除已有弹窗
+  const existing = document.querySelector('.goal-edit-popup');
+  if (existing) existing.remove();
+
+  const currentGoal = DailyGoal.get();
+
+  const popup = document.createElement('div');
+  popup.className = 'goal-edit-popup';
+  popup.innerHTML = `
+    <div class="goal-edit-card">
+      <h3>🎯 设置每日目标</h3>
+      <div class="goal-presets" id="goalPresets">
+        ${DailyGoal.PRESETS.map(p => `
+          <button class="goal-preset-btn ${p === currentGoal ? 'active' : ''}" data-value="${p}">${p} 词</button>
+        `).join('')}
+      </div>
+      <div class="goal-custom-wrap">
+        <input type="number" id="goalCustomInput" min="1" max="1000" placeholder="自定义..." />
+        <button class="btn btn-primary" id="goalCustomApply">确定</button>
+      </div>
+      <div class="goal-edit-actions">
+        <button class="btn btn-ghost" id="goalEditorClose">取消</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(popup);
+
+  function setGoal(n) {
+    DailyGoal.set(n);
+    popup.remove();
+    updateWelcomeDailyCard();
+    showToast(`每日目标已设为 ${n} 词`, 'success', 2000);
+  }
+
+  // Preset buttons
+  popup.querySelectorAll('.goal-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setGoal(parseInt(btn.dataset.value, 10));
+    });
+  });
+
+  // Custom input
+  const customInput = popup.querySelector('#goalCustomInput');
+  const customApply = popup.querySelector('#goalCustomApply');
+  customApply.addEventListener('click', () => {
+    const val = parseInt(customInput.value, 10);
+    if (val > 0 && val <= 1000) {
+      setGoal(val);
+    } else {
+      showToast('请输入 1-1000 之间的数字', 'error');
+    }
+  });
+  customInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') customApply.click();
+  });
+  customInput.focus();
+
+  // Close
+  popup.querySelector('#goalEditorClose').addEventListener('click', () => popup.remove());
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) popup.remove();
+  });
 }
 
 /* =========================================================

@@ -2806,6 +2806,153 @@ input:focus, select:focus {
 }
 
 /* =========================================================
+   v6.0 — DAILY GOAL SYSTEM
+   ========================================================= */
+.daily-goal-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.daily-goal-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.daily-goal-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.daily-goal-edit {
+  font-size: 0.75rem !important;
+  padding: 2px 8px !important;
+  margin-left: auto;
+}
+
+.daily-goal-feedback {
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+.daily-goal-feedback.halfway {
+  background: rgba(91, 110, 245, 0.12);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.daily-goal-feedback.complete {
+  background: rgba(62, 207, 142, 0.12);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+
+.daily-goal-feedback.overtop {
+  background: rgba(240, 192, 64, 0.12);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+}
+
+/* Goal edit popup */
+.goal-edit-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.goal-edit-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: var(--shadow-modal);
+  animation: modalIn 0.2s ease;
+}
+
+.goal-edit-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.goal-presets {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.goal-preset-btn {
+  padding: 10px;
+  background: var(--color-surface-2);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+  font-family: var(--font-sans);
+}
+
+.goal-preset-btn:hover {
+  border-color: var(--color-primary);
+}
+
+.goal-preset-btn.active {
+  border-color: var(--color-primary);
+  background: rgba(91, 110, 245, 0.12);
+}
+
+.goal-custom-wrap {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.goal-custom-wrap input {
+  flex: 1;
+  padding: 8px 12px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+.goal-custom-wrap input:focus {
+  border-color: var(--color-primary);
+}
+
+.goal-edit-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* =========================================================
    v5.0 — WELCOME PAGE REDESIGN
    ========================================================= */
 .welcome-scroll {
