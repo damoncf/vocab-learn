@@ -234,14 +234,28 @@
         <div class="grid-toolbar-left">
           <span class="progress-badge" id="batchLabel">Batch 1</span>
           <span class="word-count" id="wordCountLabel">100 words</span>
+          <input class="grid-search-input" id="gridSearch" type="text" placeholder="🔍 搜索..." />
         </div>
         <div class="grid-progress-bar" id="gridProgressBar">
           <div class="grid-progress-fill" id="gridProgressFill"></div>
         </div>
         <div class="grid-toolbar-right">
-          <span class="selection-hint">Click words you <strong>don't know</strong></span>
-          <button class="btn btn-ghost" id="btnSelectAll" title="Mark all as unfamiliar">Mark all</button>
-          <button class="btn btn-ghost" id="btnDeselectAll" title="Unmark all">Unmark all</button>
+          <span class="batch-timer" id="batchTimer" style="display:none">⏱ 0:00</span>
+          <select class="grid-sort-select" id="gridSort">
+            <option value="random">随机</option>
+            <option value="alpha">A-Z</option>
+            <option value="difficulty">按难度</option>
+          </select>
+          <div class="batch-actions-wrap">
+            <button class="btn btn-ghost" id="btnBatchActions" title="批量操作">批量 ▾</button>
+            <div class="batch-actions-dropdown" id="batchActionsDropdown" style="display:none">
+              <button class="batch-action-item" id="btnBatchSelectAll">全部选中</button>
+              <button class="batch-action-item" id="btnBatchDeselectAll">取消全选</button>
+              <button class="batch-action-item" id="btnBatchMarkUnfamiliar">标记陌生</button>
+              <button class="batch-action-item" id="btnBatchMarkFamiliar">标记认识</button>
+            </div>
+          </div>
+          <span class="selection-hint" id="selectionHint">单击查看释义</span>
           <button class="btn btn-primary" id="btnNext">
             Next →
           </button>
@@ -316,6 +330,10 @@
       </div>
       <div class="review-content" id="reviewContent">
         <div class="review-stats" id="reviewStats"></div>
+        <div class="review-memory-health" id="reviewMemoryHealth" style="display:none;max-width:600px;margin:0 auto 20px">
+          <h4 style="font-size:0.85rem;color:var(--color-text-muted);margin-bottom:8px">🧠 记忆健康</h4>
+          <div id="memoryHealthBars" class="memory-health-bars"></div>
+        </div>
         <div class="review-list" id="reviewList"></div>
       </div>
     </section>
@@ -323,6 +341,54 @@
     <!-- === SCREEN: Quiz (legacy — replaced by Practice tab) === -->
     <section id="screenQuiz" class="screen" style="display:none">
     </section>
+
+  <!-- ===== Batch Preview Overlay (v6.5) ===== -->
+  <div class="modal-backdrop" id="batchPreview" style="display:none">
+    <div class="modal batch-preview-modal">
+      <div class="modal-header">
+        <h3 id="batchPreviewTitle">Batch 1</h3>
+        <button class="modal-close" id="batchPreviewClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="batch-preview-info">
+          <p id="batchPreviewCount"><strong>100</strong> 个新词</p>
+          <p id="batchPreviewSource" class="form-hint">词库名</p>
+          <div class="batch-preview-words" id="batchPreviewWords" style="max-height:120px;overflow-y:auto;margin:12px 0;font-size:0.85rem;color:var(--color-text-muted);line-height:1.8"></div>
+          <p id="batchPreviewTime" class="form-hint">预计用时：5-10 分钟</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="batchPreviewCancel">取消</button>
+        <button class="btn btn-primary" id="btnStartBatch">开始</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Review 回顾 Overlay (v6.5) ===== -->
+  <div class="modal-backdrop" id="reviewReviewBackdrop" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>📊 复习回顾</h3>
+        <button class="modal-close" id="reviewReviewClose">✕</button>
+      </div>
+      <div class="modal-body" id="reviewReviewBody">
+        <div class="review-review-summary">
+          <p id="reviewReviewCount">本次复习：0 词</p>
+          <p id="reviewReviewRate">答对率：0%</p>
+        </div>
+        <div class="review-review-wrong" id="reviewReviewWrong" style="display:none;margin-top:16px">
+          <h4 style="font-size:0.85rem;color:var(--color-danger);margin-bottom:8px">🔴 答错的词</h4>
+          <div id="reviewReviewWrongList" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+        </div>
+        <div class="review-review-next" style="margin-top:16px">
+          <p class="form-hint" id="reviewReviewNext">下次复习：明天有 0 词到期</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="reviewReviewDismiss">知道了</button>
+      </div>
+    </div>
+  </div>
 
   </main>
 
@@ -418,17 +484,29 @@
     <section id="screenReading" class="screen" style="display:none">
     </section>
 
+  <!-- ===== Peek Popup (v6.5) ===== -->
   <div class="peek-popup" id="peekPopup" style="display:none">
     <div class="peek-popup-inner">
-      <div class="peek-word" id="peekWord"></div>
-      <div class="peek-pronunciation" id="peekPron"></div>
-      <div class="peek-chinese" id="peekChinese"></div>
+      <button class="peek-popup-close" id="peekPopupClose">✕</button>
+      <div class="peek-popup-header">
+        <span class="peek-word" id="peekWord"></span>
+        <span class="peek-pronunciation" id="peekPron"></span>
+        <button class="peek-popup-speak" id="peekSpeak">🔊</button>
+      </div>
+      <div class="peek-pos" id="peekPos"></div>
       <div class="peek-definition" id="peekDef"></div>
+      <div class="peek-chinese" id="peekChinese"></div>
+      <div class="peek-collocation" id="peekCollocation" style="display:none"></div>
+      <div class="peek-example" id="peekExample" style="display:none">
+        <div class="peek-example-en" id="peekExampleEn"></div>
+        <div class="peek-example-cn" id="peekExampleCn"></div>
+      </div>
       <div class="peek-actions">
-        <button class="btn btn-sm2-good" id="peekMarkFamiliar">✓ 认识</button>
-        <button class="btn btn-sm2-again" id="peekMarkUnfamiliar">✗ 不认识</button>
+        <button class="btn peek-familiar-btn" id="peekMarkFamiliar">✓ 认识</button>
+        <button class="btn peek-unfamiliar-btn" id="peekMarkUnfamiliar">✗ 不认识</button>
       </div>
     </div>
+    <div class="peek-popup-arrow"></div>
   </div>
 
   <!-- ===== Settings Modal ===== -->
@@ -467,6 +545,14 @@
             <span>Auto-pronounce on word detail</span>
           </label>
           <span class="form-hint">Automatically read aloud when entering detail page</span>
+        </div>
+        <div class="form-group">
+          <label for="inputClickBehavior">单击行为</label>
+          <select id="inputClickBehavior">
+            <option value="peek">单击查看释义</option>
+            <option value="mark">单击直接标记</option>
+          </select>
+          <span class="form-hint">单击词块时弹出释义浮窗，或直接标记为陌生</span>
         </div>
         <div class="form-group">
           <label class="toggle-label">

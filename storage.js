@@ -50,6 +50,9 @@ const Settings = {
   setTheme(v)             { localStorage.setItem('vocab_theme', v); },
   setShowShortcuts(v)     { localStorage.setItem('vocab_show_shortcuts', v ? 'true' : 'false'); },
 
+  getClickBehavior()    { return localStorage.getItem('vocab_click_behavior') || 'peek'; },
+  setClickBehavior(v)   { localStorage.setItem('vocab_click_behavior', v); },
+
   getAll() {
     return {
       apiKey:        this.getApiKey(),
@@ -58,15 +61,17 @@ const Settings = {
       sourceType:    this.getSourceType(),
       autoPronounce: this.getAutoPronounce(),
       showShortcuts: this.getShowShortcuts(),
+      clickBehavior: this.getClickBehavior(),
     };
   },
 
-  saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts }) {
+  saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts, clickBehavior }) {
     if (apiKey        !== undefined) this.setApiKey(apiKey);
     if (wordsPerBatch !== undefined) this.setWordsPerBatch(wordsPerBatch);
     if (difficulty    !== undefined) this.setDifficulty(difficulty);
     if (autoPronounce !== undefined) this.setAutoPronounce(autoPronounce);
     if (showShortcuts !== undefined) this.setShowShortcuts(showShortcuts);
+    if (clickBehavior !== undefined) this.setClickBehavior(clickBehavior);
   },
 
   getAllExtended() {
@@ -518,6 +523,7 @@ const SessionSnapshot = {
       batchIndex: state.batchIndex,
       currentWords: state.currentWords,
       markedIndices: [...state.markedIndices],
+      familiarIndices: state.familiarIndices ? [...state.familiarIndices] : [],
       sourceType: state.sourceType,
       vocabId: BuiltinVocab.get() || '',
       timestamp: Date.now(),

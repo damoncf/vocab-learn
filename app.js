@@ -21,6 +21,9 @@ const State = {
   // Set of words the user marked as unfamiliar (indices into currentWords)
   markedIndices: new Set(),
 
+  // v6.5: Set of words the user marked as familiar (indices into currentWords)
+  familiarIndices: new Set(),
+
   // Detailed info for marked words (from API)
   wordDetails: [],
 
@@ -218,14 +221,62 @@ const DOM = {
   qaSettings: document.getElementById('qaSettings'),
   inputTheme: document.getElementById('inputTheme'),
 
-  // v5.5 new DOM
+  // v6.5 — upgraded peek popup
   peekPopup: document.getElementById('peekPopup'),
   peekWord: document.getElementById('peekWord'),
   peekPron: document.getElementById('peekPron'),
   peekChinese: document.getElementById('peekChinese'),
   peekDef: document.getElementById('peekDef'),
+  peekPos: document.getElementById('peekPos'),
+  peekCollocation: document.getElementById('peekCollocation'),
+  peekExample: document.getElementById('peekExample'),
+  peekExampleEn: document.getElementById('peekExampleEn'),
+  peekExampleCn: document.getElementById('peekExampleCn'),
+  peekSpeak: document.getElementById('peekSpeak'),
+  peekPopupClose: document.getElementById('peekPopupClose'),
   peekMarkFamiliar: document.getElementById('peekMarkFamiliar'),
   peekMarkUnfamiliar: document.getElementById('peekMarkUnfamiliar'),
+
+  // v6.5 — Grid search, sort, batch, timer
+  gridSearch: document.getElementById('gridSearch'),
+  gridSort: document.getElementById('gridSort'),
+  batchTimer: document.getElementById('batchTimer'),
+  selectionHint: document.getElementById('selectionHint'),
+  btnBatchActions: document.getElementById('btnBatchActions'),
+  batchActionsDropdown: document.getElementById('batchActionsDropdown'),
+  btnBatchSelectAll: document.getElementById('btnBatchSelectAll'),
+  btnBatchDeselectAll: document.getElementById('btnBatchDeselectAll'),
+  btnBatchMarkUnfamiliar: document.getElementById('btnBatchMarkUnfamiliar'),
+  btnBatchMarkFamiliar: document.getElementById('btnBatchMarkFamiliar'),
+
+  // v6.5 — Batch preview overlay
+  batchPreview: document.getElementById('batchPreview'),
+  batchPreviewTitle: document.getElementById('batchPreviewTitle'),
+  batchPreviewCount: document.getElementById('batchPreviewCount'),
+  batchPreviewSource: document.getElementById('batchPreviewSource'),
+  batchPreviewWords: document.getElementById('batchPreviewWords'),
+  batchPreviewTime: document.getElementById('batchPreviewTime'),
+  batchPreviewClose: document.getElementById('batchPreviewClose'),
+  btnStartBatch: document.getElementById('btnStartBatch'),
+  batchPreviewCancel: document.getElementById('batchPreviewCancel'),
+
+  // v6.5 — Review回顾 overlay
+  reviewReviewBackdrop: document.getElementById('reviewReviewBackdrop'),
+  reviewReviewClose: document.getElementById('reviewReviewClose'),
+  reviewReviewBody: document.getElementById('reviewReviewBody'),
+  reviewReviewCount: document.getElementById('reviewReviewCount'),
+  reviewReviewRate: document.getElementById('reviewReviewRate'),
+  reviewReviewWrong: document.getElementById('reviewReviewWrong'),
+  reviewReviewWrongList: document.getElementById('reviewReviewWrongList'),
+  reviewReviewNext: document.getElementById('reviewReviewNext'),
+  reviewReviewDismiss: document.getElementById('reviewReviewDismiss'),
+
+  // v6.5 — Memory health
+  reviewMemoryHealth: document.getElementById('reviewMemoryHealth'),
+  memoryHealthBars: document.getElementById('memoryHealthBars'),
+
+  // v6.5 — Settings click behavior
+  inputClickBehavior: document.getElementById('inputClickBehavior'),
   snapshotRestore: document.getElementById('snapshotRestore'),
   snapshotBatchNum: document.getElementById('snapshotBatchNum'),
   snapshotResume: document.getElementById('snapshotResume'),
@@ -372,6 +423,7 @@ function init() {
   DOM.inputAutoPronounce.checked = s.autoPronounce !== false;
   DOM.inputShowShortcuts.checked = s.showShortcuts !== false;
   DOM.inputTheme.value         = s.theme;
+  DOM.inputClickBehavior.value = s.clickBehavior || 'peek';
 
   State.sourceType = s.sourceType || 'ai';
   State.fileWordPool = FileWords.get();
@@ -453,6 +505,94 @@ function init() {
   // v6.0: Initial challenge update
   updateChallengeCard();
 
+  // v6.5: Initialize grid search, sort, batch actions
+  setupGridSearch();
+  setupGridSort();
+  setupBatchActions();
+
+  // v6.5: Update selection hint based on click behavior
+  if (DOM.selectionHint) {
+    const cb = Settings.getClickBehavior() || 'peek';
+    DOM.selectionHint.textContent = cb === 'peek' ? '单击查看释义' : '单击直接标记';
+  }
+
+  // v6.5: Batch preview cancel/close
+  if (DOM.batchPreviewClose) {
+    DOM.batchPreviewClose.addEventListener('click', hideBatchPreview);
+  }
+  if (DOM.batchPreviewCancel) {
+    DOM.batchPreviewCancel.addEventListener('click', hideBatchPreview);
+  }
+  if (DOM.batchPreview) {
+    DOM.batchPreview.addEventListener('click', (e) => {
+      if (e.target === DOM.batchPreview) hideBatchPreview();
+    });
+  }
+
+  // v6.5: Review回顾 dismiss & close
+  if (DOM.reviewReviewDismiss) {
+    DOM.reviewReviewDismiss.addEventListener('click', hideReviewReview);
+  }
+  if (DOM.reviewReviewClose) {
+    DOM.reviewReviewClose.addEventListener('click', hideReviewReview);
+  }
+  if (DOM.reviewReviewBackdrop) {
+    DOM.reviewReviewBackdrop.addEventListener('click', (e) => {
+      if (e.target === DOM.reviewReviewBackdrop) hideReviewReview();
+    });
+  }
+
+  // v6.5: Peek popup close button
+  if (DOM.peekPopupClose) {
+    DOM.peekPopupClose.addEventListener('click', hidePeekPopup);
+  }
+
+  // v6.5: Peek popup speak button
+  if (DOM.peekSpeak) {
+    DOM.peekSpeak.addEventListener('click', () => {
+      if (peekPopupWord) TTS.speakWord(peekPopupWord);
+    });
+  }
+
+  // v6.5: Peek popup mark familiar/unfamiliar
+  if (DOM.peekMarkFamiliar) {
+    DOM.peekMarkFamiliar.addEventListener('click', () => {
+      const word = peekPopupWord;
+      if (!word) return;
+      const idx = State.currentWords.findIndex(w => w.toLowerCase() === word.toLowerCase());
+      const chip = idx >= 0 ? DOM.wordGrid.querySelector(`[data-index="${idx}"]`) : null;
+      markFamiliar(word, chip);
+      hidePeekPopup();
+      showToast('✓ 已标记为认识', 'success', 2000);
+    });
+  }
+  if (DOM.peekMarkUnfamiliar) {
+    DOM.peekMarkUnfamiliar.addEventListener('click', () => {
+      const word = peekPopupWord;
+      if (!word) return;
+      const idx = State.currentWords.findIndex(w => w.toLowerCase() === word.toLowerCase());
+      const chip = idx >= 0 ? DOM.wordGrid.querySelector(`[data-index="${idx}"]`) : null;
+      markUnfamiliar(word, chip);
+      hidePeekPopup();
+      showToast('✗ 已加入不熟悉列表', 'info', 2000);
+    });
+  }
+
+  // v6.5: Escape closes peek popup
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && peekPopupVisible) {
+      hidePeekPopup();
+    }
+  });
+
+  // v6.5: Batch preview start button
+  if (DOM.btnStartBatch) {
+    DOM.btnStartBatch.addEventListener('click', () => {
+      hideBatchPreview();
+      if (typeof startSession === 'function') startSession();
+    });
+  }
+
   // Show keyboard shortcut hint on first visit
   if (s.showShortcuts !== false && !localStorage.getItem('vocab_shortcuts_hint_shown')) {
     setTimeout(() => {
@@ -460,6 +600,9 @@ function init() {
       localStorage.setItem('vocab_shortcuts_hint_shown', '1');
     }, 1000);
   }
+
+  // v6.5: Update welcome daily card periodically
+  setInterval(updateWelcomeDailyCard, 60000);
 }
 
 /* =========================================================
@@ -841,37 +984,13 @@ function wireEvents() {
   });
 
   // Select all / Deselect all on grid (with stagger animation)
-  DOM.btnSelectAll.addEventListener('click', () => {
-    State.currentWords.forEach((_, i) => {
-      State.markedIndices.add(i);
-      const chip = DOM.wordGrid.querySelector(`[data-index="${i}"]`);
-      if (chip) {
-        setTimeout(() => {
-          chip.classList.add('marked', 'mark-anim');
-          setTimeout(() => chip.classList.remove('mark-anim'), 400);
-        }, i * 30); // 30ms stagger
-      }
-    });
-    updateMarkedCount();
-    updateGridProgress();
+  // v6.5: Select All / Deselect All replaced by batch dropdown
+  // Legacy: make btnSelectAll/btnDeselectAll null-safe (may not exist in HTML)
+  if (DOM.btnSelectAll) DOM.btnSelectAll.addEventListener('click', () => {
+    if (DOM.btnBatchSelectAll) DOM.btnBatchSelectAll.click();
   });
-
-  DOM.btnDeselectAll.addEventListener('click', () => {
-    const chips = DOM.wordGrid.querySelectorAll('.word-chip.marked');
-    State.markedIndices.clear();
-    chips.forEach((chip, i) => {
-      setTimeout(() => {
-        chip.classList.remove('marked');
-      }, i * 30);
-    });
-    // Non-marked ones also lose any animation state
-    setTimeout(() => {
-      DOM.wordGrid.querySelectorAll('.word-chip').forEach(chip => {
-        chip.classList.remove('mark-anim');
-      });
-    }, chips.length * 30 + 100);
-    updateMarkedCount();
-    updateGridProgress();
+  if (DOM.btnDeselectAll) DOM.btnDeselectAll.addEventListener('click', () => {
+    if (DOM.btnBatchDeselectAll) DOM.btnBatchDeselectAll.click();
   });
 
   // Settings modal
@@ -1032,50 +1151,11 @@ function wireEvents() {
   }
 
   // -------------------------------------------------------
-  // Peek Popup (v5.5)
-  // -------------------------------------------------------
-  if (DOM.peekMarkFamiliar) {
-    DOM.peekMarkFamiliar.addEventListener('click', () => {
-      hidePeekPopup();
-      // Mark as familiar = remove from markedIndices if present
-      if (peekPopupWord) {
-        const idx = State.currentWords.findIndex(w => w.toLowerCase() === peekPopupWord.toLowerCase());
-        if (idx >= 0 && State.markedIndices.has(idx)) {
-          State.markedIndices.delete(idx);
-          const chip = DOM.wordGrid.querySelector(`[data-index="${idx}"]`);
-          if (chip) chip.classList.remove('marked');
-          updateMarkedCount();
-          SessionSnapshot.save(State);
-        }
-        showToast('✓ 已标记为认识', 'success', 2000);
-      }
-    });
-  }
-  if (DOM.peekMarkUnfamiliar) {
-    DOM.peekMarkUnfamiliar.addEventListener('click', () => {
-      hidePeekPopup();
-      if (peekPopupWord) {
-        const idx = State.currentWords.findIndex(w => w.toLowerCase() === peekPopupWord.toLowerCase());
-        if (idx >= 0 && !State.markedIndices.has(idx)) {
-          State.markedIndices.add(idx);
-          const chip = DOM.wordGrid.querySelector(`[data-index="${idx}"]`);
-          if (chip) chip.classList.add('marked');
-          updateMarkedCount();
-          SessionSnapshot.save(State);
-        }
-        showToast('✗ 已加入不熟悉列表', 'info', 2000);
-      }
-    });
-  }
-
   // Close peek popup on click outside
   document.addEventListener('click', (e) => {
     const popup = DOM.peekPopup;
     if (popup && popup.style.display !== 'none' && !popup.contains(e.target)) {
-      // Don't close if clicking a word chip (that starts a new peek)
-      if (!e.target.closest('.word-chip')) {
-        hidePeekPopup();
-      }
+      hidePeekPopup();
     }
   });
 
@@ -1108,6 +1188,7 @@ function wireEvents() {
       State.batchIndex = snap.batchIndex;
       State.currentWords = snap.currentWords;
       State.markedIndices = new Set(snap.markedIndices);
+      State.familiarIndices = new Set(snap.familiarIndices || []);
       State.sourceType = snap.sourceType;
       if (snap.vocabId) {
         State.builtinVocabId = snap.vocabId;
@@ -1258,11 +1339,10 @@ function handleKeyboardShortcut(e) {
 
     case 'm':
     case 'M':
-      // M: Mark current focus word (Grid screen)
+      // M: Mark all as unfamiliar (Grid screen)
       if (activeId === 'screenGrid') {
         e.preventDefault();
-        // Mark all — simpler approach
-        DOM.btnSelectAll.click();
+        if (DOM.btnBatchMarkUnfamiliar) DOM.btnBatchMarkUnfamiliar.click();
       }
       break;
 
@@ -1341,8 +1421,9 @@ function saveSettings() {
   const autoPronounce = DOM.inputAutoPronounce.checked;
   const showShortcuts = DOM.inputShowShortcuts.checked;
   const theme         = DOM.inputTheme.value;
+  const clickBehavior = DOM.inputClickBehavior.value;
 
-  Settings.saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts });
+  Settings.saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts, clickBehavior });
   Settings.setTheme(theme);
   applyTheme(theme);
 
@@ -1357,6 +1438,12 @@ function saveSettings() {
   }
 
   closeModal(DOM.modalSettings);
+
+  // v6.5: Update selection hint based on click behavior
+  if (DOM.selectionHint) {
+    DOM.selectionHint.textContent = clickBehavior === 'peek' ? '单击查看释义' : '单击直接标记';
+  }
+
   showToast('Settings saved.', 'success');
 }
 
@@ -1460,12 +1547,29 @@ async function startSession() {
 
     State.currentWords   = words;
     State.markedIndices  = new Set();
-    renderWordGrid(words);
-    DOM.historySection.style.display = 'none';
-    updateSessionInfo();
+    State.familiarIndices = new Set();
 
-    // v6.0: Preload next batch data
-    _preloadNextBatch();
+    // v6.5: Show batch preview before grid
+    const sourceLabel = State.sourceType === 'ai' ? 'AI 生成' :
+      State.sourceType === 'builtin' ? (State.builtinVocabId || '内置词库') :
+      '文件导入';
+    showBatchPreview(words, State.batchIndex, sourceLabel);
+
+    // Wire up "开始" button to proceed to grid
+    DOM.btnStartBatch.onclick = () => {
+      hideBatchPreview();
+      // Clear skeleton
+      document.querySelectorAll('.grid-skeleton').forEach(el => el.remove());
+      renderWordGrid(State.currentWords);
+      DOM.historySection.style.display = 'none';
+      updateSessionInfo();
+      // Start batch timer
+      startBatchTimer();
+      // Preload next batch
+      _preloadNextBatch();
+    };
+    // Auto-trigger if user already on grid screen (legacy path)
+    // No — user must click "开始" first
   } catch (err) {
     document.querySelectorAll('.grid-skeleton').forEach(el => el.remove());
     showScreen('welcome');
@@ -1511,20 +1615,99 @@ async function fetchWordBatch(apiKey, count) {
 /* =========================================================
    Word Grid
    ========================================================= */
+/* =========================================================
+   v6.5 — Word Grid (click→peek, long-press→direct mark)
+   ========================================================= */
+
+/** Current search query */
+let _gridSearchQuery = '';
+/** Current sort mode */
+let _gridSortMode = 'random';
+/** Batch timer state */
+let _batchTimerInterval = null;
+let _batchTimerSeconds = 0;
+
+/** Cache the currently displayed words (after filtering/sorting) */
+let _filteredWordIndices = [];
+
 function renderWordGrid(words) {
   DOM.wordGrid.innerHTML = '';
   DOM.batchLabel.textContent    = `Batch ${State.batchIndex}`;
   DOM.wordCountLabel.textContent = `${words.length} words`;
   updateMarkedCount();
 
-  words.forEach((word, index) => {
+  // Build filtered index list
+  _filteredWordIndices = words.map((_, i) => i);
+
+  // Apply search filter
+  const query = (_gridSearchQuery || '').toLowerCase().trim();
+  if (query) {
+    _filteredWordIndices = _filteredWordIndices.filter(i => {
+      const w = words[i].toLowerCase();
+      // Check built-in vocab for chineseDef
+      let cn = '';
+      if (State.builtinVocabData && Array.isArray(State.builtinVocabData)) {
+        const entry = State.builtinVocabData.find(d => d.word && d.word.toLowerCase() === w);
+        if (entry && entry.chineseDef) cn = entry.chineseDef.toLowerCase();
+      }
+      return w.includes(query) || cn.includes(query);
+    });
+  }
+
+  // Apply sort
+  if (_gridSortMode === 'alpha') {
+    _filteredWordIndices.sort((a, b) => words[a].localeCompare(words[b]));
+  } else if (_gridSortMode === 'difficulty') {
+    // Sort by EF value in review pool (lower EF = harder = first)
+    const pool = ReviewPool.getAll();
+    const efMap = {};
+    pool.forEach(e => { efMap[e.word.toLowerCase()] = e.ef || 2.5; });
+    _filteredWordIndices.sort((a, b) => {
+      const ea = efMap[words[a].toLowerCase()] || 2.5;
+      const eb = efMap[words[b].toLowerCase()] || 2.5;
+      return ea - eb;
+    });
+  } else {
+    // random — shuffle
+    for (let i = _filteredWordIndices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [_filteredWordIndices[i], _filteredWordIndices[j]] = [_filteredWordIndices[j], _filteredWordIndices[i]];
+    }
+  }
+
+  // Render chips
+  const clickBehavior = Settings.getClickBehavior() || 'peek';
+
+  _filteredWordIndices.forEach((origIdx) => {
+    const word = words[origIdx];
     const chip = document.createElement('button');
     chip.className   = 'word-chip';
     chip.textContent = word;
-    chip.dataset.index = index;
-    chip.addEventListener('click', () => toggleMark(chip, index));
-    // v5.5: Add long-press peek
-    addPeekListener(chip, word);
+    chip.dataset.index = origIdx;
+
+    // Apply existing mark state
+    if (State.markedIndices.has(origIdx)) {
+      chip.classList.add('marked');
+    }
+    if (State.familiarIndices && State.familiarIndices.has(origIdx)) {
+      chip.classList.add('familiar');
+    }
+
+    if (clickBehavior === 'peek') {
+      // Click → show peek popup
+      chip.addEventListener('click', (e) => {
+        // Close any other popup first
+        hidePeekPopup();
+        showPeekPopup(e, word);
+      });
+    } else {
+      // Click → direct toggle mark
+      chip.addEventListener('click', () => toggleMark(chip, origIdx));
+    }
+
+    // v6.5: Long-press (400ms) → direct mark unfamiliar (no popup)
+    addLongPressListener(chip, word);
+
     DOM.wordGrid.appendChild(chip);
   });
 
@@ -1532,26 +1715,71 @@ function renderWordGrid(words) {
   _preloadCurrentBatchDetails();
 }
 
+/**
+ * Legacy direct toggle for old 'mark' click behavior
+ */
 function toggleMark(chip, index) {
-  // Press animation
   chip.classList.add('press');
   setTimeout(() => chip.classList.remove('press'), 150);
+
+  // Remove familiar state if present
+  chip.classList.remove('familiar');
+  if (State.familiarIndices) State.familiarIndices.delete(index);
 
   if (State.markedIndices.has(index)) {
     State.markedIndices.delete(index);
     chip.classList.remove('marked');
-    // Unmark fade-out effect
     chip.classList.add('unmark-anim');
   } else {
     State.markedIndices.add(index);
     chip.classList.add('marked');
-    // Mark flash effect (border ripple)
     chip.classList.add('mark-anim');
     setTimeout(() => chip.classList.remove('mark-anim'), 400);
+    ReviewPool.addWord(State.currentWords[index]);
   }
   updateMarkedCount();
-  // v5.5: Auto-save snapshot on each mark change
   SessionSnapshot.save(State);
+}
+
+/**
+ * v6.5: Mark a word as familiar (green, no review pool addition)
+ */
+function markFamiliar(word, chip) {
+  const idx = State.currentWords.findIndex(w => w.toLowerCase() === word.toLowerCase());
+  if (idx >= 0) {
+    // Remove from marked/unfamiliar if present
+    State.markedIndices.delete(idx);
+    chip.classList.remove('marked');
+
+    // Add to familiar set
+    if (!State.familiarIndices) State.familiarIndices = new Set();
+    State.familiarIndices.add(idx);
+    chip.classList.add('familiar', 'mark-anim');
+    setTimeout(() => chip.classList.remove('mark-anim'), 400);
+
+    updateMarkedCount();
+    SessionSnapshot.save(State);
+  }
+}
+
+/**
+ * v6.5: Mark a word as unfamiliar (yellow, add to review pool)
+ */
+function markUnfamiliar(word, chip) {
+  const idx = State.currentWords.findIndex(w => w.toLowerCase() === word.toLowerCase());
+  if (idx >= 0) {
+    // Remove from familiar if present
+    if (State.familiarIndices) State.familiarIndices.delete(idx);
+    chip.classList.remove('familiar');
+
+    State.markedIndices.add(idx);
+    chip.classList.add('marked', 'mark-anim');
+    setTimeout(() => chip.classList.remove('mark-anim'), 400);
+
+    ReviewPool.addWord(word);
+    updateMarkedCount();
+    SessionSnapshot.save(State);
+  }
 }
 
 function updateMarkedCount() {
@@ -1573,10 +1801,214 @@ function updateGridProgress() {
   DOM.gridProgressFill.style.width = pct + '%';
 }
 
+/**
+ * v6.5: Long press (400ms) → direct mark unfamiliar, no popup
+ */
+let _longPressTimer = null;
+
+function addLongPressListener(chip, word) {
+  const startLongPress = (e) => {
+    _longPressTimer = setTimeout(() => {
+      _longPressTimer = null;
+      // Long press detected — mark unfamiliar directly
+      markUnfamiliar(word, chip);
+      showToast(`✗ 已标记 "${word}" 为不熟悉`, 'info', 1500);
+    }, 400);
+  };
+  const cancelLongPress = () => {
+    if (_longPressTimer) {
+      clearTimeout(_longPressTimer);
+      _longPressTimer = null;
+    }
+  };
+
+  chip.addEventListener('pointerdown', startLongPress);
+  chip.addEventListener('pointerup', cancelLongPress);
+  chip.addEventListener('pointerleave', cancelLongPress);
+
+  chip.addEventListener('touchstart', startLongPress, { passive: true });
+  chip.addEventListener('touchend', cancelLongPress);
+  chip.addEventListener('touchmove', cancelLongPress);
+}
+
+/* =========================================================
+   v6.5 — Grid Search, Sort & Batch Operations
+   ========================================================= */
+
+function setupGridSearch() {
+  if (!DOM.gridSearch) return;
+  let debounceTimer = null;
+  DOM.gridSearch.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      _gridSearchQuery = DOM.gridSearch.value;
+      renderWordGrid(State.currentWords);
+    }, 300);
+  });
+}
+
+function setupGridSort() {
+  if (!DOM.gridSort) return;
+  DOM.gridSort.addEventListener('change', () => {
+    _gridSortMode = DOM.gridSort.value;
+    renderWordGrid(State.currentWords);
+  });
+}
+
+function setupBatchActions() {
+  if (!DOM.btnBatchActions) return;
+  DOM.btnBatchActions.addEventListener('click', () => {
+    const dd = DOM.batchActionsDropdown;
+    dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  });
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (DOM.btnBatchActions && DOM.batchActionsDropdown &&
+        !DOM.btnBatchActions.contains(e.target) &&
+        !DOM.batchActionsDropdown.contains(e.target)) {
+      DOM.batchActionsDropdown.style.display = 'none';
+    }
+  });
+
+  // Select all → mark all as unfamiliar
+  if (DOM.btnBatchSelectAll) {
+    DOM.btnBatchSelectAll.addEventListener('click', () => {
+      State.currentWords.forEach((_, i) => {
+        if (State.familiarIndices) State.familiarIndices.delete(i);
+        State.markedIndices.add(i);
+        ReviewPool.addWord(State.currentWords[i]);
+        const chip = DOM.wordGrid.querySelector(`[data-index="${i}"]`);
+        if (chip) {
+          chip.classList.remove('familiar');
+          chip.classList.add('marked', 'mark-anim');
+          setTimeout(() => chip.classList.remove('mark-anim'), 400);
+        }
+      });
+      DOM.batchActionsDropdown.style.display = 'none';
+      updateMarkedCount();
+      SessionSnapshot.save(State);
+    });
+  }
+
+  // Deselect all
+  if (DOM.btnBatchDeselectAll) {
+    DOM.btnBatchDeselectAll.addEventListener('click', () => {
+      State.markedIndices.clear();
+      if (State.familiarIndices) State.familiarIndices.clear();
+      DOM.wordGrid.querySelectorAll('.word-chip').forEach(chip => {
+        chip.classList.remove('marked', 'familiar');
+      });
+      DOM.batchActionsDropdown.style.display = 'none';
+      updateMarkedCount();
+      SessionSnapshot.save(State);
+    });
+  }
+
+  // Batch mark unfamiliar
+  if (DOM.btnBatchMarkUnfamiliar) {
+    DOM.btnBatchMarkUnfamiliar.addEventListener('click', () => {
+      const allChips = DOM.wordGrid.querySelectorAll('.word-chip:not(.marked)');
+      allChips.forEach(chip => {
+        const idx = parseInt(chip.dataset.index);
+        if (State.familiarIndices) State.familiarIndices.delete(idx);
+        State.markedIndices.add(idx);
+        ReviewPool.addWord(State.currentWords[idx]);
+        chip.classList.remove('familiar');
+        chip.classList.add('marked', 'mark-anim');
+        setTimeout(() => chip.classList.remove('mark-anim'), 400);
+      });
+      DOM.batchActionsDropdown.style.display = 'none';
+      showToast(`已将 ${allChips.length} 词标记为陌生`, 'info', 2000);
+      updateMarkedCount();
+      SessionSnapshot.save(State);
+    });
+  }
+
+  // Batch mark familiar
+  if (DOM.btnBatchMarkFamiliar) {
+    DOM.btnBatchMarkFamiliar.addEventListener('click', () => {
+      const allChips = DOM.wordGrid.querySelectorAll('.word-chip.marked');
+      allChips.forEach(chip => {
+        const idx = parseInt(chip.dataset.index);
+        State.markedIndices.delete(idx);
+        if (!State.familiarIndices) State.familiarIndices = new Set();
+        State.familiarIndices.add(idx);
+        chip.classList.remove('marked');
+        chip.classList.add('familiar', 'mark-anim');
+        setTimeout(() => chip.classList.remove('mark-anim'), 400);
+      });
+      DOM.batchActionsDropdown.style.display = 'none';
+      showToast(`已将 ${allChips.length} 词标记为认识`, 'success', 2000);
+      updateMarkedCount();
+      SessionSnapshot.save(State);
+    });
+  }
+}
+
+/* =========================================================
+   v6.5 — Batch Timer
+   ========================================================= */
+function startBatchTimer() {
+  _batchTimerSeconds = 0;
+  if (DOM.batchTimer) {
+    DOM.batchTimer.style.display = 'inline-block';
+    DOM.batchTimer.textContent = '⏱ 0:00';
+  }
+  clearInterval(_batchTimerInterval);
+  _batchTimerInterval = setInterval(() => {
+    _batchTimerSeconds++;
+    const mins = Math.floor(_batchTimerSeconds / 60);
+    const secs = _batchTimerSeconds % 60;
+    if (DOM.batchTimer) {
+      DOM.batchTimer.textContent = `⏱ ${mins}:${String(secs).padStart(2, '0')}`;
+    }
+  }, 1000);
+}
+
+function stopBatchTimer() {
+  clearInterval(_batchTimerInterval);
+  _batchTimerInterval = null;
+  if (DOM.batchTimer) {
+    DOM.batchTimer.style.display = 'none';
+  }
+  return _batchTimerSeconds;
+}
+
+/* =========================================================
+   v6.5 — Batch Preview
+   ========================================================= */
+function showBatchPreview(words, batchIndex, sourceLabel) {
+  if (!DOM.batchPreview) return;
+
+  DOM.batchPreviewTitle.textContent = `Batch ${batchIndex} — ${sourceLabel}`;
+  DOM.batchPreviewCount.innerHTML = `<strong>${words.length}</strong> 个新词`;
+  DOM.batchPreviewSource.textContent = `词库：${sourceLabel}`;
+
+  // Show first 8 words as preview
+  const previewWords = words.slice(0, 8);
+  const restCount = words.length - previewWords.length;
+  let previewText = previewWords.join(', ');
+  if (restCount > 0) previewText += `, ... +${restCount}`;
+  DOM.batchPreviewWords.textContent = previewText;
+
+  // Estimate time: ~3 sec per word average
+  const estMins = Math.ceil(words.length * 3 / 60);
+  DOM.batchPreviewTime.textContent = `预计用时：${Math.max(1, estMins)}-${estMins + 3} 分钟`;
+
+  DOM.batchPreview.style.display = 'flex';
+}
+
+function hideBatchPreview() {
+  if (DOM.batchPreview) DOM.batchPreview.style.display = 'none';
+}
+
 /* =========================================================
    Next → Detail or Done
    ========================================================= */
 async function handleNext() {
+  // Stop timer
+  const elapsed = stopBatchTimer();
+
   const marked = [...State.markedIndices].map(i => State.currentWords[i]);
 
   if (marked.length > 0) {
@@ -1677,6 +2109,11 @@ function renderDetailCards(details) {
       ${d.example ? `<p class="detail-example">${escHtml(d.example)}
         <button class="detail-speak-btn" data-sentence="${escHtml(d.example)}">🔊</button>
       </p>` : ''}
+      ${d.chineseDef && d.example ? `<p class="detail-example-cn">${escHtml(d.chineseDef)}</p>` : ''}
+      ${d.collocation ? `<p class="detail-collocation"><strong>常搭配：</strong>${escHtml(d.collocation)}</p>` : ''}
+      <div class="detail-card-actions" style="margin-top:12px;display:flex;gap:8px;justify-content:center">
+        <button class="btn btn-ghost detail-unmark-btn" data-word="${escHtml(d.word)}">↩ 这不是陌生词</button>
+      </div>
     `;
     DOM.detailGrid.appendChild(card);
 
@@ -1721,6 +2158,29 @@ function renderDetailCards(details) {
       const sentence = btn.dataset.sentence;
       if (word) TTS.speakWord(word);
       if (sentence) TTS.speakSentence(sentence);
+    });
+  });
+
+  // v6.5: Wire up unmark buttons
+  DOM.detailGrid.querySelectorAll('.detail-unmark-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const word = btn.dataset.word;
+      const idx = State.currentWords.findIndex(w => w.toLowerCase() === word.toLowerCase());
+      if (idx >= 0 && State.markedIndices.has(idx)) {
+        State.markedIndices.delete(idx);
+        if (State.familiarIndices) State.familiarIndices.delete(idx);
+        const chip = DOM.wordGrid.querySelector(`[data-index="${idx}"]`);
+        if (chip) {
+          chip.classList.remove('marked', 'familiar');
+          chip.classList.add('unmark-anim');
+        }
+        updateMarkedCount();
+        SessionSnapshot.save(State);
+        showToast(`已取消标记 "${word}"`, 'info', 2000);
+        // Remove this card
+        const card = btn.closest('.detail-card');
+        if (card) card.style.opacity = '0.3';
+      }
     });
   });
 
@@ -1864,11 +2324,14 @@ async function handleNextBatch() {
     updateSessionInfo();
     State.currentWords = _preloadedNextBatch;
     State.markedIndices = new Set();
+    State.familiarIndices = new Set();
     _preloadedNextBatch = null;
     renderWordGrid(State.currentWords);
     DOM.historySection.style.display = 'none';
     updateSessionInfo();
     showScreen('grid');
+    // v6.5: Start batch timer
+    startBatchTimer();
     // Preload next batch and details
     _preloadCurrentBatchDetails();
     _preloadNextBatch();
@@ -1908,6 +2371,9 @@ function openReviewScreen() {
   } else {
     renderReviewList(dueWords, true);
   }
+
+  // v6.5: Render memory health bars
+  renderMemoryHealth();
 
   // v6.0: Badge check for review
   _trackUsedMode('review');
@@ -4333,41 +4799,28 @@ function renderGridSkeleton() {
 }
 
 /* =========================================================
-   v5.5 — Peek Popup (long-press word chip)
+   v6.5 — Peek Popup (click→view, with full detail)
    ========================================================= */
 let peekPopupWord = null;
-let peekTimer = null;
+let peekPopupVisible = false;
 
-function addPeekListener(chip, word) {
-  chip.addEventListener('mousedown', (e) => {
-    peekTimer = setTimeout(() => {
-      showPeekPopup(e, word);
-    }, 500);
-  });
-  chip.addEventListener('mouseup', () => { clearTimeout(peekTimer); });
-  chip.addEventListener('mouseleave', () => { clearTimeout(peekTimer); });
-
-  chip.addEventListener('touchstart', (e) => {
-    peekTimer = setTimeout(() => {
-      showPeekPopup(e, word);
-    }, 500);
-  }, { passive: true });
-  chip.addEventListener('touchend', () => { clearTimeout(peekTimer); });
-  chip.addEventListener('touchmove', () => { clearTimeout(peekTimer); });
-}
-
+/**
+ * v6.5: Show peek popup with complete word detail
+ */
 function showPeekPopup(e, word) {
   const popup = DOM.peekPopup;
   if (!popup) return;
   peekPopupWord = word;
+  peekPopupVisible = true;
 
   const lower = word.toLowerCase();
   let detail = null;
 
+  // Lookup detail from various sources
   if (State.builtinVocabData && Array.isArray(State.builtinVocabData)) {
     detail = State.builtinVocabData.find(d => d.word && d.word.toLowerCase() === lower);
   }
-  if (!detail) {
+  if (!detail && State.wordDetails && Array.isArray(State.wordDetails)) {
     detail = State.wordDetails.find(d => d.word && d.word.toLowerCase() === lower);
   }
   if (!detail) {
@@ -4376,22 +4829,49 @@ function showPeekPopup(e, word) {
       detail = cached.find(d => d.word && d.word.toLowerCase() === lower);
     } catch (_) {}
   }
-  if (!detail && State._detailMap) {
-    detail = State._detailMap[lower];
-  }
 
+  // Populate fields
   if (DOM.peekWord) DOM.peekWord.textContent = word;
   if (DOM.peekPron) DOM.peekPron.textContent = (detail && detail.pronunciation) ? detail.pronunciation : '';
-  if (DOM.peekChinese) DOM.peekChinese.textContent = (detail && detail.chineseDef) ? detail.chineseDef : '';
+  if (DOM.peekPos) {
+    DOM.peekPos.textContent = (detail && detail.partOfSpeech) ? detail.partOfSpeech : '';
+    DOM.peekPos.style.display = (detail && detail.partOfSpeech) ? 'inline-block' : 'none';
+  }
   if (DOM.peekDef) DOM.peekDef.textContent = (detail && detail.definition) ? detail.definition : '加载中...';
+  if (DOM.peekChinese) DOM.peekChinese.textContent = (detail && detail.chineseDef) ? detail.chineseDef : '';
 
+  // Collocation
+  if (DOM.peekCollocation) {
+    const coll = (detail && detail.collocation) || '';
+    if (coll) {
+      DOM.peekCollocation.textContent = coll;
+      DOM.peekCollocation.style.display = 'block';
+    } else {
+      DOM.peekCollocation.style.display = 'none';
+    }
+  }
+
+  // Example sentence with Chinese translation
+  if (DOM.peekExample) {
+    const ex = (detail && detail.example) || '';
+    const exCn = (detail && detail.chineseDef) || '';
+    if (ex) {
+      DOM.peekExample.style.display = 'block';
+      if (DOM.peekExampleEn) DOM.peekExampleEn.textContent = `"${ex}"`;
+      if (DOM.peekExampleCn) DOM.peekExampleCn.textContent = exCn;
+    } else {
+      DOM.peekExample.style.display = 'none';
+    }
+  }
+
+  // Position near click event
   let clientX, clientY;
   if (e.changedTouches) {
     clientX = e.changedTouches[0].clientX;
     clientY = e.changedTouches[0].clientY;
   } else {
-    clientX = e.clientX;
-    clientY = e.clientY;
+    clientX = e.clientX || e.pageX || 0;
+    clientY = e.clientY || e.pageY || 0;
   }
 
   popup.style.display = 'block';
@@ -4411,11 +4891,16 @@ function showPeekPopup(e, word) {
 
     popup.style.left = left + 'px';
     popup.style.top = top + 'px';
+
+    // Position arrow
+    const arrow = popup.querySelector('.peek-popup-arrow');
+    if (arrow) {
+      arrow.style.left = (clientX - left - 6) + 'px';
+      arrow.style.top = (clientY > top + popupRect.height / 2) ? '-6px' : (popupRect.height - 6) + 'px';
+    }
   });
 
-  setTimeout(() => {
-    hidePeekPopup();
-  }, 3000);
+  // No auto-hide — user closes by clicking close/outside/pressing buttons
 }
 
 function hidePeekPopup() {
@@ -4423,7 +4908,106 @@ function hidePeekPopup() {
   if (!popup) return;
   popup.style.display = 'none';
   peekPopupWord = null;
+  peekPopupVisible = false;
 }
+
+/* =========================================================
+   v6.5 — Memory Health Visualization
+   ========================================================= */
+
+/**
+ * Render memory health bars for review words
+ */
+function renderMemoryHealth() {
+  if (!DOM.reviewMemoryHealth || !DOM.memoryHealthBars) return;
+
+  const pool = ReviewPool.getAll();
+  const unmastered = pool.filter(e => e.status !== 'mastered');
+
+  if (unmastered.length === 0) {
+    DOM.reviewMemoryHealth.style.display = 'none';
+    return;
+  }
+
+  DOM.reviewMemoryHealth.style.display = 'block';
+
+  // Show health bars for up to the first 15 unmastered words
+  const shown = unmastered.slice(0, 15);
+
+  let html = '';
+  shown.forEach(entry => {
+    // Estimate retention rate using SM-2 formula
+    // R = e^(-interval / (EF * 2))
+    const ef = entry.ef || 2.5;
+    const interval = entry.interval || 1;
+    const retention = Math.exp(-interval / (ef * 2));
+    const pct = Math.round(Math.min(100, Math.max(5, retention * 100)));
+
+    let healthClass = 'high';
+    if (pct < 40) healthClass = 'low';
+    else if (pct < 65) healthClass = 'medium';
+
+    html += `
+      <div class="memory-health-bar-row">
+        <span class="memory-health-bar-label">${escHtml(entry.word)}</span>
+        <div class="memory-health-bar-track">
+          <div class="memory-health-bar-fill ${healthClass}" style="width:${pct}%"></div>
+        </div>
+        <span class="memory-health-bar-pct">${pct}%</span>
+      </div>
+    `;
+  });
+
+  DOM.memoryHealthBars.innerHTML = html;
+}
+
+/* =========================================================
+   v6.5 — Review 回顾 Panel
+   ========================================================= */
+
+/**
+ * Show review回顾 after completing a review session
+ * @param {object} stats - { total: number, correct: number, wrongWords: string[], nextDue: number }
+ */
+function showReviewReview(stats) {
+  if (!DOM.reviewReviewBackdrop) return;
+
+  const rate = stats.total > 0 ? Math.round((stats.correct / stats.total) * 100) : 0;
+
+  DOM.reviewReviewCount.textContent = `本次复习：${stats.total} 词`;
+  DOM.reviewReviewRate.textContent = `答对率：${rate}%`;
+
+  if (stats.wrongWords && stats.wrongWords.length > 0) {
+    DOM.reviewReviewWrong.style.display = 'block';
+    DOM.reviewReviewWrongList.innerHTML = stats.wrongWords.map(w =>
+      `<span class="review-review-wrong-item" data-word="${escHtml(w)}">${escHtml(w)}</span>`
+    ).join('');
+
+    // Click on wrong word shows detail
+    DOM.reviewReviewWrongList.querySelectorAll('.review-review-wrong-item').forEach(el => {
+      el.addEventListener('click', () => {
+        DOM.reviewReviewBackdrop.style.display = 'none';
+        showReviewDetail(el.dataset.word);
+      });
+    });
+  } else {
+    DOM.reviewReviewWrong.style.display = 'none';
+  }
+
+  DOM.reviewReviewNext.textContent = `下次复习：明天有 ${stats.nextDue || 0} 词到期`;
+
+  DOM.reviewReviewBackdrop.style.display = 'flex';
+}
+
+function hideReviewReview() {
+  if (DOM.reviewReviewBackdrop) DOM.reviewReviewBackdrop.style.display = 'none';
+}
+
+/* =========================================================
+   v5.5 — Quick Test in Done Screen
+   ========================================================= */
+let _quickTestStarted = false;
+let _quickTestState = null;
 
 /* =========================================================
    v5.5 — Quick Test in Done Screen
