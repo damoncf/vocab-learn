@@ -450,6 +450,9 @@ function init() {
   // v6.0: Initial badges update
   updateBadgesSection();
 
+  // v6.0: Initial challenge update
+  updateChallengeCard();
+
   // Show keyboard shortcut hint on first visit
   if (s.showShortcuts !== false && !localStorage.getItem('vocab_shortcuts_hint_shown')) {
     setTimeout(() => {
@@ -533,6 +536,9 @@ function updateWelcomeDailyCard() {
   if (goalValue) {
     goalValue.textContent = `${goal} 词`;
   }
+
+  // v6.0: Update challenge card
+  updateChallengeCard();
 
   // v6.0: Goal feedback
   const goalFeedback = document.getElementById('dailyGoalFeedback');
@@ -2631,6 +2637,95 @@ function showBadgeDetailModal() {
 
   document.body.appendChild(backdrop);
   backdrop.querySelector('#closeBadgeDetail').addEventListener('click', () => backdrop.remove());
+}
+
+/* =========================================================
+   v6.0 — Daily Challenge UI
+   ========================================================= */
+
+/**
+ * 更新每日挑战卡片
+ */
+function updateChallengeCard() {
+  const bodyEl = document.getElementById('challengeBody');
+  const streakEl = document.getElementById('challengeStreak');
+  if (!bodyEl || !streakEl) return;
+
+  const challenge = Challenge.getTodaysChallenge();
+  if (!challenge) {
+    bodyEl.innerHTML = '<div class="challenge-loading">词库数据不足，无法生成挑战</div>';
+    streakEl.textContent = '';
+    return;
+  }
+
+  // 更新连续答对
+  const streak = Challenge.getStreak();
+  streakEl.textContent = streak > 0 ? `🔥 连续 ${streak} 天` : '';
+
+  if (challenge.answered) {
+    // 已答状态
+    const resultClass = challenge.correct ? 'challenge-result-correct' : 'challenge-result-wrong';
+    const resultIcon = challenge.correct ? '🎉' : '😅';
+    const resultText = challenge.correct ? '答对了！' : '答错了，下次加油！';
+    const detail = challenge.detail || {};
+
+    bodyEl.innerHTML = `
+      <div class="challenge-answered">
+        <div class="challenge-result-icon">${resultIcon}</div>
+        <div class="challenge-result-text ${resultClass}">${resultText}</div>
+        <div class="challenge-result-detail">
+          <strong>${escHtml(challenge.word)}</strong>
+          ${detail.pronunciation ? `<span style="color:var(--color-text-muted);font-family:var(--font-mono);font-size:0.8rem">${escHtml(detail.pronunciation)}</span>` : ''}
+          <br>
+          <span>${escHtml(detail.chineseDef || detail.definition || challenge.correctAnswer)}</span>
+          ${detail.example ? `<br><span style="font-style:italic;color:var(--color-text-muted)">"${escHtml(detail.example)}"</span>` : ''}
+        </div>
+        <div class="challenge-result-streak">🌅 明天的挑战会在 0 点刷新</div>
+      </div>
+    `;
+  } else {
+    // 未答状态
+    bodyEl.innerHTML = `
+      <div class="challenge-unanswered">
+        <span class="challenge-word">${escHtml(challenge.word)}</span>
+        <div class="challenge-prompt">选择正确的中文释义</div>
+        <div class="challenge-options" id="challengeOptions">
+          ${challenge.options.map((opt, i) => `
+            <button class="challenge-option" data-index="${i}" data-value="${escHtml(opt)}">${escHtml(opt)}</button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    // Wire up option clicks
+    bodyEl.querySelectorAll('.challenge-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        handleChallengeAnswer(challenge, btn.dataset.value);
+      });
+    });
+  }
+}
+
+/**
+ * 处理挑战答案提交
+ */
+function handleChallengeAnswer(challenge, answer) {
+  const result = Challenge.submitAnswer(answer);
+  const options = document.querySelectorAll('.challenge-option');
+
+  options.forEach(btn => {
+    btn.disabled = true;
+    if (btn.dataset.value === challenge.correctAnswer) {
+      btn.classList.add('correct');
+    } else if (btn.dataset.value === answer && !result.correct) {
+      btn.classList.add('wrong');
+    }
+  });
+
+  // 延迟刷新
+  setTimeout(() => {
+    updateChallengeCard();
+  }, 1200);
 }
 
 /* =========================================================
