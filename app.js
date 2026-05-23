@@ -5009,12 +5009,6 @@ function hideReviewReview() {
 let _quickTestStarted = false;
 let _quickTestState = null;
 
-/* =========================================================
-   v5.5 — Quick Test in Done Screen
-   ========================================================= */
-let _quickTestStarted = false;
-let _quickTestState = null;
-
 function startQuickTest() {
   if (!DOM.quickTestContent) return;
 
