@@ -1,0 +1,594 @@
+[
+  {
+    "word": "abjure",
+    "pronunciation": "/əbˈdʒʊər/",
+    "partOfSpeech": "v.",
+    "definition": "to renounce or give up",
+    "chineseDef": "发誓放弃",
+    "example": "He abjured his former beliefs."
+  },
+  {
+    "word": "abstain",
+    "pronunciation": "/əbˈsteɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to refrain from something",
+    "chineseDef": "戒除，弃权",
+    "example": "She abstained from voting."
+  },
+  {
+    "word": "accolade",
+    "pronunciation": "/ˈækəleɪd/",
+    "partOfSpeech": "n.",
+    "definition": "an award or praise",
+    "chineseDef": "荣誉",
+    "example": "She received many accolades."
+  },
+  {
+    "word": "acumen",
+    "pronunciation": "/ˈækjʊmən/",
+    "partOfSpeech": "n.",
+    "definition": "the ability to make good judgments",
+    "chineseDef": "敏锐",
+    "example": "Business acumen is valuable."
+  },
+  {
+    "word": "admonish",
+    "pronunciation": "/ədˈmɒnɪʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to warn or reprimand",
+    "chineseDef": "告诫",
+    "example": "The teacher admonished the students."
+  },
+  {
+    "word": "adverse",
+    "pronunciation": "/ˈædvɜːs/",
+    "partOfSpeech": "adj.",
+    "definition": "unfavorable or harmful",
+    "chineseDef": "不利的",
+    "example": "The adverse weather delayed the flight."
+  },
+  {
+    "word": "aesthetic",
+    "pronunciation": "/iːsˈθetɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "concerned with beauty",
+    "chineseDef": "审美的",
+    "example": "The building has aesthetic appeal."
+  },
+  {
+    "word": "affable",
+    "pronunciation": "/ˈæfəbl/",
+    "partOfSpeech": "adj.",
+    "definition": "friendly and easy to talk to",
+    "chineseDef": "和蔼的",
+    "example": "She has an affable personality."
+  },
+  {
+    "word": "alacrity",
+    "pronunciation": "/əˈlækrəti/",
+    "partOfSpeech": "n.",
+    "definition": "eager willingness",
+    "chineseDef": "爽快",
+    "example": "She accepted with alacrity."
+  },
+  {
+    "word": "allege",
+    "pronunciation": "/əˈledʒ/",
+    "partOfSpeech": "v.",
+    "definition": "to claim without proof",
+    "chineseDef": "声称",
+    "example": "He alleged corruption."
+  },
+  {
+    "word": "ambiguous",
+    "pronunciation": "/æmˈbɪɡjuəs/",
+    "partOfSpeech": "adj.",
+    "definition": "open to multiple interpretations",
+    "chineseDef": "模棱两可的",
+    "example": "The statement was ambiguous."
+  },
+  {
+    "word": "ameliorate",
+    "pronunciation": "/əˈmiːliəreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to make better",
+    "chineseDef": "改善",
+    "example": "We need to ameliorate the situation."
+  },
+  {
+    "word": "anomaly",
+    "pronunciation": "/əˈnɒməli/",
+    "partOfSpeech": "n.",
+    "definition": "something that deviates from the norm",
+    "chineseDef": "异常",
+    "example": "The result was an anomaly."
+  },
+  {
+    "word": "apathetic",
+    "pronunciation": "/ˌæpəˈθetɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "lacking interest",
+    "chineseDef": "冷漠的",
+    "example": "The audience was apathetic."
+  },
+  {
+    "word": "arbitrary",
+    "pronunciation": "/ˈɑːbɪtrəri/",
+    "partOfSpeech": "adj.",
+    "definition": "based on random choice",
+    "chineseDef": "任意的",
+    "example": "The decision seemed arbitrary."
+  },
+  {
+    "word": "arduous",
+    "pronunciation": "/ˈɑːdjuəs/",
+    "partOfSpeech": "adj.",
+    "definition": "difficult and tiring",
+    "chineseDef": "艰苦的",
+    "example": "The climb was arduous."
+  },
+  {
+    "word": "articulate",
+    "pronunciation": "/ɑːˈtɪkjuleɪt/",
+    "partOfSpeech": "adj.",
+    "definition": "clear and well-spoken",
+    "chineseDef": "口齿清晰的",
+    "example": "She is articulate."
+  },
+  {
+    "word": "ascertain",
+    "pronunciation": "/ˌæsəˈteɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to find out for certain",
+    "chineseDef": "查明",
+    "example": "We need to ascertain the truth."
+  },
+  {
+    "word": "assiduous",
+    "pronunciation": "/əˈsɪdjuəs/",
+    "partOfSpeech": "adj.",
+    "definition": "showing great care and effort",
+    "chineseDef": "勤勉的",
+    "example": "She was assiduous in her studies."
+  },
+  {
+    "word": "astute",
+    "pronunciation": "/əˈstjuːt/",
+    "partOfSpeech": "adj.",
+    "definition": "sharp and perceptive",
+    "chineseDef": "精明的",
+    "example": "He is an astute investor."
+  },
+  {
+    "word": "auspicious",
+    "pronunciation": "/ɔːˈspɪʃəs/",
+    "partOfSpeech": "adj.",
+    "definition": "favorable and promising",
+    "chineseDef": "吉利的",
+    "example": "The launch was auspicious."
+  },
+  {
+    "word": "austere",
+    "pronunciation": "/ɒˈstɪər/",
+    "partOfSpeech": "adj.",
+    "definition": "severe and strict",
+    "chineseDef": "简朴的",
+    "example": "He lived an austere life."
+  },
+  {
+    "word": "avarice",
+    "pronunciation": "/ˈævərɪs/",
+    "partOfSpeech": "n.",
+    "definition": "extreme greed",
+    "chineseDef": "贪婪",
+    "example": "His avarice knew no bounds."
+  },
+  {
+    "word": "avid",
+    "pronunciation": "/ˈævɪd/",
+    "partOfSpeech": "adj.",
+    "definition": "enthusiastic and eager",
+    "chineseDef": "热切的",
+    "example": "She is an avid reader."
+  },
+  {
+    "word": "benevolent",
+    "pronunciation": "/bəˈnevələnt/",
+    "partOfSpeech": "adj.",
+    "definition": "kind and generous",
+    "chineseDef": "仁慈的",
+    "example": "The donor was benevolent."
+  },
+  {
+    "word": "benign",
+    "pronunciation": "/bɪˈnaɪn/",
+    "partOfSpeech": "adj.",
+    "definition": "gentle and not harmful",
+    "chineseDef": "良性的",
+    "example": "The tumor was benign."
+  },
+  {
+    "word": "bequeath",
+    "pronunciation": "/bɪˈkwiːð/",
+    "partOfSpeech": "v.",
+    "definition": "to leave property in a will",
+    "chineseDef": "遗赠",
+    "example": "He bequeathed his estate to charity."
+  },
+  {
+    "word": "berate",
+    "pronunciation": "/bɪˈreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to scold harshly",
+    "chineseDef": "严厉斥责",
+    "example": "The boss berated the employees."
+  },
+  {
+    "word": "bias",
+    "pronunciation": "/ˈbaɪəs/",
+    "partOfSpeech": "n.",
+    "definition": "prejudice",
+    "chineseDef": "偏见",
+    "example": "The article shows political bias."
+  },
+  {
+    "word": "bolster",
+    "pronunciation": "/ˈbəʊlstər/",
+    "partOfSpeech": "v.",
+    "definition": "to support or strengthen",
+    "chineseDef": "支持",
+    "example": "The evidence bolstered his case."
+  },
+  {
+    "word": "bombastic",
+    "pronunciation": "/bɒmˈbæstɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "high-sounding but empty",
+    "chineseDef": "夸夸其谈的",
+    "example": "His speech was bombastic."
+  },
+  {
+    "word": "cacophony",
+    "pronunciation": "/kəˈkɒfəni/",
+    "partOfSpeech": "n.",
+    "definition": "a harsh mixture of sounds",
+    "chineseDef": "刺耳的声音",
+    "example": "The cacophony was loud."
+  },
+  {
+    "word": "candid",
+    "pronunciation": "/ˈkændɪd/",
+    "partOfSpeech": "adj.",
+    "definition": "open and honest",
+    "chineseDef": "坦率的",
+    "example": "She gave a candid assessment."
+  },
+  {
+    "word": "capitulate",
+    "pronunciation": "/kəˈpɪtjuleɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to surrender or give in",
+    "chineseDef": "投降",
+    "example": "The army capitulated."
+  },
+  {
+    "word": "catalyst",
+    "pronunciation": "/ˈkætəlɪst/",
+    "partOfSpeech": "n.",
+    "definition": "something that causes change",
+    "chineseDef": "催化剂",
+    "example": "The speech was a catalyst for change."
+  },
+  {
+    "word": "caustic",
+    "pronunciation": "/ˈkɔːstɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "sarcastic or burning",
+    "chineseDef": "尖刻的",
+    "example": "His caustic remarks hurt her."
+  },
+  {
+    "word": "circumspect",
+    "pronunciation": "/ˈsɜːkəmspekt/",
+    "partOfSpeech": "adj.",
+    "definition": "careful and cautious",
+    "chineseDef": "谨慎的",
+    "example": "Be circumspect."
+  },
+  {
+    "word": "circumvent",
+    "pronunciation": "/ˌsɜːkəmˈvent/",
+    "partOfSpeech": "v.",
+    "definition": "to find a way around",
+    "chineseDef": "规避",
+    "example": "They circumvented the regulations."
+  },
+  {
+    "word": "clandestine",
+    "pronunciation": "/klænˈdestɪn/",
+    "partOfSpeech": "adj.",
+    "definition": "secret and hidden",
+    "chineseDef": "秘密的",
+    "example": "They held a clandestine meeting."
+  },
+  {
+    "word": "coerce",
+    "pronunciation": "/kəʊˈɜːs/",
+    "partOfSpeech": "v.",
+    "definition": "to force someone to do something",
+    "chineseDef": "强迫",
+    "example": "They coerced him into signing."
+  },
+  {
+    "word": "cogent",
+    "pronunciation": "/ˈkəʊdʒənt/",
+    "partOfSpeech": "adj.",
+    "definition": "clear and convincing",
+    "chineseDef": "有说服力的",
+    "example": "Her argument was cogent."
+  },
+  {
+    "word": "colloquial",
+    "pronunciation": "/kəˈləʊkwiəl/",
+    "partOfSpeech": "adj.",
+    "definition": "informal and conversational",
+    "chineseDef": "口语的",
+    "example": "Colloquial language is used daily."
+  },
+  {
+    "word": "compelling",
+    "pronunciation": "/kəmˈpelɪŋ/",
+    "partOfSpeech": "adj.",
+    "definition": "extremely interesting",
+    "chineseDef": "引人入胜的",
+    "example": "The story was compelling."
+  },
+  {
+    "word": "compliant",
+    "pronunciation": "/kəmˈplaɪənt/",
+    "partOfSpeech": "adj.",
+    "definition": "willing to obey",
+    "chineseDef": "顺从的",
+    "example": "The child was compliant."
+  },
+  {
+    "word": "concede",
+    "pronunciation": "/kənˈsiːd/",
+    "partOfSpeech": "v.",
+    "definition": "to admit or yield",
+    "chineseDef": "承认",
+    "example": "He conceded defeat."
+  },
+  {
+    "word": "conciliatory",
+    "pronunciation": "/kənˈsɪliətɔːri/",
+    "partOfSpeech": "adj.",
+    "definition": "intended to make peace",
+    "chineseDef": "安抚的",
+    "example": "She made a conciliatory gesture."
+  },
+  {
+    "word": "conclusive",
+    "pronunciation": "/kənˈkluːsɪv/",
+    "partOfSpeech": "adj.",
+    "definition": "settling an issue",
+    "chineseDef": "决定性的",
+    "example": "The evidence was conclusive."
+  },
+  {
+    "word": "condone",
+    "pronunciation": "/kənˈdəʊn/",
+    "partOfSpeech": "v.",
+    "definition": "to overlook or forgive",
+    "chineseDef": "宽恕",
+    "example": "I cannot condone such behavior."
+  },
+  {
+    "word": "conjecture",
+    "pronunciation": "/kənˈdʒektʃər/",
+    "partOfSpeech": "n.",
+    "definition": "a guess based on incomplete info",
+    "chineseDef": "推测",
+    "example": "That's pure conjecture."
+  },
+  {
+    "word": "conscientious",
+    "pronunciation": "/ˌkɒnʃiˈenʃəs/",
+    "partOfSpeech": "adj.",
+    "definition": "thorough and careful",
+    "chineseDef": "尽职尽责的",
+    "example": "She is a conscientious worker."
+  },
+  {
+    "word": "consensus",
+    "pronunciation": "/kənˈsensəs/",
+    "partOfSpeech": "n.",
+    "definition": "general agreement",
+    "chineseDef": "共识",
+    "example": "The group reached a consensus."
+  },
+  {
+    "word": "conspicuous",
+    "pronunciation": "/kənˈspɪkjuəs/",
+    "partOfSpeech": "adj.",
+    "definition": "easily noticeable",
+    "chineseDef": "显眼的",
+    "example": "The sign was conspicuous."
+  },
+  {
+    "word": "constrain",
+    "pronunciation": "/kənˈstreɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to limit or restrict",
+    "chineseDef": "约束",
+    "example": "Funding constrained the project."
+  },
+  {
+    "word": "contemplate",
+    "pronunciation": "/ˈkɒntəmpleɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to consider deeply",
+    "chineseDef": "沉思",
+    "example": "She contemplated her future."
+  },
+  {
+    "word": "contempt",
+    "pronunciation": "/kənˈtempt/",
+    "partOfSpeech": "n.",
+    "definition": "a feeling of disdain",
+    "chineseDef": "蔑视",
+    "example": "He showed contempt."
+  },
+  {
+    "word": "controversy",
+    "pronunciation": "/kənˈtrɒvərsi/",
+    "partOfSpeech": "n.",
+    "definition": "a prolonged public disagreement",
+    "chineseDef": "争议",
+    "example": "The decision sparked controversy."
+  },
+  {
+    "word": "conundrum",
+    "pronunciation": "/kəˈnʌndrəm/",
+    "partOfSpeech": "n.",
+    "definition": "a confusing problem",
+    "chineseDef": "难题",
+    "example": "The question was a conundrum."
+  },
+  {
+    "word": "copious",
+    "pronunciation": "/ˈkəʊpiəs/",
+    "partOfSpeech": "adj.",
+    "definition": "abundant in quantity",
+    "chineseDef": "大量的",
+    "example": "She took copious notes."
+  },
+  {
+    "word": "corroborate",
+    "pronunciation": "/kəˈrɒbəreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to confirm or support",
+    "chineseDef": "证实",
+    "example": "The witness corroborated his story."
+  },
+  {
+    "word": "cosmopolitan",
+    "pronunciation": "/ˌkɒzməˈpɒlɪtən/",
+    "partOfSpeech": "adj.",
+    "definition": "familiar with many cultures",
+    "chineseDef": "世界性的",
+    "example": "She has a cosmopolitan outlook."
+  },
+  {
+    "word": "covert",
+    "pronunciation": "/ˈkʌvət/",
+    "partOfSpeech": "adj.",
+    "definition": "hidden or secret",
+    "chineseDef": "隐秘的",
+    "example": "They conducted covert operations."
+  },
+  {
+    "word": "credulous",
+    "pronunciation": "/ˈkredʒʊləs/",
+    "partOfSpeech": "adj.",
+    "definition": "easily believing",
+    "chineseDef": "轻信的",
+    "example": "The credulous child believed everything."
+  },
+  {
+    "word": "culminate",
+    "pronunciation": "/ˈkʌlmɪneɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to reach the highest point",
+    "chineseDef": "达到顶点",
+    "example": "The festival culminated in fireworks."
+  },
+  {
+    "word": "cursory",
+    "pronunciation": "/ˈkɜːsəri/",
+    "partOfSpeech": "adj.",
+    "definition": "hasty and superficial",
+    "chineseDef": "粗略的",
+    "example": "He gave the report a cursory glance."
+  },
+  {
+    "word": "curtail",
+    "pronunciation": "/kɜːˈteɪl/",
+    "partOfSpeech": "v.",
+    "definition": "to reduce or cut short",
+    "chineseDef": "削减",
+    "example": "The budget was curtailed."
+  },
+  {
+    "word": "cynical",
+    "pronunciation": "/ˈsɪnɪkəl/",
+    "partOfSpeech": "adj.",
+    "definition": "distrustful of others' motives",
+    "chineseDef": "愤世嫉俗的",
+    "example": "He is cynical about politics."
+  },
+  {
+    "word": "daunting",
+    "pronunciation": "/ˈdɔːntɪŋ/",
+    "partOfSpeech": "adj.",
+    "definition": "seeming difficult to deal with",
+    "chineseDef": "令人畏惧的",
+    "example": "The task was daunting."
+  },
+  {
+    "word": "debacle",
+    "pronunciation": "/deɪˈbɑːkl/",
+    "partOfSpeech": "n.",
+    "definition": "a complete failure",
+    "chineseDef": "惨败",
+    "example": "The project was a debacle."
+  },
+  {
+    "word": "decorum",
+    "pronunciation": "/dɪˈkɔːrəm/",
+    "partOfSpeech": "n.",
+    "definition": "proper behavior",
+    "chineseDef": "得体",
+    "example": "He maintained decorum."
+  },
+  {
+    "word": "deference",
+    "pronunciation": "/ˈdefərəns/",
+    "partOfSpeech": "n.",
+    "definition": "polite respect",
+    "chineseDef": "尊重",
+    "example": "She spoke with deference."
+  },
+  {
+    "word": "delineate",
+    "pronunciation": "/dɪˈlɪnieɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to describe or portray accurately",
+    "chineseDef": "描绘",
+    "example": "The report delineates the issues."
+  },
+  {
+    "word": "deluge",
+    "pronunciation": "/ˈdeljuːdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "a great flood or downpour",
+    "chineseDef": "洪水",
+    "example": "The deluge caused widespread damage."
+  },
+  {
+    "word": "demeanor",
+    "pronunciation": "/dɪˈmiːnər/",
+    "partOfSpeech": "n.",
+    "definition": "outward behavior or manner",
+    "chineseDef": "举止",
+    "example": "His calm demeanor was reassuring."
+  },
+  {
+    "word": "denigrate",
+    "pronunciation": "/ˈdenɪɡreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to criticize unfairly",
+    "chineseDef": "诋毁",
+    "example": "Do not denigrate others."
+  }
+]

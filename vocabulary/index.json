@@ -5,7 +5,7 @@
       "name": "CET-4",
       "nameCn": "大学英语四级",
       "description": "约4500个四级核心词汇，掌握后可应对大学英语四级考试",
-      "wordCount": 4500,
+      "wordCount": 453,
       "difficulty": "intermediate",
       "source": "builtin",
       "file": "cet4.json"
@@ -15,7 +15,7 @@
       "name": "CET-6",
       "nameCn": "大学英语六级",
       "description": "约6000个六级核心词汇，适合已通过四级的学习者",
-      "wordCount": 6000,
+      "wordCount": 289,
       "difficulty": "advanced",
       "source": "builtin",
       "file": "cet6.json"
@@ -25,7 +25,7 @@
       "name": "IELTS",
       "nameCn": "雅思核心词汇",
       "description": "约3500个雅思高频词汇，涵盖学术类和生活类场景",
-      "wordCount": 3500,
+      "wordCount": 291,
       "difficulty": "advanced",
       "source": "builtin",
       "file": "ielts.json"
@@ -35,7 +35,7 @@
       "name": "TOEFL",
       "nameCn": "托福核心词汇",
       "description": "约4000个托福高频词汇，涵盖学术讲座和校园场景",
-      "wordCount": 4000,
+      "wordCount": 356,
       "difficulty": "advanced",
       "source": "builtin",
       "file": "toefl.json"
@@ -45,10 +45,70 @@
       "name": "GRE",
       "nameCn": "GRE词汇",
       "description": "约5000个GRE核心词汇，含大量学术词汇和高级词汇",
-      "wordCount": 5000,
+      "wordCount": 411,
       "difficulty": "advanced",
       "source": "builtin",
       "file": "gre.json"
+    },
+    {
+      "id": "gaokao",
+      "name": "Gaokao",
+      "nameCn": "高考英语",
+      "description": "高中英语课标词汇，覆盖高考核心词汇",
+      "difficulty": "intermediate",
+      "wordCount": 643,
+      "source": "builtin",
+      "file": "gaokao.json"
+    },
+    {
+      "id": "k12",
+      "name": "K12",
+      "nameCn": "中考英语",
+      "description": "初中英语课标词汇，适合中考备考",
+      "difficulty": "beginner",
+      "wordCount": 100,
+      "source": "builtin",
+      "file": "k12.json"
+    },
+    {
+      "id": "business",
+      "name": "Business",
+      "nameCn": "商务英语",
+      "description": "BEC核心词汇，涵盖商务场景",
+      "difficulty": "advanced",
+      "wordCount": 109,
+      "source": "builtin",
+      "file": "business.json"
+    },
+    {
+      "id": "sat",
+      "name": "SAT",
+      "nameCn": "SAT词汇",
+      "description": "美国高考核心学术词汇",
+      "difficulty": "advanced",
+      "wordCount": 74,
+      "source": "builtin",
+      "file": "sat.json"
+    },
+    {
+      "id": "phrasal-verbs",
+      "name": "Phrasal Verbs",
+      "nameCn": "动词短语",
+      "description": "高频英语动词短语",
+      "difficulty": "intermediate",
+      "wordCount": 50,
+      "source": "builtin",
+      "file": "phrasal-verbs.json"
+    },
+    {
+      "id": "collins",
+      "name": "Collins 3000",
+      "nameCn": "柯林斯高频词",
+      "description": "柯林斯星级标记高频单词",
+      "difficulty": "beginner",
+      "wordCount": 98,
+      "source": "builtin",
+      "file": "collins.json"
     }
   ]
 }

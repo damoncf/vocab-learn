@@ -1,0 +1,786 @@
+[
+  {
+    "word": "the",
+    "pronunciation": "/ðə/",
+    "partOfSpeech": "det.",
+    "definition": "used to refer to something specific",
+    "chineseDef": "定冠词",
+    "example": "The sun is shining."
+  },
+  {
+    "word": "be",
+    "pronunciation": "/biː/",
+    "partOfSpeech": "v.",
+    "definition": "to exist or have a quality",
+    "chineseDef": "是，存在",
+    "example": "I want to be a doctor."
+  },
+  {
+    "word": "to",
+    "pronunciation": "/tuː/",
+    "partOfSpeech": "prep.",
+    "definition": "in the direction of",
+    "chineseDef": "向，到",
+    "example": "Go to the store."
+  },
+  {
+    "word": "of",
+    "pronunciation": "/ɒv/",
+    "partOfSpeech": "prep.",
+    "definition": "expressing the relationship",
+    "chineseDef": "的",
+    "example": "The color of the sky."
+  },
+  {
+    "word": "and",
+    "pronunciation": "/ænd/",
+    "partOfSpeech": "conj.",
+    "definition": "used to connect words",
+    "chineseDef": "和",
+    "example": "You and me."
+  },
+  {
+    "word": "a",
+    "pronunciation": "/eɪ/",
+    "partOfSpeech": "art.",
+    "definition": "used before nouns",
+    "chineseDef": "一个",
+    "example": "I saw a bird."
+  },
+  {
+    "word": "in",
+    "pronunciation": "/ɪn/",
+    "partOfSpeech": "prep.",
+    "definition": "expressing location or time",
+    "chineseDef": "在...里面",
+    "example": "It is in the box."
+  },
+  {
+    "word": "that",
+    "pronunciation": "/ðæt/",
+    "partOfSpeech": "conj.",
+    "definition": "introducing a clause",
+    "chineseDef": "那",
+    "example": "I know that you are right."
+  },
+  {
+    "word": "have",
+    "pronunciation": "/hæv/",
+    "partOfSpeech": "v.",
+    "definition": "to possess or own",
+    "chineseDef": "有",
+    "example": "I have a car."
+  },
+  {
+    "word": "it",
+    "pronunciation": "/ɪt/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to a thing",
+    "chineseDef": "它",
+    "example": "It is raining."
+  },
+  {
+    "word": "for",
+    "pronunciation": "/fɔːr/",
+    "partOfSpeech": "prep.",
+    "definition": "intended to belong to",
+    "chineseDef": "为了",
+    "example": "This is for you."
+  },
+  {
+    "word": "not",
+    "pronunciation": "/nɒt/",
+    "partOfSpeech": "adv.",
+    "definition": "used to form the negative",
+    "chineseDef": "不",
+    "example": "I do not know."
+  },
+  {
+    "word": "on",
+    "pronunciation": "/ɒn/",
+    "partOfSpeech": "prep.",
+    "definition": "physically in contact with",
+    "chineseDef": "在...上",
+    "example": "The book is on the table."
+  },
+  {
+    "word": "with",
+    "pronunciation": "/wɪð/",
+    "partOfSpeech": "prep.",
+    "definition": "accompanied by",
+    "chineseDef": "和...一起",
+    "example": "Come with me."
+  },
+  {
+    "word": "he",
+    "pronunciation": "/hiː/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to a male",
+    "chineseDef": "他",
+    "example": "He is my brother."
+  },
+  {
+    "word": "as",
+    "pronunciation": "/æz/",
+    "partOfSpeech": "conj.",
+    "definition": "used to indicate function",
+    "chineseDef": "作为",
+    "example": "She works as a teacher."
+  },
+  {
+    "word": "you",
+    "pronunciation": "/juː/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to the person addressed",
+    "chineseDef": "你",
+    "example": "You are my friend."
+  },
+  {
+    "word": "do",
+    "pronunciation": "/duː/",
+    "partOfSpeech": "v.",
+    "definition": "to perform an action",
+    "chineseDef": "做",
+    "example": "What do you do?"
+  },
+  {
+    "word": "at",
+    "pronunciation": "/æt/",
+    "partOfSpeech": "prep.",
+    "definition": "expressing location",
+    "chineseDef": "在",
+    "example": "I am at home."
+  },
+  {
+    "word": "this",
+    "pronunciation": "/ðɪs/",
+    "partOfSpeech": "pron.",
+    "definition": "used to identify a specific thing",
+    "chineseDef": "这个",
+    "example": "This is mine."
+  },
+  {
+    "word": "but",
+    "pronunciation": "/bʌt/",
+    "partOfSpeech": "conj.",
+    "definition": "used to introduce a contrast",
+    "chineseDef": "但是",
+    "example": "I like it but it's expensive."
+  },
+  {
+    "word": "his",
+    "pronunciation": "/hɪz/",
+    "partOfSpeech": "pron.",
+    "definition": "belonging to him",
+    "chineseDef": "他的",
+    "example": "This is his book."
+  },
+  {
+    "word": "by",
+    "pronunciation": "/baɪ/",
+    "partOfSpeech": "prep.",
+    "definition": "indicating the agent",
+    "chineseDef": "通过",
+    "example": "It was made by her."
+  },
+  {
+    "word": "from",
+    "pronunciation": "/frɒm/",
+    "partOfSpeech": "prep.",
+    "definition": "indicating the point of origin",
+    "chineseDef": "从",
+    "example": "I come from China."
+  },
+  {
+    "word": "they",
+    "pronunciation": "/ðeɪ/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to people or things",
+    "chineseDef": "他们",
+    "example": "They are here."
+  },
+  {
+    "word": "we",
+    "pronunciation": "/wiː/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to oneself and others",
+    "chineseDef": "我们",
+    "example": "We are going."
+  },
+  {
+    "word": "say",
+    "pronunciation": "/seɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to utter words",
+    "chineseDef": "说",
+    "example": "What did you say?"
+  },
+  {
+    "word": "her",
+    "pronunciation": "/hɜːr/",
+    "partOfSpeech": "pron.",
+    "definition": "belonging to her",
+    "chineseDef": "她的",
+    "example": "I like her dress."
+  },
+  {
+    "word": "she",
+    "pronunciation": "/ʃiː/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to a female",
+    "chineseDef": "她",
+    "example": "She is my sister."
+  },
+  {
+    "word": "or",
+    "pronunciation": "/ɔːr/",
+    "partOfSpeech": "conj.",
+    "definition": "used to link alternatives",
+    "chineseDef": "或者",
+    "example": "Tea or coffee?"
+  },
+  {
+    "word": "will",
+    "pronunciation": "/wɪl/",
+    "partOfSpeech": "modal.",
+    "definition": "expressing the future",
+    "chineseDef": "将",
+    "example": "I will go."
+  },
+  {
+    "word": "my",
+    "pronunciation": "/maɪ/",
+    "partOfSpeech": "pron.",
+    "definition": "belonging to me",
+    "chineseDef": "我的",
+    "example": "This is my car."
+  },
+  {
+    "word": "one",
+    "pronunciation": "/wʌn/",
+    "partOfSpeech": "num.",
+    "definition": "the number 1",
+    "chineseDef": "一",
+    "example": "I have one apple."
+  },
+  {
+    "word": "all",
+    "pronunciation": "/ɔːl/",
+    "partOfSpeech": "adj.",
+    "definition": "the whole quantity of",
+    "chineseDef": "所有的",
+    "example": "All people are equal."
+  },
+  {
+    "word": "would",
+    "pronunciation": "/wʊd/",
+    "partOfSpeech": "modal.",
+    "definition": "expressing conditional",
+    "chineseDef": "会",
+    "example": "I would like that."
+  },
+  {
+    "word": "there",
+    "pronunciation": "/ðeər/",
+    "partOfSpeech": "adv.",
+    "definition": "in, at, or to that place",
+    "chineseDef": "在那里",
+    "example": "It is over there."
+  },
+  {
+    "word": "their",
+    "pronunciation": "/ðeər/",
+    "partOfSpeech": "pron.",
+    "definition": "belonging to them",
+    "chineseDef": "他们的",
+    "example": "Their house is big."
+  },
+  {
+    "word": "what",
+    "pronunciation": "/wɒt/",
+    "partOfSpeech": "pron.",
+    "definition": "asking for information",
+    "chineseDef": "什么",
+    "example": "What is your name?"
+  },
+  {
+    "word": "so",
+    "pronunciation": "/səʊ/",
+    "partOfSpeech": "adv.",
+    "definition": "to such a great extent",
+    "chineseDef": "如此",
+    "example": "It's so beautiful."
+  },
+  {
+    "word": "up",
+    "pronunciation": "/ʌp/",
+    "partOfSpeech": "adv.",
+    "definition": "toward a higher position",
+    "chineseDef": "向上",
+    "example": "Stand up."
+  },
+  {
+    "word": "out",
+    "pronunciation": "/aʊt/",
+    "partOfSpeech": "adv.",
+    "definition": "away from inside",
+    "chineseDef": "出去",
+    "example": "Go out."
+  },
+  {
+    "word": "if",
+    "pronunciation": "/ɪf/",
+    "partOfSpeech": "conj.",
+    "definition": "on the condition that",
+    "chineseDef": "如果",
+    "example": "If you go, I'll come."
+  },
+  {
+    "word": "about",
+    "pronunciation": "/əˈbaʊt/",
+    "partOfSpeech": "prep.",
+    "definition": "on the subject of",
+    "chineseDef": "关于",
+    "example": "Tell me about it."
+  },
+  {
+    "word": "who",
+    "pronunciation": "/huː/",
+    "partOfSpeech": "pron.",
+    "definition": "what person or people",
+    "chineseDef": "谁",
+    "example": "Who is there?"
+  },
+  {
+    "word": "get",
+    "pronunciation": "/ɡet/",
+    "partOfSpeech": "v.",
+    "definition": "to come to have",
+    "chineseDef": "得到",
+    "example": "I got a gift."
+  },
+  {
+    "word": "which",
+    "pronunciation": "/wɪtʃ/",
+    "partOfSpeech": "pron.",
+    "definition": "asking for specific information",
+    "chineseDef": "哪个",
+    "example": "Which one is yours?"
+  },
+  {
+    "word": "go",
+    "pronunciation": "/ɡəʊ/",
+    "partOfSpeech": "v.",
+    "definition": "to move or travel",
+    "chineseDef": "去",
+    "example": "Let's go."
+  },
+  {
+    "word": "me",
+    "pronunciation": "/miː/",
+    "partOfSpeech": "pron.",
+    "definition": "used by a speaker to refer to himself",
+    "chineseDef": "我",
+    "example": "Give it to me."
+  },
+  {
+    "word": "when",
+    "pronunciation": "/wen/",
+    "partOfSpeech": "adv.",
+    "definition": "at what time",
+    "chineseDef": "什么时候",
+    "example": "When will you come?"
+  },
+  {
+    "word": "make",
+    "pronunciation": "/meɪk/",
+    "partOfSpeech": "v.",
+    "definition": "to form or create",
+    "chineseDef": "制作",
+    "example": "She made a cake."
+  },
+  {
+    "word": "can",
+    "pronunciation": "/kæn/",
+    "partOfSpeech": "modal.",
+    "definition": "to be able to",
+    "chineseDef": "能",
+    "example": "I can swim."
+  },
+  {
+    "word": "like",
+    "pronunciation": "/laɪk/",
+    "partOfSpeech": "prep.",
+    "definition": "similar to",
+    "chineseDef": "像",
+    "example": "She looks like her mother."
+  },
+  {
+    "word": "time",
+    "pronunciation": "/taɪm/",
+    "partOfSpeech": "n.",
+    "definition": "a period of existence",
+    "chineseDef": "时间",
+    "example": "Time flies."
+  },
+  {
+    "word": "no",
+    "pronunciation": "/nəʊ/",
+    "partOfSpeech": "det.",
+    "definition": "not any",
+    "chineseDef": "没有",
+    "example": "I have no money."
+  },
+  {
+    "word": "just",
+    "pronunciation": "/dʒʌst/",
+    "partOfSpeech": "adv.",
+    "definition": "exactly or only",
+    "chineseDef": "仅仅，正好",
+    "example": "Just do it."
+  },
+  {
+    "word": "him",
+    "pronunciation": "/hɪm/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to a male",
+    "chineseDef": "他",
+    "example": "I saw him."
+  },
+  {
+    "word": "know",
+    "pronunciation": "/nəʊ/",
+    "partOfSpeech": "v.",
+    "definition": "to have information",
+    "chineseDef": "知道",
+    "example": "I know the answer."
+  },
+  {
+    "word": "take",
+    "pronunciation": "/teɪk/",
+    "partOfSpeech": "v.",
+    "definition": "to lay hold of",
+    "chineseDef": "拿",
+    "example": "Take a seat."
+  },
+  {
+    "word": "people",
+    "pronunciation": "/ˈpiːpl/",
+    "partOfSpeech": "n.",
+    "definition": "human beings in general",
+    "chineseDef": "人们",
+    "example": "Many people came."
+  },
+  {
+    "word": "into",
+    "pronunciation": "/ˈɪntuː/",
+    "partOfSpeech": "prep.",
+    "definition": "to the inside of",
+    "chineseDef": "进入",
+    "example": "Go into the room."
+  },
+  {
+    "word": "year",
+    "pronunciation": "/jɪər/",
+    "partOfSpeech": "n.",
+    "definition": "the time taken by the Earth to orbit the sun",
+    "chineseDef": "年",
+    "example": "A year has 365 days."
+  },
+  {
+    "word": "your",
+    "pronunciation": "/jɔːr/",
+    "partOfSpeech": "pron.",
+    "definition": "belonging to you",
+    "chineseDef": "你的",
+    "example": "Your bag is here."
+  },
+  {
+    "word": "good",
+    "pronunciation": "/ɡʊd/",
+    "partOfSpeech": "adj.",
+    "definition": "of a high quality",
+    "chineseDef": "好的",
+    "example": "This is a good book."
+  },
+  {
+    "word": "some",
+    "pronunciation": "/sʌm/",
+    "partOfSpeech": "det.",
+    "definition": "an unspecified quantity",
+    "chineseDef": "一些",
+    "example": "I need some water."
+  },
+  {
+    "word": "could",
+    "pronunciation": "/kʊd/",
+    "partOfSpeech": "modal.",
+    "definition": "expressing possibility",
+    "chineseDef": "可以，能",
+    "example": "Could you help me?"
+  },
+  {
+    "word": "them",
+    "pronunciation": "/ðem/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to people or things",
+    "chineseDef": "他们",
+    "example": "I saw them."
+  },
+  {
+    "word": "see",
+    "pronunciation": "/siː/",
+    "partOfSpeech": "v.",
+    "definition": "to perceive with the eyes",
+    "chineseDef": "看见",
+    "example": "I can see you."
+  },
+  {
+    "word": "other",
+    "pronunciation": "/ˈʌðər/",
+    "partOfSpeech": "adj.",
+    "definition": "different from the one named",
+    "chineseDef": "其他的",
+    "example": "The other one is better."
+  },
+  {
+    "word": "than",
+    "pronunciation": "/ðæn/",
+    "partOfSpeech": "conj.",
+    "definition": "used in comparisons",
+    "chineseDef": "比",
+    "example": "She is taller than me."
+  },
+  {
+    "word": "then",
+    "pronunciation": "/ðen/",
+    "partOfSpeech": "adv.",
+    "definition": "at that time",
+    "chineseDef": "然后",
+    "example": "I was younger then."
+  },
+  {
+    "word": "now",
+    "pronunciation": "/naʊ/",
+    "partOfSpeech": "adv.",
+    "definition": "at the present time",
+    "chineseDef": "现在",
+    "example": "Do it now."
+  },
+  {
+    "word": "look",
+    "pronunciation": "/lʊk/",
+    "partOfSpeech": "v.",
+    "definition": "to direct one's gaze",
+    "chineseDef": "看",
+    "example": "Look at that!"
+  },
+  {
+    "word": "only",
+    "pronunciation": "/ˈəʊnli/",
+    "partOfSpeech": "adv.",
+    "definition": "no more than",
+    "chineseDef": "仅仅",
+    "example": "I only have one."
+  },
+  {
+    "word": "come",
+    "pronunciation": "/kʌm/",
+    "partOfSpeech": "v.",
+    "definition": "to move toward the speaker",
+    "chineseDef": "来",
+    "example": "Come here."
+  },
+  {
+    "word": "its",
+    "pronunciation": "/ɪts/",
+    "partOfSpeech": "pron.",
+    "definition": "belonging to it",
+    "chineseDef": "它的",
+    "example": "The cat licked its paw."
+  },
+  {
+    "word": "over",
+    "pronunciation": "/ˈəʊvər/",
+    "partOfSpeech": "prep.",
+    "definition": "extending upward from",
+    "chineseDef": "在...之上",
+    "example": "A bridge over the river."
+  },
+  {
+    "word": "think",
+    "pronunciation": "/θɪŋk/",
+    "partOfSpeech": "v.",
+    "definition": "to have a belief",
+    "chineseDef": "认为",
+    "example": "I think you're right."
+  },
+  {
+    "word": "also",
+    "pronunciation": "/ˈɔːlsəʊ/",
+    "partOfSpeech": "adv.",
+    "definition": "in addition",
+    "chineseDef": "也",
+    "example": "She also came."
+  },
+  {
+    "word": "back",
+    "pronunciation": "/bæk/",
+    "partOfSpeech": "adv.",
+    "definition": "in return to a previous place",
+    "chineseDef": "回来",
+    "example": "Go back home."
+  },
+  {
+    "word": "after",
+    "pronunciation": "/ˈɑːftər/",
+    "partOfSpeech": "prep.",
+    "definition": "following in time",
+    "chineseDef": "在...之后",
+    "example": "After dinner we left."
+  },
+  {
+    "word": "use",
+    "pronunciation": "/juːz/",
+    "partOfSpeech": "v.",
+    "definition": "to employ for a purpose",
+    "chineseDef": "使用",
+    "example": "Use a pen."
+  },
+  {
+    "word": "two",
+    "pronunciation": "/tuː/",
+    "partOfSpeech": "num.",
+    "definition": "the number 2",
+    "chineseDef": "二",
+    "example": "I have two cats."
+  },
+  {
+    "word": "how",
+    "pronunciation": "/haʊ/",
+    "partOfSpeech": "adv.",
+    "definition": "in what way",
+    "chineseDef": "如何",
+    "example": "How are you?"
+  },
+  {
+    "word": "our",
+    "pronunciation": "/aʊər/",
+    "partOfSpeech": "pron.",
+    "definition": "belonging to us",
+    "chineseDef": "我们的",
+    "example": "Our house is small."
+  },
+  {
+    "word": "work",
+    "pronunciation": "/wɜːk/",
+    "partOfSpeech": "n.",
+    "definition": "physical or mental effort",
+    "chineseDef": "工作",
+    "example": "I go to work."
+  },
+  {
+    "word": "first",
+    "pronunciation": "/fɜːst/",
+    "partOfSpeech": "adj.",
+    "definition": "coming before all others",
+    "chineseDef": "第一",
+    "example": "This is my first time."
+  },
+  {
+    "word": "well",
+    "pronunciation": "/wel/",
+    "partOfSpeech": "adv.",
+    "definition": "in a good manner",
+    "chineseDef": "好",
+    "example": "She sings well."
+  },
+  {
+    "word": "way",
+    "pronunciation": "/weɪ/",
+    "partOfSpeech": "n.",
+    "definition": "a method or manner",
+    "chineseDef": "方式，路",
+    "example": "Show me the way."
+  },
+  {
+    "word": "even",
+    "pronunciation": "/ˈiːvən/",
+    "partOfSpeech": "adv.",
+    "definition": "used for emphasis",
+    "chineseDef": "甚至",
+    "example": "Even he agreed."
+  },
+  {
+    "word": "new",
+    "pronunciation": "/njuː/",
+    "partOfSpeech": "adj.",
+    "definition": "not existing before",
+    "chineseDef": "新的",
+    "example": "I bought a new phone."
+  },
+  {
+    "word": "want",
+    "pronunciation": "/wɒnt/",
+    "partOfSpeech": "v.",
+    "definition": "to have a desire",
+    "chineseDef": "想要",
+    "example": "I want water."
+  },
+  {
+    "word": "because",
+    "pronunciation": "/bɪˈkɒz/",
+    "partOfSpeech": "conj.",
+    "definition": "for the reason that",
+    "chineseDef": "因为",
+    "example": "I left because I was tired."
+  },
+  {
+    "word": "any",
+    "pronunciation": "/ˈeni/",
+    "partOfSpeech": "det.",
+    "definition": "one or some",
+    "chineseDef": "任何",
+    "example": "Any questions?"
+  },
+  {
+    "word": "these",
+    "pronunciation": "/ðiːz/",
+    "partOfSpeech": "pron.",
+    "definition": "plural of this",
+    "chineseDef": "这些",
+    "example": "These are mine."
+  },
+  {
+    "word": "give",
+    "pronunciation": "/ɡɪv/",
+    "partOfSpeech": "v.",
+    "definition": "to freely transfer",
+    "chineseDef": "给",
+    "example": "Give me the book."
+  },
+  {
+    "word": "day",
+    "pronunciation": "/deɪ/",
+    "partOfSpeech": "n.",
+    "definition": "a 24-hour period",
+    "chineseDef": "天",
+    "example": "Have a nice day."
+  },
+  {
+    "word": "most",
+    "pronunciation": "/məʊst/",
+    "partOfSpeech": "adj.",
+    "definition": "greatest in amount",
+    "chineseDef": "最多的",
+    "example": "Most people agree."
+  },
+  {
+    "word": "us",
+    "pronunciation": "/ʌs/",
+    "partOfSpeech": "pron.",
+    "definition": "used to refer to oneself and others",
+    "chineseDef": "我们",
+    "example": "Come with us."
+  }
+]

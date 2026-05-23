@@ -1,0 +1,402 @@
+[
+  {
+    "word": "give up",
+    "pronunciation": "/ɡɪv ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to stop trying",
+    "chineseDef": "放弃",
+    "example": "Don't give up on your dreams."
+  },
+  {
+    "word": "look after",
+    "pronunciation": "/lʊk ˈɑːftər/",
+    "partOfSpeech": "phr.",
+    "definition": "to take care of",
+    "chineseDef": "照顾",
+    "example": "She looks after her mother."
+  },
+  {
+    "word": "put off",
+    "pronunciation": "/pʊt ɒf/",
+    "partOfSpeech": "phr.",
+    "definition": "to postpone",
+    "chineseDef": "推迟",
+    "example": "Don't put off your homework."
+  },
+  {
+    "word": "take off",
+    "pronunciation": "/teɪk ɒf/",
+    "partOfSpeech": "phr.",
+    "definition": "to remove or leave the ground",
+    "chineseDef": "脱下，起飞",
+    "example": "The plane took off."
+  },
+  {
+    "word": "turn down",
+    "pronunciation": "/tɜːn daʊn/",
+    "partOfSpeech": "phr.",
+    "definition": "to reject or lower volume",
+    "chineseDef": "拒绝，调低",
+    "example": "He turned down the offer."
+  },
+  {
+    "word": "break down",
+    "pronunciation": "/breɪk daʊn/",
+    "partOfSpeech": "phr.",
+    "definition": "to stop functioning",
+    "chineseDef": "出故障",
+    "example": "My car broke down."
+  },
+  {
+    "word": "come across",
+    "pronunciation": "/kʌm əˈkrɒs/",
+    "partOfSpeech": "phr.",
+    "definition": "to find by chance",
+    "chineseDef": "偶然遇到",
+    "example": "I came across an old photo."
+  },
+  {
+    "word": "get along",
+    "pronunciation": "/ɡet əˈlɒŋ/",
+    "partOfSpeech": "phr.",
+    "definition": "to have a friendly relationship",
+    "chineseDef": "相处",
+    "example": "They get along well."
+  },
+  {
+    "word": "run out of",
+    "pronunciation": "/rʌn aʊt ɒv/",
+    "partOfSpeech": "phr.",
+    "definition": "to exhaust the supply",
+    "chineseDef": "用完",
+    "example": "We ran out of milk."
+  },
+  {
+    "word": "set up",
+    "pronunciation": "/set ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to establish or arrange",
+    "chineseDef": "建立",
+    "example": "They set up a company."
+  },
+  {
+    "word": "bring up",
+    "pronunciation": "/brɪŋ ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to raise or mention",
+    "chineseDef": "抚养，提起",
+    "example": "She brought up three children."
+  },
+  {
+    "word": "call off",
+    "pronunciation": "/kɔːl ɒf/",
+    "partOfSpeech": "phr.",
+    "definition": "to cancel",
+    "chineseDef": "取消",
+    "example": "The game was called off."
+  },
+  {
+    "word": "carry on",
+    "pronunciation": "/ˈkæri ɒn/",
+    "partOfSpeech": "phr.",
+    "definition": "to continue",
+    "chineseDef": "继续",
+    "example": "Carry on with your work."
+  },
+  {
+    "word": "check in",
+    "pronunciation": "/tʃek ɪn/",
+    "partOfSpeech": "phr.",
+    "definition": "to register at a hotel",
+    "chineseDef": "办理入住",
+    "example": "We checked in at the hotel."
+  },
+  {
+    "word": "cut down",
+    "pronunciation": "/kʌt daʊn/",
+    "partOfSpeech": "phr.",
+    "definition": "to reduce",
+    "chineseDef": "减少",
+    "example": "Cut down on sugar."
+  },
+  {
+    "word": "end up",
+    "pronunciation": "/end ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to eventually find oneself",
+    "chineseDef": "最终",
+    "example": "He ended up in hospital."
+  },
+  {
+    "word": "figure out",
+    "pronunciation": "/ˈfɪɡər aʊt/",
+    "partOfSpeech": "phr.",
+    "definition": "to solve or understand",
+    "chineseDef": "弄明白",
+    "example": "She figured out the puzzle."
+  },
+  {
+    "word": "fill in",
+    "pronunciation": "/fɪl ɪn/",
+    "partOfSpeech": "phr.",
+    "definition": "to complete a form",
+    "chineseDef": "填写",
+    "example": "Please fill in this form."
+  },
+  {
+    "word": "get over",
+    "pronunciation": "/ɡet ˈəʊvər/",
+    "partOfSpeech": "phr.",
+    "definition": "to recover from",
+    "chineseDef": "从...恢复",
+    "example": "She got over her illness."
+  },
+  {
+    "word": "go through",
+    "pronunciation": "/ɡəʊ θruː/",
+    "partOfSpeech": "phr.",
+    "definition": "to experience or examine",
+    "chineseDef": "经历，检查",
+    "example": "He went through a difficult time."
+  },
+  {
+    "word": "hold on",
+    "pronunciation": "/həʊld ɒn/",
+    "partOfSpeech": "phr.",
+    "definition": "to wait or grip tightly",
+    "chineseDef": "稍等，抓紧",
+    "example": "Hold on, I'll be right there."
+  },
+  {
+    "word": "keep up",
+    "pronunciation": "/kiːp ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to maintain at the same level",
+    "chineseDef": "保持",
+    "example": "Keep up the good work."
+  },
+  {
+    "word": "look forward to",
+    "pronunciation": "/lʊk ˈfɔːwəd tuː/",
+    "partOfSpeech": "phr.",
+    "definition": "to anticipate excitedly",
+    "chineseDef": "期待",
+    "example": "I look forward to meeting you."
+  },
+  {
+    "word": "make up",
+    "pronunciation": "/meɪk ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to invent or reconcile",
+    "chineseDef": "编造，和好",
+    "example": "They made up after the argument."
+  },
+  {
+    "word": "pick up",
+    "pronunciation": "/pɪk ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to collect or learn",
+    "chineseDef": "捡起，接送",
+    "example": "I'll pick you up at 8."
+  },
+  {
+    "word": "point out",
+    "pronunciation": "/pɔɪnt aʊt/",
+    "partOfSpeech": "phr.",
+    "definition": "to indicate or draw attention",
+    "chineseDef": "指出",
+    "example": "She pointed out the error."
+  },
+  {
+    "word": "put up with",
+    "pronunciation": "/pʊt ʌp wɪð/",
+    "partOfSpeech": "phr.",
+    "definition": "to tolerate",
+    "chineseDef": "忍受",
+    "example": "I can't put up with the noise."
+  },
+  {
+    "word": "run into",
+    "pronunciation": "/rʌn ˈɪntuː/",
+    "partOfSpeech": "phr.",
+    "definition": "to meet unexpectedly",
+    "chineseDef": "偶然碰见",
+    "example": "I ran into an old friend."
+  },
+  {
+    "word": "show up",
+    "pronunciation": "/ʃəʊ ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to arrive or appear",
+    "chineseDef": "出现",
+    "example": "He showed up late."
+  },
+  {
+    "word": "take care of",
+    "pronunciation": "/teɪk keər ɒv/",
+    "partOfSpeech": "phr.",
+    "definition": "to be responsible for",
+    "chineseDef": "照顾",
+    "example": "Take care of yourself."
+  },
+  {
+    "word": "think over",
+    "pronunciation": "/θɪŋk ˈəʊvər/",
+    "partOfSpeech": "phr.",
+    "definition": "to consider carefully",
+    "chineseDef": "仔细考虑",
+    "example": "Think it over before deciding."
+  },
+  {
+    "word": "throw away",
+    "pronunciation": "/θrəʊ əˈweɪ/",
+    "partOfSpeech": "phr.",
+    "definition": "to discard",
+    "chineseDef": "扔掉",
+    "example": "Don't throw away the receipt."
+  },
+  {
+    "word": "try on",
+    "pronunciation": "/traɪ ɒn/",
+    "partOfSpeech": "phr.",
+    "definition": "to test clothing",
+    "chineseDef": "试穿",
+    "example": "Try on the dress."
+  },
+  {
+    "word": "turn up",
+    "pronunciation": "/tɜːn ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to arrive or increase volume",
+    "chineseDef": "出现，调大",
+    "example": "He turned up late."
+  },
+  {
+    "word": "work out",
+    "pronunciation": "/wɜːk aʊt/",
+    "partOfSpeech": "phr.",
+    "definition": "to exercise or solve a problem",
+    "chineseDef": "锻炼，解决",
+    "example": "Things will work out."
+  },
+  {
+    "word": "look up",
+    "pronunciation": "/lʊk ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to search for information",
+    "chineseDef": "查阅",
+    "example": "Look up the word in a dictionary."
+  },
+  {
+    "word": "calm down",
+    "pronunciation": "/kɑːm daʊn/",
+    "partOfSpeech": "phr.",
+    "definition": "to become relaxed",
+    "chineseDef": "冷静下来",
+    "example": "Calm down and tell me."
+  },
+  {
+    "word": "come up with",
+    "pronunciation": "/kʌm ʌp wɪð/",
+    "partOfSpeech": "phr.",
+    "definition": "to think of a solution",
+    "chineseDef": "想出",
+    "example": "She came up with a great idea."
+  },
+  {
+    "word": "dress up",
+    "pronunciation": "/dres ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to wear formal clothes",
+    "chineseDef": "盛装打扮",
+    "example": "We dressed up for the party."
+  },
+  {
+    "word": "fall apart",
+    "pronunciation": "/fɔːl əˈpɑːt/",
+    "partOfSpeech": "phr.",
+    "definition": "to break into pieces",
+    "chineseDef": "破裂，崩溃",
+    "example": "Their marriage fell apart."
+  },
+  {
+    "word": "grow up",
+    "pronunciation": "/ɡrəʊ ʌp/",
+    "partOfSpeech": "phr.",
+    "definition": "to become an adult",
+    "chineseDef": "长大",
+    "example": "What do you want to be when you grow up?"
+  },
+  {
+    "word": "hang out",
+    "pronunciation": "/hæŋ aʊt/",
+    "partOfSpeech": "phr.",
+    "definition": "to spend time with friends",
+    "chineseDef": "闲逛",
+    "example": "I hung out with friends."
+  },
+  {
+    "word": "let down",
+    "pronunciation": "/let daʊn/",
+    "partOfSpeech": "phr.",
+    "definition": "to disappoint",
+    "chineseDef": "让...失望",
+    "example": "Don't let me down."
+  },
+  {
+    "word": "look into",
+    "pronunciation": "/lʊk ˈɪntuː/",
+    "partOfSpeech": "phr.",
+    "definition": "to investigate",
+    "chineseDef": "调查",
+    "example": "The police are looking into it."
+  },
+  {
+    "word": "pass away",
+    "pronunciation": "/pɑːs əˈweɪ/",
+    "partOfSpeech": "phr.",
+    "definition": "to die",
+    "chineseDef": "去世",
+    "example": "Her grandfather passed away."
+  },
+  {
+    "word": "pull over",
+    "pronunciation": "/pʊl ˈəʊvər/",
+    "partOfSpeech": "phr.",
+    "definition": "to move to the side of the road",
+    "chineseDef": "靠边停车",
+    "example": "The police told him to pull over."
+  },
+  {
+    "word": "put away",
+    "pronunciation": "/pʊt əˈweɪ/",
+    "partOfSpeech": "phr.",
+    "definition": "to store or tidy",
+    "chineseDef": "收好",
+    "example": "Put away your toys."
+  },
+  {
+    "word": "settle down",
+    "pronunciation": "/ˈsetl daʊn/",
+    "partOfSpeech": "phr.",
+    "definition": "to establish a stable life",
+    "chineseDef": "安定下来",
+    "example": "He wants to settle down."
+  },
+  {
+    "word": "stand for",
+    "pronunciation": "/stænd fɔːr/",
+    "partOfSpeech": "phr.",
+    "definition": "to represent",
+    "chineseDef": "代表",
+    "example": "What does UN stand for?"
+  },
+  {
+    "word": "turn into",
+    "pronunciation": "/tɜːn ˈɪntuː/",
+    "partOfSpeech": "phr.",
+    "definition": "to become or transform into",
+    "chineseDef": "变成",
+    "example": "The caterpillar turned into a butterfly."
+  }
+]

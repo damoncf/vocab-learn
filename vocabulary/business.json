@@ -1,0 +1,874 @@
+[
+  {
+    "word": "agenda",
+    "pronunciation": "/əˈdʒendə/",
+    "partOfSpeech": "n.",
+    "definition": "a list of items to discuss",
+    "chineseDef": "议程",
+    "example": "What's on the agenda?"
+  },
+  {
+    "word": "asset",
+    "pronunciation": "/ˈæset/",
+    "partOfSpeech": "n.",
+    "definition": "something valuable owned",
+    "chineseDef": "资产",
+    "example": "The company's assets total $10M."
+  },
+  {
+    "word": "audit",
+    "pronunciation": "/ˈɔːdɪt/",
+    "partOfSpeech": "n.",
+    "definition": "an official financial inspection",
+    "chineseDef": "审计",
+    "example": "The annual audit is next month."
+  },
+  {
+    "word": "bankruptcy",
+    "pronunciation": "/ˈbæŋkrʌptsi/",
+    "partOfSpeech": "n.",
+    "definition": "being unable to pay debts",
+    "chineseDef": "破产",
+    "example": "The company filed for bankruptcy."
+  },
+  {
+    "word": "benchmark",
+    "pronunciation": "/ˈbentʃmɑːk/",
+    "partOfSpeech": "n.",
+    "definition": "a standard for comparison",
+    "chineseDef": "基准",
+    "example": "This sets the quality benchmark."
+  },
+  {
+    "word": "bid",
+    "pronunciation": "/bɪd/",
+    "partOfSpeech": "n.",
+    "definition": "an offer of a price",
+    "chineseDef": "出价",
+    "example": "Their bid was $2 million."
+  },
+  {
+    "word": "board",
+    "pronunciation": "/bɔːd/",
+    "partOfSpeech": "n.",
+    "definition": "a group of directors",
+    "chineseDef": "董事会",
+    "example": "The board approved the merger."
+  },
+  {
+    "word": "bond",
+    "pronunciation": "/bɒnd/",
+    "partOfSpeech": "n.",
+    "definition": "a loan issued by a company",
+    "chineseDef": "债券",
+    "example": "Investors bought government bonds."
+  },
+  {
+    "word": "bonus",
+    "pronunciation": "/ˈbəʊnəs/",
+    "partOfSpeech": "n.",
+    "definition": "extra payment beyond salary",
+    "chineseDef": "奖金",
+    "example": "She received a year-end bonus."
+  },
+  {
+    "word": "brand",
+    "pronunciation": "/brænd/",
+    "partOfSpeech": "n.",
+    "definition": "a distinctive product identity",
+    "chineseDef": "品牌",
+    "example": "The brand is recognized worldwide."
+  },
+  {
+    "word": "broker",
+    "pronunciation": "/ˈbrəʊkər/",
+    "partOfSpeech": "n.",
+    "definition": "a person who arranges transactions",
+    "chineseDef": "经纪人",
+    "example": "The real estate broker showed us houses."
+  },
+  {
+    "word": "budget",
+    "pronunciation": "/ˈbʌdʒɪt/",
+    "partOfSpeech": "n.",
+    "definition": "a spending plan",
+    "chineseDef": "预算",
+    "example": "We need to cut the budget."
+  },
+  {
+    "word": "capital",
+    "pronunciation": "/ˈkæpɪtəl/",
+    "partOfSpeech": "n.",
+    "definition": "wealth used to produce more wealth",
+    "chineseDef": "资本",
+    "example": "They raised capital from investors."
+  },
+  {
+    "word": "CEO",
+    "pronunciation": "/siː iː əʊ/",
+    "partOfSpeech": "n.",
+    "definition": "chief executive officer",
+    "chineseDef": "首席执行官",
+    "example": "The CEO announced the new strategy."
+  },
+  {
+    "word": "client",
+    "pronunciation": "/ˈklaɪənt/",
+    "partOfSpeech": "n.",
+    "definition": "a person that uses services",
+    "chineseDef": "客户",
+    "example": "Our client is satisfied."
+  },
+  {
+    "word": "collateral",
+    "pronunciation": "/kəˈlætərəl/",
+    "partOfSpeech": "n.",
+    "definition": "property pledged as security",
+    "chineseDef": "抵押品",
+    "example": "The bank required collateral."
+  },
+  {
+    "word": "commerce",
+    "pronunciation": "/ˈkɒmɜːs/",
+    "partOfSpeech": "n.",
+    "definition": "buying and selling",
+    "chineseDef": "商业",
+    "example": "Electronic commerce is growing."
+  },
+  {
+    "word": "commission",
+    "pronunciation": "/kəˈmɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a fee paid as a percentage of sales",
+    "chineseDef": "佣金",
+    "example": "She earns 10% commission."
+  },
+  {
+    "word": "commodity",
+    "pronunciation": "/kəˈmɒdəti/",
+    "partOfSpeech": "n.",
+    "definition": "a raw material or product",
+    "chineseDef": "商品",
+    "example": "Oil is a valuable commodity."
+  },
+  {
+    "word": "compensation",
+    "pronunciation": "/ˌkɒmpenˈseɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "payment for work or loss",
+    "chineseDef": "补偿",
+    "example": "She received compensation."
+  },
+  {
+    "word": "competitive",
+    "pronunciation": "/kəmˈpetətɪv/",
+    "partOfSpeech": "adj.",
+    "definition": "eager to win in business",
+    "chineseDef": "有竞争力的",
+    "example": "We offer competitive prices."
+  },
+  {
+    "word": "consultant",
+    "pronunciation": "/kənˈsʌltənt/",
+    "partOfSpeech": "n.",
+    "definition": "an expert who gives advice",
+    "chineseDef": "顾问",
+    "example": "The consultant recommended changes."
+  },
+  {
+    "word": "contract",
+    "pronunciation": "/ˈkɒntrækt/",
+    "partOfSpeech": "n.",
+    "definition": "a legally binding agreement",
+    "chineseDef": "合同",
+    "example": "Please sign the contract."
+  },
+  {
+    "word": "corporate",
+    "pronunciation": "/ˈkɔːpərət/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to a large company",
+    "chineseDef": "企业的",
+    "example": "Corporate culture affects morale."
+  },
+  {
+    "word": "cost",
+    "pronunciation": "/kɒst/",
+    "partOfSpeech": "n.",
+    "definition": "the price paid to acquire something",
+    "chineseDef": "成本",
+    "example": "We need to reduce costs."
+  },
+  {
+    "word": "creditor",
+    "pronunciation": "/ˈkredɪtər/",
+    "partOfSpeech": "n.",
+    "definition": "a person or company owed money",
+    "chineseDef": "债权人",
+    "example": "The creditors demanded payment."
+  },
+  {
+    "word": "currency",
+    "pronunciation": "/ˈkʌrənsi/",
+    "partOfSpeech": "n.",
+    "definition": "money used in a country",
+    "chineseDef": "货币",
+    "example": "The dollar is a strong currency."
+  },
+  {
+    "word": "deadline",
+    "pronunciation": "/ˈdedlaɪn/",
+    "partOfSpeech": "n.",
+    "definition": "the latest time to complete",
+    "chineseDef": "截止日期",
+    "example": "The deadline is next Friday."
+  },
+  {
+    "word": "debt",
+    "pronunciation": "/det/",
+    "partOfSpeech": "n.",
+    "definition": "money that is owed",
+    "chineseDef": "债务",
+    "example": "The company has reduced its debt."
+  },
+  {
+    "word": "deficit",
+    "pronunciation": "/ˈdefɪsɪt/",
+    "partOfSpeech": "n.",
+    "definition": "excess of spending over income",
+    "chineseDef": "赤字",
+    "example": "The budget deficit is growing."
+  },
+  {
+    "word": "dividend",
+    "pronunciation": "/ˈdɪvɪdend/",
+    "partOfSpeech": "n.",
+    "definition": "a share of profits paid to shareholders",
+    "chineseDef": "股息",
+    "example": "The company pays quarterly dividends."
+  },
+  {
+    "word": "downsize",
+    "pronunciation": "/ˈdaʊnsaɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to reduce the number of employees",
+    "chineseDef": "裁员",
+    "example": "The company downsized due to losses."
+  },
+  {
+    "word": "e-commerce",
+    "pronunciation": "/ˈiːkɒmɜːs/",
+    "partOfSpeech": "n.",
+    "definition": "buying and selling online",
+    "chineseDef": "电子商务",
+    "example": "E-commerce sales are booming."
+  },
+  {
+    "word": "economy",
+    "pronunciation": "/ɪˈkɒnəmi/",
+    "partOfSpeech": "n.",
+    "definition": "the system of production and trade",
+    "chineseDef": "经济",
+    "example": "The economy is recovering."
+  },
+  {
+    "word": "employee",
+    "pronunciation": "/ɪmˈplɔɪiː/",
+    "partOfSpeech": "n.",
+    "definition": "a person employed for wages",
+    "chineseDef": "员工",
+    "example": "The company has 500 employees."
+  },
+  {
+    "word": "employer",
+    "pronunciation": "/ɪmˈplɔɪər/",
+    "partOfSpeech": "n.",
+    "definition": "a person who employs others",
+    "chineseDef": "雇主",
+    "example": "The employer offers good benefits."
+  },
+  {
+    "word": "entrepreneur",
+    "pronunciation": "/ˌɒntrəprəˈnɜːr/",
+    "partOfSpeech": "n.",
+    "definition": "a person who starts businesses",
+    "chineseDef": "企业家",
+    "example": "She is a successful entrepreneur."
+  },
+  {
+    "word": "equity",
+    "pronunciation": "/ˈekwəti/",
+    "partOfSpeech": "n.",
+    "definition": "ownership value in a company",
+    "chineseDef": "股权",
+    "example": "He holds a 30% equity stake."
+  },
+  {
+    "word": "executive",
+    "pronunciation": "/ɪɡˈzekjʊtɪv/",
+    "partOfSpeech": "n.",
+    "definition": "a senior manager",
+    "chineseDef": "高管",
+    "example": "The executive team meets weekly."
+  },
+  {
+    "word": "export",
+    "pronunciation": "/ɪkˈspɔːt/",
+    "partOfSpeech": "v.",
+    "definition": "to send goods to other countries",
+    "chineseDef": "出口",
+    "example": "The company exports to Europe."
+  },
+  {
+    "word": "finance",
+    "pronunciation": "/ˈfaɪnæns/",
+    "partOfSpeech": "n.",
+    "definition": "the management of money",
+    "chineseDef": "财务",
+    "example": "She works in corporate finance."
+  },
+  {
+    "word": "forecast",
+    "pronunciation": "/ˈfɔːkɑːst/",
+    "partOfSpeech": "n.",
+    "definition": "a prediction of future trends",
+    "chineseDef": "预测",
+    "example": "The sales forecast looks promising."
+  },
+  {
+    "word": "founder",
+    "pronunciation": "/ˈfaʊndər/",
+    "partOfSpeech": "n.",
+    "definition": "a person who starts a company",
+    "chineseDef": "创始人",
+    "example": "The founder retired after 30 years."
+  },
+  {
+    "word": "franchise",
+    "pronunciation": "/ˈfræntʃaɪz/",
+    "partOfSpeech": "n.",
+    "definition": "a license to operate a branded business",
+    "chineseDef": "特许经营权",
+    "example": "They bought a fast food franchise."
+  },
+  {
+    "word": "fund",
+    "pronunciation": "/fʌnd/",
+    "partOfSpeech": "n.",
+    "definition": "a sum of money set aside",
+    "chineseDef": "基金",
+    "example": "The pension fund is well managed."
+  },
+  {
+    "word": "globalization",
+    "pronunciation": "/ˌɡləʊbəlaɪˈzeɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "worldwide integration",
+    "chineseDef": "全球化",
+    "example": "Globalization has increased trade."
+  },
+  {
+    "word": "growth",
+    "pronunciation": "/ɡrəʊθ/",
+    "partOfSpeech": "n.",
+    "definition": "an increase in size or value",
+    "chineseDef": "增长",
+    "example": "The company achieved 20% growth."
+  },
+  {
+    "word": "headquarters",
+    "pronunciation": "/ˌhedˈkwɔːtəz/",
+    "partOfSpeech": "n.",
+    "definition": "the main office of a company",
+    "chineseDef": "总部",
+    "example": "The headquarters is in New York."
+  },
+  {
+    "word": "import",
+    "pronunciation": "/ɪmˈpɔːt/",
+    "partOfSpeech": "v.",
+    "definition": "to bring goods from other countries",
+    "chineseDef": "进口",
+    "example": "Japan imports most of its oil."
+  },
+  {
+    "word": "incentive",
+    "pronunciation": "/ɪnˈsentɪv/",
+    "partOfSpeech": "n.",
+    "definition": "something that motivates action",
+    "chineseDef": "激励",
+    "example": "The bonus is an incentive to work."
+  },
+  {
+    "word": "income",
+    "pronunciation": "/ˈɪnkʌm/",
+    "partOfSpeech": "n.",
+    "definition": "money received regularly",
+    "chineseDef": "收入",
+    "example": "Her annual income is $80,000."
+  },
+  {
+    "word": "inflation",
+    "pronunciation": "/ɪnˈfleɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a general increase in prices",
+    "chineseDef": "通货膨胀",
+    "example": "Inflation is running at 3%."
+  },
+  {
+    "word": "infrastructure",
+    "pronunciation": "/ˈɪnfrəstrʌktʃər/",
+    "partOfSpeech": "n.",
+    "definition": "basic physical systems",
+    "chineseDef": "基础设施",
+    "example": "The government invests in infrastructure."
+  },
+  {
+    "word": "innovation",
+    "pronunciation": "/ˌɪnəˈveɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "the introduction of new ideas",
+    "chineseDef": "创新",
+    "example": "Innovation drives business growth."
+  },
+  {
+    "word": "insurance",
+    "pronunciation": "/ɪnˈʃʊərəns/",
+    "partOfSpeech": "n.",
+    "definition": "protection against financial loss",
+    "chineseDef": "保险",
+    "example": "Health insurance is mandatory."
+  },
+  {
+    "word": "interest",
+    "pronunciation": "/ˈɪntrəst/",
+    "partOfSpeech": "n.",
+    "definition": "a charge for borrowing money",
+    "chineseDef": "利息",
+    "example": "The interest rate is 5%."
+  },
+  {
+    "word": "inventory",
+    "pronunciation": "/ˈɪnvəntɔri/",
+    "partOfSpeech": "n.",
+    "definition": "the stock of goods on hand",
+    "chineseDef": "库存",
+    "example": "We need to reduce inventory."
+  },
+  {
+    "word": "investment",
+    "pronunciation": "/ɪnˈvestmənt/",
+    "partOfSpeech": "n.",
+    "definition": "the purchase of an asset for profit",
+    "chineseDef": "投资",
+    "example": "The investment yielded 10%."
+  },
+  {
+    "word": "invoice",
+    "pronunciation": "/ˈɪnvɔɪs/",
+    "partOfSpeech": "n.",
+    "definition": "a bill for goods or services",
+    "chineseDef": "发票",
+    "example": "Please send the invoice."
+  },
+  {
+    "word": "IPO",
+    "pronunciation": "/aɪ piː əʊ/",
+    "partOfSpeech": "n.",
+    "definition": "initial public offering",
+    "chineseDef": "首次公开募股",
+    "example": "The company's IPO raised $500M."
+  },
+  {
+    "word": "liability",
+    "pronunciation": "/ˌlaɪəˈbɪləti/",
+    "partOfSpeech": "n.",
+    "definition": "a legal obligation or debt",
+    "chineseDef": "负债",
+    "example": "Liabilities exceed assets."
+  },
+  {
+    "word": "license",
+    "pronunciation": "/ˈlaɪsəns/",
+    "partOfSpeech": "n.",
+    "definition": "an official permit",
+    "chineseDef": "执照",
+    "example": "The restaurant has a liquor license."
+  },
+  {
+    "word": "loan",
+    "pronunciation": "/ləʊn/",
+    "partOfSpeech": "n.",
+    "definition": "money borrowed that must be repaid",
+    "chineseDef": "贷款",
+    "example": "We applied for a business loan."
+  },
+  {
+    "word": "logistics",
+    "pronunciation": "/ləˈdʒɪstɪks/",
+    "partOfSpeech": "n.",
+    "definition": "the coordination of operations",
+    "chineseDef": "物流",
+    "example": "Logistics is critical for supply chains."
+  },
+  {
+    "word": "margin",
+    "pronunciation": "/ˈmɑːdʒɪn/",
+    "partOfSpeech": "n.",
+    "definition": "the difference between cost and price",
+    "chineseDef": "利润空间",
+    "example": "Profit margins are thin."
+  },
+  {
+    "word": "market",
+    "pronunciation": "/ˈmɑːkɪt/",
+    "partOfSpeech": "n.",
+    "definition": "a place or system for buying and selling",
+    "chineseDef": "市场",
+    "example": "The stock market is volatile."
+  },
+  {
+    "word": "merger",
+    "pronunciation": "/ˈmɜːdʒər/",
+    "partOfSpeech": "n.",
+    "definition": "the combining of two companies",
+    "chineseDef": "合并",
+    "example": "The merger created a global giant."
+  },
+  {
+    "word": "mortgage",
+    "pronunciation": "/ˈmɔːɡɪdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "a loan for buying property",
+    "chineseDef": "抵押贷款",
+    "example": "They took out a mortgage."
+  },
+  {
+    "word": "negotiate",
+    "pronunciation": "/nɪˈɡəʊʃieɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to discuss terms to reach agreement",
+    "chineseDef": "谈判",
+    "example": "We negotiated a better price."
+  },
+  {
+    "word": "net",
+    "pronunciation": "/net/",
+    "partOfSpeech": "adj.",
+    "definition": "after deductions",
+    "chineseDef": "净的",
+    "example": "Net profit increased by 15%."
+  },
+  {
+    "word": "outsource",
+    "pronunciation": "/ˈaʊtsɔːs/",
+    "partOfSpeech": "v.",
+    "definition": "to obtain services from an outside supplier",
+    "chineseDef": "外包",
+    "example": "Many companies outsource IT support."
+  },
+  {
+    "word": "overhead",
+    "pronunciation": "/ˈəʊvəhed/",
+    "partOfSpeech": "n.",
+    "definition": "regular business expenses",
+    "chineseDef": "管理费用",
+    "example": "We need to reduce overhead."
+  },
+  {
+    "word": "partnership",
+    "pronunciation": "/ˈpɑːtnəʃɪp/",
+    "partOfSpeech": "n.",
+    "definition": "a business relationship",
+    "chineseDef": "合伙关系",
+    "example": "They formed a partnership."
+  },
+  {
+    "word": "payroll",
+    "pronunciation": "/ˈpeɪrəʊl/",
+    "partOfSpeech": "n.",
+    "definition": "the list of employees and their pay",
+    "chineseDef": "工资单",
+    "example": "The payroll is processed monthly."
+  },
+  {
+    "word": "pension",
+    "pronunciation": "/ˈpenʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a retirement fund",
+    "chineseDef": "养老金",
+    "example": "The company contributes to the pension plan."
+  },
+  {
+    "word": "portfolio",
+    "pronunciation": "/pɔːtˈfəʊliəʊ/",
+    "partOfSpeech": "n.",
+    "definition": "a collection of investments",
+    "chineseDef": "投资组合",
+    "example": "Her portfolio is diversified."
+  },
+  {
+    "word": "premium",
+    "pronunciation": "/ˈpriːmiəm/",
+    "partOfSpeech": "n.",
+    "definition": "an extra payment or insurance cost",
+    "chineseDef": "溢价",
+    "example": "Insurance premiums are increasing."
+  },
+  {
+    "word": "procurement",
+    "pronunciation": "/prəˈkjʊəmənt/",
+    "partOfSpeech": "n.",
+    "definition": "the act of buying goods for a company",
+    "chineseDef": "采购",
+    "example": "The procurement department handles purchasing."
+  },
+  {
+    "word": "productivity",
+    "pronunciation": "/ˌprɒdʌkˈtɪvəti/",
+    "partOfSpeech": "n.",
+    "definition": "the efficiency of production",
+    "chineseDef": "生产力",
+    "example": "Productivity has increased by 10%."
+  },
+  {
+    "word": "profit",
+    "pronunciation": "/ˈprɒfɪt/",
+    "partOfSpeech": "n.",
+    "definition": "financial gain",
+    "chineseDef": "利润",
+    "example": "The company reported a profit."
+  },
+  {
+    "word": "prospectus",
+    "pronunciation": "/prəˈspektəs/",
+    "partOfSpeech": "n.",
+    "definition": "a document describing an investment",
+    "chineseDef": "招股说明书",
+    "example": "Read the prospectus."
+  },
+  {
+    "word": "purchase",
+    "pronunciation": "/ˈpɜːtʃəs/",
+    "partOfSpeech": "v.",
+    "definition": "to buy something",
+    "chineseDef": "购买",
+    "example": "We purchased new equipment."
+  },
+  {
+    "word": "quota",
+    "pronunciation": "/ˈkwəʊtə/",
+    "partOfSpeech": "n.",
+    "definition": "a fixed minimum target",
+    "chineseDef": "配额",
+    "example": "Sales representatives have monthly quotas."
+  },
+  {
+    "word": "recession",
+    "pronunciation": "/rɪˈseʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a period of economic decline",
+    "chineseDef": "经济衰退",
+    "example": "The economy is in recession."
+  },
+  {
+    "word": "receivable",
+    "pronunciation": "/rɪˈsiːvəbl/",
+    "partOfSpeech": "n.",
+    "definition": "money owed by customers",
+    "chineseDef": "应收账款",
+    "example": "Accounts receivable are 60 days overdue."
+  },
+  {
+    "word": "refund",
+    "pronunciation": "/ˈriːfʌnd/",
+    "partOfSpeech": "n.",
+    "definition": "money returned to a customer",
+    "chineseDef": "退款",
+    "example": "The store issued a refund."
+  },
+  {
+    "word": "regulatory",
+    "pronunciation": "/ˈreɡjələtɔːri/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to government rules",
+    "chineseDef": "监管的",
+    "example": "Regulatory compliance is mandatory."
+  },
+  {
+    "word": "reimburse",
+    "pronunciation": "/ˌriːɪmˈbɜːs/",
+    "partOfSpeech": "v.",
+    "definition": "to pay back expenses",
+    "chineseDef": "报销",
+    "example": "The company reimburses travel expenses."
+  },
+  {
+    "word": "revenue",
+    "pronunciation": "/ˈrevənjuː/",
+    "partOfSpeech": "n.",
+    "definition": "income from sales",
+    "chineseDef": "收入",
+    "example": "Annual revenue reached $10M."
+  },
+  {
+    "word": "royalty",
+    "pronunciation": "/ˈrɔɪəlti/",
+    "partOfSpeech": "n.",
+    "definition": "a payment to a creator for using their work",
+    "chineseDef": "版税",
+    "example": "The author earns 10% royalty."
+  },
+  {
+    "word": "salary",
+    "pronunciation": "/ˈsæləri/",
+    "partOfSpeech": "n.",
+    "definition": "fixed regular pay",
+    "chineseDef": "薪资",
+    "example": "She earns a good salary."
+  },
+  {
+    "word": "share",
+    "pronunciation": "/ʃeər/",
+    "partOfSpeech": "n.",
+    "definition": "a unit of ownership in a company",
+    "chineseDef": "股份",
+    "example": "The stock price is $50 per share."
+  },
+  {
+    "word": "shareholder",
+    "pronunciation": "/ˈʃeərhəʊldər/",
+    "partOfSpeech": "n.",
+    "definition": "an owner of shares",
+    "chineseDef": "股东",
+    "example": "Shareholders approved the merger."
+  },
+  {
+    "word": "stakeholder",
+    "pronunciation": "/ˈsteɪkhəʊldər/",
+    "partOfSpeech": "n.",
+    "definition": "a person with an interest",
+    "chineseDef": "利益相关者",
+    "example": "All stakeholders were consulted."
+  },
+  {
+    "word": "startup",
+    "pronunciation": "/ˈstɑːtʌp/",
+    "partOfSpeech": "n.",
+    "definition": "a newly established business",
+    "chineseDef": "初创公司",
+    "example": "The startup raised seed funding."
+  },
+  {
+    "word": "stock",
+    "pronunciation": "/stɒk/",
+    "partOfSpeech": "n.",
+    "definition": "shares of a company",
+    "chineseDef": "股票",
+    "example": "He invested in technology stocks."
+  },
+  {
+    "word": "subsidiary",
+    "pronunciation": "/səbˈsɪdiəri/",
+    "partOfSpeech": "n.",
+    "definition": "a company controlled by another",
+    "chineseDef": "子公司",
+    "example": "The subsidiary operates independently."
+  },
+  {
+    "word": "supply",
+    "pronunciation": "/səˈplaɪ/",
+    "partOfSpeech": "n.",
+    "definition": "the amount of goods available",
+    "chineseDef": "供应",
+    "example": "The supply chain was disrupted."
+  },
+  {
+    "word": "surplus",
+    "pronunciation": "/ˈsɜːpləs/",
+    "partOfSpeech": "n.",
+    "definition": "an excess of income over spending",
+    "chineseDef": "盈余",
+    "example": "The trade surplus is growing."
+  },
+  {
+    "word": "tariff",
+    "pronunciation": "/ˈtærɪf/",
+    "partOfSpeech": "n.",
+    "definition": "a tax on imported goods",
+    "chineseDef": "关税",
+    "example": "Tariffs on steel were increased."
+  },
+  {
+    "word": "tax",
+    "pronunciation": "/tæks/",
+    "partOfSpeech": "n.",
+    "definition": "a compulsory payment to the government",
+    "chineseDef": "税收",
+    "example": "Corporate tax rates have been reduced."
+  },
+  {
+    "word": "tender",
+    "pronunciation": "/ˈtendər/",
+    "partOfSpeech": "n.",
+    "definition": "a formal offer to supply goods",
+    "chineseDef": "投标",
+    "example": "The company submitted a tender."
+  },
+  {
+    "word": "trade",
+    "pronunciation": "/treɪd/",
+    "partOfSpeech": "n.",
+    "definition": "the exchange of goods and services",
+    "chineseDef": "贸易",
+    "example": "International trade benefits both countries."
+  },
+  {
+    "word": "transaction",
+    "pronunciation": "/trænˈzækʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a business deal",
+    "chineseDef": "交易",
+    "example": "The transaction was completed online."
+  },
+  {
+    "word": "treasury",
+    "pronunciation": "/ˈtreʒəri/",
+    "partOfSpeech": "n.",
+    "definition": "the department managing finances",
+    "chineseDef": "财务部",
+    "example": "The treasury manages cash flow."
+  },
+  {
+    "word": "turnover",
+    "pronunciation": "/ˈtɜːnəʊvər/",
+    "partOfSpeech": "n.",
+    "definition": "the rate of employee departures",
+    "chineseDef": "员工流动率",
+    "example": "High turnover is costly."
+  },
+  {
+    "word": "valuation",
+    "pronunciation": "/ˌvæljuˈeɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "the estimated worth",
+    "chineseDef": "估值",
+    "example": "The company's valuation is $1B."
+  },
+  {
+    "word": "warranty",
+    "pronunciation": "/ˈwɒrənti/",
+    "partOfSpeech": "n.",
+    "definition": "a guarantee for a product",
+    "chineseDef": "保修",
+    "example": "The product comes with a two-year warranty."
+  },
+  {
+    "word": "yield",
+    "pronunciation": "/jiːld/",
+    "partOfSpeech": "n.",
+    "definition": "the income return on an investment",
+    "chineseDef": "收益率",
+    "example": "The bond yields 5%."
+  }
+]

@@ -1,0 +1,5146 @@
+[
+  {
+    "word": "abandon",
+    "pronunciation": "/əˈbændən/",
+    "partOfSpeech": "v.",
+    "definition": "to leave completely",
+    "chineseDef": "放弃，遗弃",
+    "example": "They had to abandon the sinking ship."
+  },
+  {
+    "word": "ability",
+    "pronunciation": "/əˈbɪləti/",
+    "partOfSpeech": "n.",
+    "definition": "the power to do something",
+    "chineseDef": "能力，才能",
+    "example": "She has the ability to succeed."
+  },
+  {
+    "word": "abroad",
+    "pronunciation": "/əˈbrɔːd/",
+    "partOfSpeech": "adv.",
+    "definition": "in a foreign country",
+    "chineseDef": "在国外",
+    "example": "He wants to study abroad."
+  },
+  {
+    "word": "absent",
+    "pronunciation": "/ˈæbsənt/",
+    "partOfSpeech": "adj.",
+    "definition": "not present",
+    "chineseDef": "缺席的",
+    "example": "She was absent from school yesterday."
+  },
+  {
+    "word": "absorb",
+    "pronunciation": "/əbˈzɔːb/",
+    "partOfSpeech": "v.",
+    "definition": "to take in or soak up",
+    "chineseDef": "吸收",
+    "example": "Plants absorb carbon dioxide."
+  },
+  {
+    "word": "abstract",
+    "pronunciation": "/ˈæbstrækt/",
+    "partOfSpeech": "adj.",
+    "definition": "existing as an idea",
+    "chineseDef": "抽象的",
+    "example": "Justice is an abstract concept."
+  },
+  {
+    "word": "abundant",
+    "pronunciation": "/əˈbʌndənt/",
+    "partOfSpeech": "adj.",
+    "definition": "existing in large quantities",
+    "chineseDef": "充足的",
+    "example": "The region has abundant resources."
+  },
+  {
+    "word": "abuse",
+    "pronunciation": "/əˈbjuːs/",
+    "partOfSpeech": "n.",
+    "definition": "cruel or violent treatment",
+    "chineseDef": "滥用，虐待",
+    "example": "The abuse of power must stop."
+  },
+  {
+    "word": "academic",
+    "pronunciation": "/ˌækəˈdemɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to education",
+    "chineseDef": "学术的",
+    "example": "She had a brilliant academic career."
+  },
+  {
+    "word": "accelerate",
+    "pronunciation": "/əkˈseləreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to increase speed",
+    "chineseDef": "加速",
+    "example": "The car accelerated quickly."
+  },
+  {
+    "word": "accept",
+    "pronunciation": "/əkˈsept/",
+    "partOfSpeech": "v.",
+    "definition": "to agree to receive",
+    "chineseDef": "接受",
+    "example": "She accepted the job offer."
+  },
+  {
+    "word": "access",
+    "pronunciation": "/ˈækses/",
+    "partOfSpeech": "n.",
+    "definition": "the ability to enter or use",
+    "chineseDef": "通道，使用权",
+    "example": "Students have access to the library."
+  },
+  {
+    "word": "accident",
+    "pronunciation": "/ˈæksɪdənt/",
+    "partOfSpeech": "n.",
+    "definition": "an unexpected harmful event",
+    "chineseDef": "事故",
+    "example": "The accident caused a traffic jam."
+  },
+  {
+    "word": "accompany",
+    "pronunciation": "/əˈkʌmpəni/",
+    "partOfSpeech": "v.",
+    "definition": "to go with someone",
+    "chineseDef": "陪伴",
+    "example": "She accompanied him to the airport."
+  },
+  {
+    "word": "accomplish",
+    "pronunciation": "/əˈkʌmplɪʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to succeed in doing",
+    "chineseDef": "完成",
+    "example": "We accomplished our goal."
+  },
+  {
+    "word": "account",
+    "pronunciation": "/əˈkaʊnt/",
+    "partOfSpeech": "n.",
+    "definition": "a report or description",
+    "chineseDef": "账户，说明",
+    "example": "He gave a detailed account."
+  },
+  {
+    "word": "accurate",
+    "pronunciation": "/ˈækjərət/",
+    "partOfSpeech": "adj.",
+    "definition": "correct and precise",
+    "chineseDef": "准确的",
+    "example": "The measurement is accurate."
+  },
+  {
+    "word": "achieve",
+    "pronunciation": "/əˈtʃiːv/",
+    "partOfSpeech": "v.",
+    "definition": "to reach a goal",
+    "chineseDef": "达到，取得",
+    "example": "She achieved her dream."
+  },
+  {
+    "word": "acknowledge",
+    "pronunciation": "/əkˈnɒlɪdʒ/",
+    "partOfSpeech": "v.",
+    "definition": "to accept or admit",
+    "chineseDef": "承认",
+    "example": "He acknowledged his mistake."
+  },
+  {
+    "word": "acquire",
+    "pronunciation": "/əˈkwaɪər/",
+    "partOfSpeech": "v.",
+    "definition": "to obtain or gain",
+    "chineseDef": "获得",
+    "example": "She acquired new skills."
+  },
+  {
+    "word": "adapt",
+    "pronunciation": "/əˈdæpt/",
+    "partOfSpeech": "v.",
+    "definition": "to change to fit new conditions",
+    "chineseDef": "适应",
+    "example": "Animals adapt to survive."
+  },
+  {
+    "word": "adequate",
+    "pronunciation": "/ˈædɪkwət/",
+    "partOfSpeech": "adj.",
+    "definition": "enough or sufficient",
+    "chineseDef": "充足的",
+    "example": "The supply is adequate."
+  },
+  {
+    "word": "adjust",
+    "pronunciation": "/əˈdʒʌst/",
+    "partOfSpeech": "v.",
+    "definition": "to change slightly",
+    "chineseDef": "调整",
+    "example": "She adjusted the settings."
+  },
+  {
+    "word": "admire",
+    "pronunciation": "/ədˈmaɪər/",
+    "partOfSpeech": "v.",
+    "definition": "to regard with respect",
+    "chineseDef": "钦佩",
+    "example": "I admire your courage."
+  },
+  {
+    "word": "admit",
+    "pronunciation": "/ədˈmɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to confess or allow entry",
+    "chineseDef": "承认，准许",
+    "example": "He admitted his mistake."
+  },
+  {
+    "word": "adopt",
+    "pronunciation": "/əˈdɒpt/",
+    "partOfSpeech": "v.",
+    "definition": "to legally take as one's own",
+    "chineseDef": "采纳，收养",
+    "example": "They adopted a child."
+  },
+  {
+    "word": "advance",
+    "pronunciation": "/ədˈvɑːns/",
+    "partOfSpeech": "v.",
+    "definition": "to move forward",
+    "chineseDef": "前进",
+    "example": "Technology continues to advance."
+  },
+  {
+    "word": "advantage",
+    "pronunciation": "/ədˈvɑːntɪdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "a benefit or gain",
+    "chineseDef": "优势",
+    "example": "Being tall is an advantage."
+  },
+  {
+    "word": "adventure",
+    "pronunciation": "/ədˈventʃər/",
+    "partOfSpeech": "n.",
+    "definition": "an exciting experience",
+    "chineseDef": "冒险",
+    "example": "They went on an adventure."
+  },
+  {
+    "word": "advise",
+    "pronunciation": "/ədˈvaɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to give recommendations",
+    "chineseDef": "建议",
+    "example": "The doctor advised rest."
+  },
+  {
+    "word": "affect",
+    "pronunciation": "/əˈfekt/",
+    "partOfSpeech": "v.",
+    "definition": "to influence",
+    "chineseDef": "影响",
+    "example": "The weather affects my mood."
+  },
+  {
+    "word": "afford",
+    "pronunciation": "/əˈfɔːd/",
+    "partOfSpeech": "v.",
+    "definition": "to have enough money for",
+    "chineseDef": "负担得起",
+    "example": "I can't afford that car."
+  },
+  {
+    "word": "agree",
+    "pronunciation": "/əˈɡriː/",
+    "partOfSpeech": "v.",
+    "definition": "to share the same opinion",
+    "chineseDef": "同意",
+    "example": "We all agreed."
+  },
+  {
+    "word": "agriculture",
+    "pronunciation": "/ˈæɡrɪkʌltʃər/",
+    "partOfSpeech": "n.",
+    "definition": "farming and cultivation",
+    "chineseDef": "农业",
+    "example": "Agriculture is the main industry."
+  },
+  {
+    "word": "allow",
+    "pronunciation": "/əˈlaʊ/",
+    "partOfSpeech": "v.",
+    "definition": "to permit",
+    "chineseDef": "允许",
+    "example": "Smoking is not allowed here."
+  },
+  {
+    "word": "ambition",
+    "pronunciation": "/æmˈbɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a strong desire to succeed",
+    "chineseDef": "雄心",
+    "example": "His ambition is to become CEO."
+  },
+  {
+    "word": "amount",
+    "pronunciation": "/əˈmaʊnt/",
+    "partOfSpeech": "n.",
+    "definition": "quantity or total",
+    "chineseDef": "数量",
+    "example": "A large amount was spent."
+  },
+  {
+    "word": "ancient",
+    "pronunciation": "/ˈeɪnʃənt/",
+    "partOfSpeech": "adj.",
+    "definition": "very old",
+    "chineseDef": "古代的",
+    "example": "The ancient city was discovered."
+  },
+  {
+    "word": "announce",
+    "pronunciation": "/əˈnaʊns/",
+    "partOfSpeech": "v.",
+    "definition": "to make a public statement",
+    "chineseDef": "宣布",
+    "example": "They announced their engagement."
+  },
+  {
+    "word": "annual",
+    "pronunciation": "/ˈænjuəl/",
+    "partOfSpeech": "adj.",
+    "definition": "yearly",
+    "chineseDef": "每年的",
+    "example": "The annual meeting is in March."
+  },
+  {
+    "word": "anxiety",
+    "pronunciation": "/æŋˈzaɪəti/",
+    "partOfSpeech": "n.",
+    "definition": "worry or nervousness",
+    "chineseDef": "焦虑",
+    "example": "She felt anxiety before the exam."
+  },
+  {
+    "word": "appeal",
+    "pronunciation": "/əˈpiːl/",
+    "partOfSpeech": "n.",
+    "definition": "a serious request",
+    "chineseDef": "呼吁，吸引力",
+    "example": "The charity made an appeal."
+  },
+  {
+    "word": "apply",
+    "pronunciation": "/əˈplaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to make a formal request",
+    "chineseDef": "申请",
+    "example": "She applied for the job."
+  },
+  {
+    "word": "appreciate",
+    "pronunciation": "/əˈpriːʃieɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to recognize the value",
+    "chineseDef": "感激",
+    "example": "I appreciate your help."
+  },
+  {
+    "word": "approach",
+    "pronunciation": "/əˈprəʊtʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to come near",
+    "chineseDef": "接近",
+    "example": "The train is approaching."
+  },
+  {
+    "word": "approve",
+    "pronunciation": "/əˈpruːv/",
+    "partOfSpeech": "v.",
+    "definition": "to officially agree",
+    "chineseDef": "批准",
+    "example": "The committee approved the plan."
+  },
+  {
+    "word": "arise",
+    "pronunciation": "/əˈraɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to come up",
+    "chineseDef": "出现",
+    "example": "A problem has arisen."
+  },
+  {
+    "word": "arrange",
+    "pronunciation": "/əˈreɪndʒ/",
+    "partOfSpeech": "v.",
+    "definition": "to organize",
+    "chineseDef": "安排",
+    "example": "She arranged the flowers."
+  },
+  {
+    "word": "arrest",
+    "pronunciation": "/əˈrest/",
+    "partOfSpeech": "v.",
+    "definition": "to seize by law",
+    "chineseDef": "逮捕",
+    "example": "The police arrested the thief."
+  },
+  {
+    "word": "artificial",
+    "pronunciation": "/ˌɑːtɪˈfɪʃəl/",
+    "partOfSpeech": "adj.",
+    "definition": "made by humans",
+    "chineseDef": "人工的",
+    "example": "Artificial intelligence is advancing."
+  },
+  {
+    "word": "aspect",
+    "pronunciation": "/ˈæspekt/",
+    "partOfSpeech": "n.",
+    "definition": "a part or feature",
+    "chineseDef": "方面",
+    "example": "We considered every aspect."
+  },
+  {
+    "word": "assess",
+    "pronunciation": "/əˈses/",
+    "partOfSpeech": "v.",
+    "definition": "to evaluate",
+    "chineseDef": "评估",
+    "example": "We need to assess the damage."
+  },
+  {
+    "word": "assign",
+    "pronunciation": "/əˈsaɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to allocate",
+    "chineseDef": "分配",
+    "example": "The teacher assigned homework."
+  },
+  {
+    "word": "assist",
+    "pronunciation": "/əˈsɪst/",
+    "partOfSpeech": "v.",
+    "definition": "to help",
+    "chineseDef": "协助",
+    "example": "She assisted the elderly man."
+  },
+  {
+    "word": "assume",
+    "pronunciation": "/əˈsjuːm/",
+    "partOfSpeech": "v.",
+    "definition": "to suppose without proof",
+    "chineseDef": "假设",
+    "example": "I assume you're right."
+  },
+  {
+    "word": "atmosphere",
+    "pronunciation": "/ˈætməsfɪər/",
+    "partOfSpeech": "n.",
+    "definition": "the air surrounding Earth",
+    "chineseDef": "大气，气氛",
+    "example": "The atmosphere was tense."
+  },
+  {
+    "word": "attach",
+    "pronunciation": "/əˈtætʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to fasten or connect",
+    "chineseDef": "附上",
+    "example": "Please attach the file."
+  },
+  {
+    "word": "attempt",
+    "pronunciation": "/əˈtempt/",
+    "partOfSpeech": "n.",
+    "definition": "an effort to do something",
+    "chineseDef": "尝试",
+    "example": "He made an attempt."
+  },
+  {
+    "word": "attend",
+    "pronunciation": "/əˈtend/",
+    "partOfSpeech": "v.",
+    "definition": "to be present at",
+    "chineseDef": "参加",
+    "example": "She attended the conference."
+  },
+  {
+    "word": "attitude",
+    "pronunciation": "/ˈætɪtjuːd/",
+    "partOfSpeech": "n.",
+    "definition": "a way of thinking",
+    "chineseDef": "态度",
+    "example": "He has a positive attitude."
+  },
+  {
+    "word": "attract",
+    "pronunciation": "/əˈtrækt/",
+    "partOfSpeech": "v.",
+    "definition": "to draw toward",
+    "chineseDef": "吸引",
+    "example": "The museum attracts many visitors."
+  },
+  {
+    "word": "authority",
+    "pronunciation": "/ɔːˈθɒrəti/",
+    "partOfSpeech": "n.",
+    "definition": "the power to give orders",
+    "chineseDef": "权威",
+    "example": "The local authority made the decision."
+  },
+  {
+    "word": "available",
+    "pronunciation": "/əˈveɪləbl/",
+    "partOfSpeech": "adj.",
+    "definition": "able to be used",
+    "chineseDef": "可用的",
+    "example": "Tickets are still available."
+  },
+  {
+    "word": "average",
+    "pronunciation": "/ˈævərɪdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "the typical amount",
+    "chineseDef": "平均",
+    "example": "His grades are above average."
+  },
+  {
+    "word": "avoid",
+    "pronunciation": "/əˈvɔɪd/",
+    "partOfSpeech": "v.",
+    "definition": "to keep away from",
+    "chineseDef": "避免",
+    "example": "She avoided eye contact."
+  },
+  {
+    "word": "aware",
+    "pronunciation": "/əˈweər/",
+    "partOfSpeech": "adj.",
+    "definition": "having knowledge of",
+    "chineseDef": "意识到",
+    "example": "He was aware of the danger."
+  },
+  {
+    "word": "balance",
+    "pronunciation": "/ˈbæləns/",
+    "partOfSpeech": "n.",
+    "definition": "even distribution of weight",
+    "chineseDef": "平衡",
+    "example": "She lost her balance."
+  },
+  {
+    "word": "ban",
+    "pronunciation": "/bæn/",
+    "partOfSpeech": "v.",
+    "definition": "to prohibit",
+    "chineseDef": "禁止",
+    "example": "Smoking is banned."
+  },
+  {
+    "word": "barrier",
+    "pronunciation": "/ˈbæriər/",
+    "partOfSpeech": "n.",
+    "definition": "something that blocks",
+    "chineseDef": "障碍",
+    "example": "Language can be a barrier."
+  },
+  {
+    "word": "basis",
+    "pronunciation": "/ˈbeɪsɪs/",
+    "partOfSpeech": "n.",
+    "definition": "a foundation",
+    "chineseDef": "基础，根据",
+    "example": "On a daily basis."
+  },
+  {
+    "word": "behalf",
+    "pronunciation": "/bɪˈhɑːf/",
+    "partOfSpeech": "n.",
+    "definition": "in the interest of",
+    "chineseDef": "代表",
+    "example": "He spoke on behalf of the group."
+  },
+  {
+    "word": "behave",
+    "pronunciation": "/bɪˈheɪv/",
+    "partOfSpeech": "v.",
+    "definition": "to act in a certain way",
+    "chineseDef": "举止",
+    "example": "Children should behave well."
+  },
+  {
+    "word": "belief",
+    "pronunciation": "/bɪˈliːf/",
+    "partOfSpeech": "n.",
+    "definition": "a strong opinion",
+    "chineseDef": "信念",
+    "example": "His beliefs are strong."
+  },
+  {
+    "word": "belong",
+    "pronunciation": "/bɪˈlɒŋ/",
+    "partOfSpeech": "v.",
+    "definition": "to be a member of",
+    "chineseDef": "属于",
+    "example": "This book belongs to me."
+  },
+  {
+    "word": "benefit",
+    "pronunciation": "/ˈbenɪfɪt/",
+    "partOfSpeech": "n.",
+    "definition": "an advantage or gain",
+    "chineseDef": "利益",
+    "example": "Exercise has many benefits."
+  },
+  {
+    "word": "blame",
+    "pronunciation": "/bleɪm/",
+    "partOfSpeech": "v.",
+    "definition": "to hold responsible",
+    "chineseDef": "责备",
+    "example": "Don't blame others."
+  },
+  {
+    "word": "border",
+    "pronunciation": "/ˈbɔːdər/",
+    "partOfSpeech": "n.",
+    "definition": "a dividing line",
+    "chineseDef": "边界",
+    "example": "They crossed the border."
+  },
+  {
+    "word": "brave",
+    "pronunciation": "/breɪv/",
+    "partOfSpeech": "adj.",
+    "definition": "courageous",
+    "chineseDef": "勇敢的",
+    "example": "The brave firefighter saved the child."
+  },
+  {
+    "word": "brief",
+    "pronunciation": "/briːf/",
+    "partOfSpeech": "adj.",
+    "definition": "short in duration",
+    "chineseDef": "简短的",
+    "example": "The meeting was brief."
+  },
+  {
+    "word": "brilliant",
+    "pronunciation": "/ˈbrɪliənt/",
+    "partOfSpeech": "adj.",
+    "definition": "very bright or intelligent",
+    "chineseDef": "杰出的",
+    "example": "She had a brilliant idea."
+  },
+  {
+    "word": "broad",
+    "pronunciation": "/brɔːd/",
+    "partOfSpeech": "adj.",
+    "definition": "wide",
+    "chineseDef": "宽阔的",
+    "example": "The river is very broad."
+  },
+  {
+    "word": "budget",
+    "pronunciation": "/ˈbʌdʒɪt/",
+    "partOfSpeech": "n.",
+    "definition": "a spending plan",
+    "chineseDef": "预算",
+    "example": "We need to stick to our budget."
+  },
+  {
+    "word": "burden",
+    "pronunciation": "/ˈbɜːdən/",
+    "partOfSpeech": "n.",
+    "definition": "a heavy load",
+    "chineseDef": "负担",
+    "example": "The burden of leadership is heavy."
+  },
+  {
+    "word": "calculate",
+    "pronunciation": "/ˈkælkjuleɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to compute",
+    "chineseDef": "计算",
+    "example": "Can you calculate the total?"
+  },
+  {
+    "word": "campaign",
+    "pronunciation": "/kæmˈpeɪn/",
+    "partOfSpeech": "n.",
+    "definition": "a series of planned actions",
+    "chineseDef": "运动",
+    "example": "The election campaign starts."
+  },
+  {
+    "word": "capable",
+    "pronunciation": "/ˈkeɪpəbl/",
+    "partOfSpeech": "adj.",
+    "definition": "having the ability",
+    "chineseDef": "有能力的",
+    "example": "She is a capable leader."
+  },
+  {
+    "word": "capture",
+    "pronunciation": "/ˈkæptʃər/",
+    "partOfSpeech": "v.",
+    "definition": "to take by force",
+    "chineseDef": "捕获",
+    "example": "The photographer captured the moment."
+  },
+  {
+    "word": "career",
+    "pronunciation": "/kəˈrɪər/",
+    "partOfSpeech": "n.",
+    "definition": "an occupation for life",
+    "chineseDef": "职业",
+    "example": "She chose a career in medicine."
+  },
+  {
+    "word": "category",
+    "pronunciation": "/ˈkætəɡəri/",
+    "partOfSpeech": "n.",
+    "definition": "a class or division",
+    "chineseDef": "类别",
+    "example": "Books are divided into categories."
+  },
+  {
+    "word": "caution",
+    "pronunciation": "/ˈkɔːʃən/",
+    "partOfSpeech": "n.",
+    "definition": "careful attention",
+    "chineseDef": "谨慎",
+    "example": "Proceed with caution."
+  },
+  {
+    "word": "celebrate",
+    "pronunciation": "/ˈselɪbreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to mark a special occasion",
+    "chineseDef": "庆祝",
+    "example": "We celebrated her birthday."
+  },
+  {
+    "word": "ceremony",
+    "pronunciation": "/ˈserɪməni/",
+    "partOfSpeech": "n.",
+    "definition": "a formal event",
+    "chineseDef": "仪式",
+    "example": "The wedding ceremony was beautiful."
+  },
+  {
+    "word": "challenge",
+    "pronunciation": "/ˈtʃælɪndʒ/",
+    "partOfSpeech": "n.",
+    "definition": "a difficult task",
+    "chineseDef": "挑战",
+    "example": "The exam was a real challenge."
+  },
+  {
+    "word": "character",
+    "pronunciation": "/ˈkærɪktər/",
+    "partOfSpeech": "n.",
+    "definition": "personality or role",
+    "chineseDef": "性格，角色",
+    "example": "He has a strong character."
+  },
+  {
+    "word": "charity",
+    "pronunciation": "/ˈtʃærəti/",
+    "partOfSpeech": "n.",
+    "definition": "help for the needy",
+    "chineseDef": "慈善",
+    "example": "They donated to charity."
+  },
+  {
+    "word": "chief",
+    "pronunciation": "/tʃiːf/",
+    "partOfSpeech": "adj.",
+    "definition": "most important",
+    "chineseDef": "主要的",
+    "example": "The chief concern is safety."
+  },
+  {
+    "word": "circumstance",
+    "pronunciation": "/ˈsɜːkəmstəns/",
+    "partOfSpeech": "n.",
+    "definition": "a condition or fact",
+    "chineseDef": "环境，情况",
+    "example": "Under the circumstances."
+  },
+  {
+    "word": "citizen",
+    "pronunciation": "/ˈsɪtɪzən/",
+    "partOfSpeech": "n.",
+    "definition": "a member of a country",
+    "chineseDef": "公民",
+    "example": "She is a US citizen."
+  },
+  {
+    "word": "claim",
+    "pronunciation": "/kleɪm/",
+    "partOfSpeech": "v.",
+    "definition": "to assert or demand",
+    "chineseDef": "声称",
+    "example": "He claimed ownership."
+  },
+  {
+    "word": "climate",
+    "pronunciation": "/ˈklaɪmət/",
+    "partOfSpeech": "n.",
+    "definition": "weather conditions over time",
+    "chineseDef": "气候",
+    "example": "The climate is changing."
+  },
+  {
+    "word": "collapse",
+    "pronunciation": "/kəˈlæps/",
+    "partOfSpeech": "v.",
+    "definition": "to fall down suddenly",
+    "chineseDef": "倒塌",
+    "example": "The building collapsed."
+  },
+  {
+    "word": "colleague",
+    "pronunciation": "/ˈkɒliːɡ/",
+    "partOfSpeech": "n.",
+    "definition": "a work associate",
+    "chineseDef": "同事",
+    "example": "My colleague helped me."
+  },
+  {
+    "word": "combine",
+    "pronunciation": "/kəmˈbaɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to join together",
+    "chineseDef": "结合",
+    "example": "Combine the ingredients."
+  },
+  {
+    "word": "command",
+    "pronunciation": "/kəˈmɑːnd/",
+    "partOfSpeech": "v.",
+    "definition": "to give an order",
+    "chineseDef": "命令",
+    "example": "The general commanded his troops."
+  },
+  {
+    "word": "comment",
+    "pronunciation": "/ˈkɒment/",
+    "partOfSpeech": "n.",
+    "definition": "a remark or opinion",
+    "chineseDef": "评论",
+    "example": "He made a positive comment."
+  },
+  {
+    "word": "commercial",
+    "pronunciation": "/kəˈmɜːʃəl/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to commerce",
+    "chineseDef": "商业的",
+    "example": "The commercial district is busy."
+  },
+  {
+    "word": "commit",
+    "pronunciation": "/kəˈmɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to pledge or carry out",
+    "chineseDef": "犯，承诺",
+    "example": "He committed a crime."
+  },
+  {
+    "word": "communicate",
+    "pronunciation": "/kəˈmjuːnɪkeɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to share information",
+    "chineseDef": "交流",
+    "example": "We communicate via email."
+  },
+  {
+    "word": "community",
+    "pronunciation": "/kəˈmjuːnəti/",
+    "partOfSpeech": "n.",
+    "definition": "a group of people",
+    "chineseDef": "社区",
+    "example": "The community came together."
+  },
+  {
+    "word": "companion",
+    "pronunciation": "/kəmˈpænjən/",
+    "partOfSpeech": "n.",
+    "definition": "a friend or partner",
+    "chineseDef": "同伴",
+    "example": "She was my travel companion."
+  },
+  {
+    "word": "compare",
+    "pronunciation": "/kəmˈpeər/",
+    "partOfSpeech": "v.",
+    "definition": "to examine similarities",
+    "chineseDef": "比较",
+    "example": "Compare the two products."
+  },
+  {
+    "word": "compete",
+    "pronunciation": "/kəmˈpiːt/",
+    "partOfSpeech": "v.",
+    "definition": "to strive against others",
+    "chineseDef": "竞争",
+    "example": "Athletes compete for gold."
+  },
+  {
+    "word": "complain",
+    "pronunciation": "/kəmˈpleɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to express dissatisfaction",
+    "chineseDef": "抱怨",
+    "example": "She complained about the service."
+  },
+  {
+    "word": "complete",
+    "pronunciation": "/kəmˈpliːt/",
+    "partOfSpeech": "adj.",
+    "definition": "having all parts",
+    "chineseDef": "完整的",
+    "example": "The project is complete."
+  },
+  {
+    "word": "complex",
+    "pronunciation": "/ˈkɒmpleks/",
+    "partOfSpeech": "adj.",
+    "definition": "complicated",
+    "chineseDef": "复杂的",
+    "example": "The problem is very complex."
+  },
+  {
+    "word": "compose",
+    "pronunciation": "/kəmˈpəʊz/",
+    "partOfSpeech": "v.",
+    "definition": "to write or create",
+    "chineseDef": "创作",
+    "example": "He composed a beautiful song."
+  },
+  {
+    "word": "concentrate",
+    "pronunciation": "/ˈkɒnsəntreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to focus attention",
+    "chineseDef": "集中",
+    "example": "Please concentrate."
+  },
+  {
+    "word": "concept",
+    "pronunciation": "/ˈkɒnsept/",
+    "partOfSpeech": "n.",
+    "definition": "an abstract idea",
+    "chineseDef": "概念",
+    "example": "Justice is a difficult concept."
+  },
+  {
+    "word": "concern",
+    "pronunciation": "/kənˈsɜːn/",
+    "partOfSpeech": "n.",
+    "definition": "a matter of interest",
+    "chineseDef": "关心，担忧",
+    "example": "Her safety is my concern."
+  },
+  {
+    "word": "conclude",
+    "pronunciation": "/kənˈkluːd/",
+    "partOfSpeech": "v.",
+    "definition": "to bring to an end",
+    "chineseDef": "总结",
+    "example": "We concluded the meeting."
+  },
+  {
+    "word": "condition",
+    "pronunciation": "/kənˈdɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a state or requirement",
+    "chineseDef": "条件",
+    "example": "The car is in good condition."
+  },
+  {
+    "word": "conduct",
+    "pronunciation": "/kənˈdʌkt/",
+    "partOfSpeech": "v.",
+    "definition": "to organize and carry out",
+    "chineseDef": "进行",
+    "example": "They conducted an experiment."
+  },
+  {
+    "word": "conference",
+    "pronunciation": "/ˈkɒnfərəns/",
+    "partOfSpeech": "n.",
+    "definition": "a formal meeting",
+    "chineseDef": "会议",
+    "example": "He spoke at the conference."
+  },
+  {
+    "word": "confident",
+    "pronunciation": "/ˈkɒnfɪdənt/",
+    "partOfSpeech": "adj.",
+    "definition": "sure of oneself",
+    "chineseDef": "自信的",
+    "example": "She is confident."
+  },
+  {
+    "word": "confirm",
+    "pronunciation": "/kənˈfɜːm/",
+    "partOfSpeech": "v.",
+    "definition": "to establish the truth",
+    "chineseDef": "确认",
+    "example": "Please confirm your attendance."
+  },
+  {
+    "word": "conflict",
+    "pronunciation": "/ˈkɒnflɪkt/",
+    "partOfSpeech": "n.",
+    "definition": "a serious disagreement",
+    "chineseDef": "冲突",
+    "example": "The conflict lasted for years."
+  },
+  {
+    "word": "confuse",
+    "pronunciation": "/kənˈfjuːz/",
+    "partOfSpeech": "v.",
+    "definition": "to make unclear",
+    "chineseDef": "使困惑",
+    "example": "The instructions confused me."
+  },
+  {
+    "word": "connect",
+    "pronunciation": "/kəˈnekt/",
+    "partOfSpeech": "v.",
+    "definition": "to join together",
+    "chineseDef": "连接",
+    "example": "Connect the cables."
+  },
+  {
+    "word": "conscious",
+    "pronunciation": "/ˈkɒnʃəs/",
+    "partOfSpeech": "adj.",
+    "definition": "aware and awake",
+    "chineseDef": "有意识的",
+    "example": "He was conscious."
+  },
+  {
+    "word": "consequence",
+    "pronunciation": "/ˈkɒnsɪkwəns/",
+    "partOfSpeech": "n.",
+    "definition": "a result or effect",
+    "chineseDef": "结果",
+    "example": "Actions have consequences."
+  },
+  {
+    "word": "consider",
+    "pronunciation": "/kənˈsɪdər/",
+    "partOfSpeech": "v.",
+    "definition": "to think about",
+    "chineseDef": "考虑",
+    "example": "Please consider my proposal."
+  },
+  {
+    "word": "consist",
+    "pronunciation": "/kənˈsɪst/",
+    "partOfSpeech": "v.",
+    "definition": "to be composed of",
+    "chineseDef": "由...组成",
+    "example": "Water consists of H2O."
+  },
+  {
+    "word": "constant",
+    "pronunciation": "/ˈkɒnstənt/",
+    "partOfSpeech": "adj.",
+    "definition": "occurring continuously",
+    "chineseDef": "持续的",
+    "example": "The noise is constant."
+  },
+  {
+    "word": "construct",
+    "pronunciation": "/kənˈstrʌkt/",
+    "partOfSpeech": "v.",
+    "definition": "to build",
+    "chineseDef": "建造",
+    "example": "They constructed a new bridge."
+  },
+  {
+    "word": "consult",
+    "pronunciation": "/kənˈsʌlt/",
+    "partOfSpeech": "v.",
+    "definition": "to seek advice from",
+    "chineseDef": "咨询",
+    "example": "Consult your doctor."
+  },
+  {
+    "word": "consume",
+    "pronunciation": "/kənˈsjuːm/",
+    "partOfSpeech": "v.",
+    "definition": "to eat or use up",
+    "chineseDef": "消费，消耗",
+    "example": "We consume too much sugar."
+  },
+  {
+    "word": "contact",
+    "pronunciation": "/ˈkɒntækt/",
+    "partOfSpeech": "n.",
+    "definition": "communication or touch",
+    "chineseDef": "联系",
+    "example": "Keep in contact."
+  },
+  {
+    "word": "contain",
+    "pronunciation": "/kənˈteɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to hold inside",
+    "chineseDef": "包含",
+    "example": "The box contains chocolates."
+  },
+  {
+    "word": "contemporary",
+    "pronunciation": "/kənˈtempərəri/",
+    "partOfSpeech": "adj.",
+    "definition": "modern or current",
+    "chineseDef": "当代的",
+    "example": "She enjoys contemporary art."
+  },
+  {
+    "word": "content",
+    "pronunciation": "/ˈkɒntent/",
+    "partOfSpeech": "n.",
+    "definition": "what is inside",
+    "chineseDef": "内容",
+    "example": "The content is interesting."
+  },
+  {
+    "word": "continue",
+    "pronunciation": "/kənˈtɪnjuː/",
+    "partOfSpeech": "v.",
+    "definition": "to keep going",
+    "chineseDef": "继续",
+    "example": "The rain continued all day."
+  },
+  {
+    "word": "contract",
+    "pronunciation": "/ˈkɒntrækt/",
+    "partOfSpeech": "n.",
+    "definition": "a legal agreement",
+    "chineseDef": "合同",
+    "example": "Sign the contract."
+  },
+  {
+    "word": "contribute",
+    "pronunciation": "/kənˈtrɪbjuːt/",
+    "partOfSpeech": "v.",
+    "definition": "to give or add",
+    "chineseDef": "贡献",
+    "example": "He contributed to charity."
+  },
+  {
+    "word": "control",
+    "pronunciation": "/kənˈtrəʊl/",
+    "partOfSpeech": "n.",
+    "definition": "the power to direct",
+    "chineseDef": "控制",
+    "example": "The situation is under control."
+  },
+  {
+    "word": "convenient",
+    "pronunciation": "/kənˈviːniənt/",
+    "partOfSpeech": "adj.",
+    "definition": "suitable and easy",
+    "chineseDef": "方便的",
+    "example": "The location is convenient."
+  },
+  {
+    "word": "convince",
+    "pronunciation": "/kənˈvɪns/",
+    "partOfSpeech": "v.",
+    "definition": "to persuade",
+    "chineseDef": "说服",
+    "example": "She convinced me to join."
+  },
+  {
+    "word": "cooperate",
+    "pronunciation": "/kəʊˈɒpəreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to work together",
+    "chineseDef": "合作",
+    "example": "The two teams cooperated."
+  },
+  {
+    "word": "cope",
+    "pronunciation": "/kəʊp/",
+    "partOfSpeech": "v.",
+    "definition": "to deal with difficulty",
+    "chineseDef": "应付",
+    "example": "She coped well with pressure."
+  },
+  {
+    "word": "core",
+    "pronunciation": "/kɔːr/",
+    "partOfSpeech": "n.",
+    "definition": "the central part",
+    "chineseDef": "核心",
+    "example": "The core problem is funding."
+  },
+  {
+    "word": "correct",
+    "pronunciation": "/kəˈrekt/",
+    "partOfSpeech": "adj.",
+    "definition": "without errors",
+    "chineseDef": "正确的",
+    "example": "Your answer is correct."
+  },
+  {
+    "word": "courage",
+    "pronunciation": "/ˈkʌrɪdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "the ability to face danger",
+    "chineseDef": "勇气",
+    "example": "It takes courage to speak up."
+  },
+  {
+    "word": "create",
+    "pronunciation": "/kriˈeɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to bring into existence",
+    "chineseDef": "创造",
+    "example": "She created a beautiful painting."
+  },
+  {
+    "word": "crime",
+    "pronunciation": "/kraɪm/",
+    "partOfSpeech": "n.",
+    "definition": "an illegal act",
+    "chineseDef": "犯罪",
+    "example": "Crime rates are decreasing."
+  },
+  {
+    "word": "crisis",
+    "pronunciation": "/ˈkraɪsɪs/",
+    "partOfSpeech": "n.",
+    "definition": "a time of great difficulty",
+    "chineseDef": "危机",
+    "example": "The country faced an economic crisis."
+  },
+  {
+    "word": "critical",
+    "pronunciation": "/ˈkrɪtɪkəl/",
+    "partOfSpeech": "adj.",
+    "definition": "very important",
+    "chineseDef": "关键的",
+    "example": "This is a critical moment."
+  },
+  {
+    "word": "cultivate",
+    "pronunciation": "/ˈkʌltɪveɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to grow or develop",
+    "chineseDef": "培养",
+    "example": "She cultivated good habits."
+  },
+  {
+    "word": "curious",
+    "pronunciation": "/ˈkjʊəriəs/",
+    "partOfSpeech": "adj.",
+    "definition": "eager to learn",
+    "chineseDef": "好奇的",
+    "example": "Children are naturally curious."
+  },
+  {
+    "word": "current",
+    "pronunciation": "/ˈkʌrənt/",
+    "partOfSpeech": "adj.",
+    "definition": "belonging to the present",
+    "chineseDef": "当前的",
+    "example": "What is the current time?"
+  },
+  {
+    "word": "custom",
+    "pronunciation": "/ˈkʌstəm/",
+    "partOfSpeech": "n.",
+    "definition": "a traditional practice",
+    "chineseDef": "习俗",
+    "example": "It's a local custom."
+  },
+  {
+    "word": "damage",
+    "pronunciation": "/ˈdæmɪdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "harm or injury",
+    "chineseDef": "损害",
+    "example": "The storm caused damage."
+  },
+  {
+    "word": "debate",
+    "pronunciation": "/dɪˈbeɪt/",
+    "partOfSpeech": "n.",
+    "definition": "a formal discussion",
+    "chineseDef": "辩论",
+    "example": "The debate was lively."
+  },
+  {
+    "word": "debt",
+    "pronunciation": "/det/",
+    "partOfSpeech": "n.",
+    "definition": "money owed",
+    "chineseDef": "债务",
+    "example": "He is in debt."
+  },
+  {
+    "word": "decade",
+    "pronunciation": "/ˈdekeɪd/",
+    "partOfSpeech": "n.",
+    "definition": "a period of ten years",
+    "chineseDef": "十年",
+    "example": "The past decade saw great changes."
+  },
+  {
+    "word": "declare",
+    "pronunciation": "/dɪˈkleər/",
+    "partOfSpeech": "v.",
+    "definition": "to announce formally",
+    "chineseDef": "宣布",
+    "example": "The president declared a holiday."
+  },
+  {
+    "word": "decline",
+    "pronunciation": "/dɪˈklaɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to decrease or refuse",
+    "chineseDef": "下降，拒绝",
+    "example": "The population is declining."
+  },
+  {
+    "word": "decorate",
+    "pronunciation": "/ˈdekəreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to add beauty to",
+    "chineseDef": "装饰",
+    "example": "They decorated the room."
+  },
+  {
+    "word": "decrease",
+    "pronunciation": "/dɪˈkriːs/",
+    "partOfSpeech": "v.",
+    "definition": "to become smaller",
+    "chineseDef": "减少",
+    "example": "Sales decreased this quarter."
+  },
+  {
+    "word": "defeat",
+    "pronunciation": "/dɪˈfiːt/",
+    "partOfSpeech": "v.",
+    "definition": "to beat or overcome",
+    "chineseDef": "击败",
+    "example": "The team was defeated."
+  },
+  {
+    "word": "defend",
+    "pronunciation": "/dɪˈfend/",
+    "partOfSpeech": "v.",
+    "definition": "to protect from harm",
+    "chineseDef": "防御",
+    "example": "We must defend our rights."
+  },
+  {
+    "word": "define",
+    "pronunciation": "/dɪˈfaɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to explain the meaning",
+    "chineseDef": "定义",
+    "example": "How do you define success?"
+  },
+  {
+    "word": "definite",
+    "pronunciation": "/ˈdefɪnət/",
+    "partOfSpeech": "adj.",
+    "definition": "clear and certain",
+    "chineseDef": "明确的",
+    "example": "We need a definite answer."
+  },
+  {
+    "word": "delay",
+    "pronunciation": "/dɪˈleɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to postpone",
+    "chineseDef": "延迟",
+    "example": "The flight was delayed."
+  },
+  {
+    "word": "deliver",
+    "pronunciation": "/dɪˈlɪvər/",
+    "partOfSpeech": "v.",
+    "definition": "to bring or hand over",
+    "chineseDef": "递送",
+    "example": "Please deliver the package."
+  },
+  {
+    "word": "demand",
+    "pronunciation": "/dɪˈmɑːnd/",
+    "partOfSpeech": "n.",
+    "definition": "a strong request",
+    "chineseDef": "需求",
+    "example": "There is high demand."
+  },
+  {
+    "word": "demonstrate",
+    "pronunciation": "/ˈdemənstreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to show or prove",
+    "chineseDef": "展示",
+    "example": "The experiment demonstrated the theory."
+  },
+  {
+    "word": "deny",
+    "pronunciation": "/dɪˈnaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to refuse to admit",
+    "chineseDef": "否认",
+    "example": "He denied the accusation."
+  },
+  {
+    "word": "depend",
+    "pronunciation": "/dɪˈpend/",
+    "partOfSpeech": "v.",
+    "definition": "to rely on",
+    "chineseDef": "依赖",
+    "example": "It depends on the weather."
+  },
+  {
+    "word": "depress",
+    "pronunciation": "/dɪˈpres/",
+    "partOfSpeech": "v.",
+    "definition": "to make sad",
+    "chineseDef": "使沮丧",
+    "example": "The news depressed him."
+  },
+  {
+    "word": "describe",
+    "pronunciation": "/dɪˈskraɪb/",
+    "partOfSpeech": "v.",
+    "definition": "to give an account",
+    "chineseDef": "描述",
+    "example": "Describe what you saw."
+  },
+  {
+    "word": "deserve",
+    "pronunciation": "/dɪˈzɜːv/",
+    "partOfSpeech": "v.",
+    "definition": "to be worthy of",
+    "chineseDef": "值得",
+    "example": "You deserve a break."
+  },
+  {
+    "word": "design",
+    "pronunciation": "/dɪˈzaɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to plan and create",
+    "chineseDef": "设计",
+    "example": "She designed the building."
+  },
+  {
+    "word": "desire",
+    "pronunciation": "/dɪˈzaɪər/",
+    "partOfSpeech": "n.",
+    "definition": "a strong wish",
+    "chineseDef": "渴望",
+    "example": "He had a desire to travel."
+  },
+  {
+    "word": "desperate",
+    "pronunciation": "/ˈdespərət/",
+    "partOfSpeech": "adj.",
+    "definition": "feeling hopeless",
+    "chineseDef": "绝望的",
+    "example": "She was desperate for help."
+  },
+  {
+    "word": "despite",
+    "pronunciation": "/dɪˈspaɪt/",
+    "partOfSpeech": "prep.",
+    "definition": "in spite of",
+    "chineseDef": "尽管",
+    "example": "Despite the rain, we went out."
+  },
+  {
+    "word": "destroy",
+    "pronunciation": "/dɪˈstrɔɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to ruin completely",
+    "chineseDef": "破坏",
+    "example": "The fire destroyed the building."
+  },
+  {
+    "word": "determine",
+    "pronunciation": "/dɪˈtɜːmɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to decide firmly",
+    "chineseDef": "决定",
+    "example": "We need to determine the cause."
+  },
+  {
+    "word": "develop",
+    "pronunciation": "/dɪˈveləp/",
+    "partOfSpeech": "v.",
+    "definition": "to grow or improve",
+    "chineseDef": "发展",
+    "example": "The city developed rapidly."
+  },
+  {
+    "word": "device",
+    "pronunciation": "/dɪˈvaɪs/",
+    "partOfSpeech": "n.",
+    "definition": "a tool or machine",
+    "chineseDef": "设备",
+    "example": "This device measures temperature."
+  },
+  {
+    "word": "devote",
+    "pronunciation": "/dɪˈvəʊt/",
+    "partOfSpeech": "v.",
+    "definition": "to give completely",
+    "chineseDef": "致力于",
+    "example": "She devoted her life to teaching."
+  },
+  {
+    "word": "differ",
+    "pronunciation": "/ˈdɪfər/",
+    "partOfSpeech": "v.",
+    "definition": "to be unlike",
+    "chineseDef": "不同",
+    "example": "The twins differ."
+  },
+  {
+    "word": "direction",
+    "pronunciation": "/daɪˈrekʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a course or guidance",
+    "chineseDef": "方向",
+    "example": "Go in that direction."
+  },
+  {
+    "word": "discipline",
+    "pronunciation": "/ˈdɪsɪplɪn/",
+    "partOfSpeech": "n.",
+    "definition": "training in self-control",
+    "chineseDef": "纪律",
+    "example": "He lacks discipline."
+  },
+  {
+    "word": "discover",
+    "pronunciation": "/dɪˈskʌvər/",
+    "partOfSpeech": "v.",
+    "definition": "to find or learn",
+    "chineseDef": "发现",
+    "example": "She discovered a new species."
+  },
+  {
+    "word": "discuss",
+    "pronunciation": "/dɪˈskʌs/",
+    "partOfSpeech": "v.",
+    "definition": "to talk about",
+    "chineseDef": "讨论",
+    "example": "We discussed the plan."
+  },
+  {
+    "word": "display",
+    "pronunciation": "/dɪˈspleɪ/",
+    "partOfSpeech": "n.",
+    "definition": "an exhibition or show",
+    "chineseDef": "展示",
+    "example": "The display was impressive."
+  },
+  {
+    "word": "dispute",
+    "pronunciation": "/dɪˈspjuːt/",
+    "partOfSpeech": "n.",
+    "definition": "a disagreement",
+    "chineseDef": "争端",
+    "example": "The dispute was settled."
+  },
+  {
+    "word": "distance",
+    "pronunciation": "/ˈdɪstəns/",
+    "partOfSpeech": "n.",
+    "definition": "the space between points",
+    "chineseDef": "距离",
+    "example": "The distance is 10 miles."
+  },
+  {
+    "word": "distinct",
+    "pronunciation": "/dɪˈstɪŋkt/",
+    "partOfSpeech": "adj.",
+    "definition": "clearly different",
+    "chineseDef": "明显的",
+    "example": "There are distinct differences."
+  },
+  {
+    "word": "distinguish",
+    "pronunciation": "/dɪˈstɪŋɡwɪʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to recognize differences",
+    "chineseDef": "区分",
+    "example": "Can you distinguish them?"
+  },
+  {
+    "word": "distribute",
+    "pronunciation": "/dɪˈstrɪbjuːt/",
+    "partOfSpeech": "v.",
+    "definition": "to hand out",
+    "chineseDef": "分配",
+    "example": "The teacher distributed the papers."
+  },
+  {
+    "word": "diverse",
+    "pronunciation": "/daɪˈvɜːs/",
+    "partOfSpeech": "adj.",
+    "definition": "varied and different",
+    "chineseDef": "多样的",
+    "example": "The group is very diverse."
+  },
+  {
+    "word": "document",
+    "pronunciation": "/ˈdɒkjʊmənt/",
+    "partOfSpeech": "n.",
+    "definition": "a written record",
+    "chineseDef": "文件",
+    "example": "Please sign the document."
+  },
+  {
+    "word": "domestic",
+    "pronunciation": "/dəˈmestɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to home or country",
+    "chineseDef": "国内的",
+    "example": "The domestic market is strong."
+  },
+  {
+    "word": "dominate",
+    "pronunciation": "/ˈdɒmɪneɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to have control over",
+    "chineseDef": "支配",
+    "example": "The team dominated the game."
+  },
+  {
+    "word": "donate",
+    "pronunciation": "/dəʊˈneɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to give as a gift",
+    "chineseDef": "捐赠",
+    "example": "Please donate to charity."
+  },
+  {
+    "word": "dramatic",
+    "pronunciation": "/drəˈmætɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "striking and sudden",
+    "chineseDef": "戏剧性的",
+    "example": "There was a dramatic change."
+  },
+  {
+    "word": "economy",
+    "pronunciation": "/ɪˈkɒnəmi/",
+    "partOfSpeech": "n.",
+    "definition": "the system of wealth",
+    "chineseDef": "经济",
+    "example": "The economy is growing."
+  },
+  {
+    "word": "educate",
+    "pronunciation": "/ˈedjʊkeɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to teach",
+    "chineseDef": "教育",
+    "example": "We must educate the next generation."
+  },
+  {
+    "word": "efficient",
+    "pronunciation": "/ɪˈfɪʃənt/",
+    "partOfSpeech": "adj.",
+    "definition": "working without waste",
+    "chineseDef": "高效的",
+    "example": "This method is efficient."
+  },
+  {
+    "word": "element",
+    "pronunciation": "/ˈelɪmənt/",
+    "partOfSpeech": "n.",
+    "definition": "a basic part",
+    "chineseDef": "元素",
+    "example": "Honesty is a key element."
+  },
+  {
+    "word": "eliminate",
+    "pronunciation": "/ɪˈlɪmɪneɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to remove completely",
+    "chineseDef": "消除",
+    "example": "We need to eliminate errors."
+  },
+  {
+    "word": "emerge",
+    "pronunciation": "/ɪˈmɜːdʒ/",
+    "partOfSpeech": "v.",
+    "definition": "to come out",
+    "chineseDef": "出现",
+    "example": "New evidence emerged."
+  },
+  {
+    "word": "emergency",
+    "pronunciation": "/ɪˈmɜːdʒənsi/",
+    "partOfSpeech": "n.",
+    "definition": "a serious situation",
+    "chineseDef": "紧急情况",
+    "example": "Call 911 in an emergency."
+  },
+  {
+    "word": "emotion",
+    "pronunciation": "/ɪˈməʊʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a strong feeling",
+    "chineseDef": "情感",
+    "example": "She couldn't hide her emotions."
+  },
+  {
+    "word": "emphasize",
+    "pronunciation": "/ˈemfəsaɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to give special importance",
+    "chineseDef": "强调",
+    "example": "He emphasized the importance."
+  },
+  {
+    "word": "employ",
+    "pronunciation": "/ɪmˈplɔɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to hire",
+    "chineseDef": "雇佣",
+    "example": "The company employs 500 people."
+  },
+  {
+    "word": "enable",
+    "pronunciation": "/ɪˈneɪbl/",
+    "partOfSpeech": "v.",
+    "definition": "to make possible",
+    "chineseDef": "使能够",
+    "example": "The grant enabled her to study."
+  },
+  {
+    "word": "encounter",
+    "pronunciation": "/ɪnˈkaʊntər/",
+    "partOfSpeech": "v.",
+    "definition": "to meet unexpectedly",
+    "chineseDef": "遇到",
+    "example": "I encountered an old friend."
+  },
+  {
+    "word": "encourage",
+    "pronunciation": "/ɪnˈkʌrɪdʒ/",
+    "partOfSpeech": "v.",
+    "definition": "to give support",
+    "chineseDef": "鼓励",
+    "example": "She encouraged me to try."
+  },
+  {
+    "word": "endure",
+    "pronunciation": "/ɪnˈdjʊər/",
+    "partOfSpeech": "v.",
+    "definition": "to suffer through",
+    "chineseDef": "忍受",
+    "example": "He endured great pain."
+  },
+  {
+    "word": "engage",
+    "pronunciation": "/ɪnˈɡeɪdʒ/",
+    "partOfSpeech": "v.",
+    "definition": "to take part",
+    "chineseDef": "参与",
+    "example": "She engaged the audience."
+  },
+  {
+    "word": "enhance",
+    "pronunciation": "/ɪnˈhɑːns/",
+    "partOfSpeech": "v.",
+    "definition": "to improve",
+    "chineseDef": "提高",
+    "example": "Exercise enhances health."
+  },
+  {
+    "word": "enormous",
+    "pronunciation": "/ɪˈnɔːməs/",
+    "partOfSpeech": "adj.",
+    "definition": "very large",
+    "chineseDef": "巨大的",
+    "example": "The building is enormous."
+  },
+  {
+    "word": "ensure",
+    "pronunciation": "/ɪnˈʃʊər/",
+    "partOfSpeech": "v.",
+    "definition": "to make certain",
+    "chineseDef": "确保",
+    "example": "Please ensure the door is locked."
+  },
+  {
+    "word": "enterprise",
+    "pronunciation": "/ˈentəpraɪz/",
+    "partOfSpeech": "n.",
+    "definition": "a business or project",
+    "chineseDef": "企业",
+    "example": "He runs a successful enterprise."
+  },
+  {
+    "word": "entertain",
+    "pronunciation": "/ˌentəˈteɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to amuse",
+    "chineseDef": "娱乐",
+    "example": "The clown entertained the children."
+  },
+  {
+    "word": "enthusiasm",
+    "pronunciation": "/ɪnˈθjuːziazəm/",
+    "partOfSpeech": "n.",
+    "definition": "eager enjoyment",
+    "chineseDef": "热情",
+    "example": "She showed great enthusiasm."
+  },
+  {
+    "word": "entire",
+    "pronunciation": "/ɪnˈtaɪər/",
+    "partOfSpeech": "adj.",
+    "definition": "whole or complete",
+    "chineseDef": "整个的",
+    "example": "I read the entire book."
+  },
+  {
+    "word": "environment",
+    "pronunciation": "/ɪnˈvaɪrənmənt/",
+    "partOfSpeech": "n.",
+    "definition": "surroundings",
+    "chineseDef": "环境",
+    "example": "We must protect the environment."
+  },
+  {
+    "word": "equal",
+    "pronunciation": "/ˈiːkwəl/",
+    "partOfSpeech": "adj.",
+    "definition": "the same in value",
+    "chineseDef": "相等的",
+    "example": "All people are equal."
+  },
+  {
+    "word": "equip",
+    "pronunciation": "/ɪˈkwɪp/",
+    "partOfSpeech": "v.",
+    "definition": "to supply with needed items",
+    "chineseDef": "装备",
+    "example": "The lab is well equipped."
+  },
+  {
+    "word": "error",
+    "pronunciation": "/ˈerər/",
+    "partOfSpeech": "n.",
+    "definition": "a mistake",
+    "chineseDef": "错误",
+    "example": "The report contains errors."
+  },
+  {
+    "word": "escape",
+    "pronunciation": "/ɪˈskeɪp/",
+    "partOfSpeech": "v.",
+    "definition": "to get away",
+    "chineseDef": "逃跑",
+    "example": "The prisoner escaped."
+  },
+  {
+    "word": "essential",
+    "pronunciation": "/ɪˈsenʃəl/",
+    "partOfSpeech": "adj.",
+    "definition": "absolutely necessary",
+    "chineseDef": "必要的",
+    "example": "Water is essential for life."
+  },
+  {
+    "word": "establish",
+    "pronunciation": "/ɪˈstæblɪʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to set up firmly",
+    "chineseDef": "建立",
+    "example": "The company was established in 1990."
+  },
+  {
+    "word": "estimate",
+    "pronunciation": "/ˈestɪmeɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to roughly calculate",
+    "chineseDef": "估计",
+    "example": "We estimate the cost at $500."
+  },
+  {
+    "word": "evaluate",
+    "pronunciation": "/ɪˈvæljueɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to assess",
+    "chineseDef": "评估",
+    "example": "The teacher evaluated the students."
+  },
+  {
+    "word": "evidence",
+    "pronunciation": "/ˈevɪdəns/",
+    "partOfSpeech": "n.",
+    "definition": "proof or facts",
+    "chineseDef": "证据",
+    "example": "There is no evidence."
+  },
+  {
+    "word": "evolve",
+    "pronunciation": "/ɪˈvɒlv/",
+    "partOfSpeech": "v.",
+    "definition": "to develop gradually",
+    "chineseDef": "进化",
+    "example": "Species evolve over time."
+  },
+  {
+    "word": "exact",
+    "pronunciation": "/ɪɡˈzækt/",
+    "partOfSpeech": "adj.",
+    "definition": "precise and accurate",
+    "chineseDef": "精确的",
+    "example": "Give me the exact number."
+  },
+  {
+    "word": "examine",
+    "pronunciation": "/ɪɡˈzæmɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to inspect closely",
+    "chineseDef": "检查",
+    "example": "The doctor examined the patient."
+  },
+  {
+    "word": "exceed",
+    "pronunciation": "/ɪkˈsiːd/",
+    "partOfSpeech": "v.",
+    "definition": "to go beyond",
+    "chineseDef": "超过",
+    "example": "The cost exceeds our budget."
+  },
+  {
+    "word": "excellent",
+    "pronunciation": "/ˈeksələnt/",
+    "partOfSpeech": "adj.",
+    "definition": "very good",
+    "chineseDef": "优秀的",
+    "example": "She did an excellent job."
+  },
+  {
+    "word": "except",
+    "pronunciation": "/ɪkˈsept/",
+    "partOfSpeech": "prep.",
+    "definition": "not including",
+    "chineseDef": "除了",
+    "example": "Everyone except John came."
+  },
+  {
+    "word": "exchange",
+    "pronunciation": "/ɪksˈtʃeɪndʒ/",
+    "partOfSpeech": "n.",
+    "definition": "a trade or swap",
+    "chineseDef": "交换",
+    "example": "Currency exchange rates change."
+  },
+  {
+    "word": "exclude",
+    "pronunciation": "/ɪkˈskluːd/",
+    "partOfSpeech": "v.",
+    "definition": "to leave out",
+    "chineseDef": "排除",
+    "example": "The price excludes tax."
+  },
+  {
+    "word": "execute",
+    "pronunciation": "/ˈeksɪkjuːt/",
+    "partOfSpeech": "v.",
+    "definition": "to carry out",
+    "chineseDef": "执行",
+    "example": "The plan was executed perfectly."
+  },
+  {
+    "word": "exercise",
+    "pronunciation": "/ˈeksəsaɪz/",
+    "partOfSpeech": "n.",
+    "definition": "physical activity",
+    "chineseDef": "锻炼",
+    "example": "Exercise keeps you healthy."
+  },
+  {
+    "word": "exist",
+    "pronunciation": "/ɪɡˈzɪst/",
+    "partOfSpeech": "v.",
+    "definition": "to have being",
+    "chineseDef": "存在",
+    "example": "Do aliens exist?"
+  },
+  {
+    "word": "expand",
+    "pronunciation": "/ɪkˈspænd/",
+    "partOfSpeech": "v.",
+    "definition": "to become larger",
+    "chineseDef": "扩展",
+    "example": "The company is expanding."
+  },
+  {
+    "word": "expect",
+    "pronunciation": "/ɪkˈspekt/",
+    "partOfSpeech": "v.",
+    "definition": "to regard as likely",
+    "chineseDef": "期待",
+    "example": "I expect good results."
+  },
+  {
+    "word": "expense",
+    "pronunciation": "/ɪkˈspens/",
+    "partOfSpeech": "n.",
+    "definition": "cost or spending",
+    "chineseDef": "费用",
+    "example": "Travel expenses are covered."
+  },
+  {
+    "word": "experiment",
+    "pronunciation": "/ɪkˈsperɪmənt/",
+    "partOfSpeech": "n.",
+    "definition": "a scientific test",
+    "chineseDef": "实验",
+    "example": "The experiment proved the theory."
+  },
+  {
+    "word": "expert",
+    "pronunciation": "/ˈekspɜːt/",
+    "partOfSpeech": "n.",
+    "definition": "a specialist",
+    "chineseDef": "专家",
+    "example": "She is an expert in finance."
+  },
+  {
+    "word": "explain",
+    "pronunciation": "/ɪkˈspleɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to make clear",
+    "chineseDef": "解释",
+    "example": "Please explain the concept."
+  },
+  {
+    "word": "explore",
+    "pronunciation": "/ɪkˈsplɔːr/",
+    "partOfSpeech": "v.",
+    "definition": "to travel and discover",
+    "chineseDef": "探索",
+    "example": "They explored the cave."
+  },
+  {
+    "word": "export",
+    "pronunciation": "/ɪkˈspɔːt/",
+    "partOfSpeech": "v.",
+    "definition": "to send goods abroad",
+    "chineseDef": "出口",
+    "example": "China exports many products."
+  },
+  {
+    "word": "expose",
+    "pronunciation": "/ɪkˈspəʊz/",
+    "partOfSpeech": "v.",
+    "definition": "to reveal or uncover",
+    "chineseDef": "暴露",
+    "example": "The scandal was exposed."
+  },
+  {
+    "word": "extend",
+    "pronunciation": "/ɪkˈstend/",
+    "partOfSpeech": "v.",
+    "definition": "to stretch or prolong",
+    "chineseDef": "延伸",
+    "example": "Can you extend the deadline?"
+  },
+  {
+    "word": "external",
+    "pronunciation": "/ɪkˈstɜːnəl/",
+    "partOfSpeech": "adj.",
+    "definition": "outside",
+    "chineseDef": "外部的",
+    "example": "The external walls need painting."
+  },
+  {
+    "word": "extraordinary",
+    "pronunciation": "/ɪkˈstrɔːdənəri/",
+    "partOfSpeech": "adj.",
+    "definition": "very unusual",
+    "chineseDef": "非凡的",
+    "example": "She has extraordinary talent."
+  },
+  {
+    "word": "extreme",
+    "pronunciation": "/ɪkˈstriːm/",
+    "partOfSpeech": "adj.",
+    "definition": "to the highest degree",
+    "chineseDef": "极端的",
+    "example": "The weather is extreme."
+  },
+  {
+    "word": "facility",
+    "pronunciation": "/fəˈsɪləti/",
+    "partOfSpeech": "n.",
+    "definition": "a building or equipment",
+    "chineseDef": "设施",
+    "example": "The sports facility is excellent."
+  },
+  {
+    "word": "factor",
+    "pronunciation": "/ˈfæktər/",
+    "partOfSpeech": "n.",
+    "definition": "an element that influences",
+    "chineseDef": "因素",
+    "example": "Cost is a key factor."
+  },
+  {
+    "word": "faith",
+    "pronunciation": "/feɪθ/",
+    "partOfSpeech": "n.",
+    "definition": "strong belief or trust",
+    "chineseDef": "信仰",
+    "example": "He has faith in humanity."
+  },
+  {
+    "word": "fashion",
+    "pronunciation": "/ˈfæʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a popular style",
+    "chineseDef": "时尚",
+    "example": "Fashion changes quickly."
+  },
+  {
+    "word": "fatal",
+    "pronunciation": "/ˈfeɪtəl/",
+    "partOfSpeech": "adj.",
+    "definition": "causing death",
+    "chineseDef": "致命的",
+    "example": "The accident was fatal."
+  },
+  {
+    "word": "feature",
+    "pronunciation": "/ˈfiːtʃər/",
+    "partOfSpeech": "n.",
+    "definition": "a distinctive characteristic",
+    "chineseDef": "特征",
+    "example": "The phone has many features."
+  },
+  {
+    "word": "fierce",
+    "pronunciation": "/fɪəs/",
+    "partOfSpeech": "adj.",
+    "definition": "violent and intense",
+    "chineseDef": "凶猛的",
+    "example": "The competition was fierce."
+  },
+  {
+    "word": "figure",
+    "pronunciation": "/ˈfɪɡər/",
+    "partOfSpeech": "n.",
+    "definition": "a number or shape",
+    "chineseDef": "数字",
+    "example": "The figure shows the data."
+  },
+  {
+    "word": "finance",
+    "pronunciation": "/ˈfaɪnæns/",
+    "partOfSpeech": "n.",
+    "definition": "money management",
+    "chineseDef": "金融",
+    "example": "She works in finance."
+  },
+  {
+    "word": "flexible",
+    "pronunciation": "/ˈfleksɪbl/",
+    "partOfSpeech": "adj.",
+    "definition": "able to bend or change",
+    "chineseDef": "灵活的",
+    "example": "My schedule is flexible."
+  },
+  {
+    "word": "flourish",
+    "pronunciation": "/ˈflʌrɪʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to grow or succeed",
+    "chineseDef": "繁荣",
+    "example": "The business flourished."
+  },
+  {
+    "word": "focus",
+    "pronunciation": "/ˈfəʊkəs/",
+    "partOfSpeech": "v.",
+    "definition": "to concentrate",
+    "chineseDef": "集中",
+    "example": "Focus on your goal."
+  },
+  {
+    "word": "forecast",
+    "pronunciation": "/ˈfɔːkɑːst/",
+    "partOfSpeech": "n.",
+    "definition": "a prediction",
+    "chineseDef": "预测",
+    "example": "The weather forecast is good."
+  },
+  {
+    "word": "former",
+    "pronunciation": "/ˈfɔːmər/",
+    "partOfSpeech": "adj.",
+    "definition": "earlier in time",
+    "chineseDef": "前者的",
+    "example": "He is a former president."
+  },
+  {
+    "word": "fortune",
+    "pronunciation": "/ˈfɔːtʃuːn/",
+    "partOfSpeech": "n.",
+    "definition": "wealth or luck",
+    "chineseDef": "财富",
+    "example": "She made a fortune."
+  },
+  {
+    "word": "foundation",
+    "pronunciation": "/faʊnˈdeɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a base or underlying support",
+    "chineseDef": "基础",
+    "example": "The foundation is strong."
+  },
+  {
+    "word": "fraction",
+    "pronunciation": "/ˈfrækʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a small part",
+    "chineseDef": "分数",
+    "example": "A fraction voted."
+  },
+  {
+    "word": "framework",
+    "pronunciation": "/ˈfreɪmwɜːk/",
+    "partOfSpeech": "n.",
+    "definition": "a basic structure",
+    "chineseDef": "框架",
+    "example": "The legal framework needs updating."
+  },
+  {
+    "word": "frequency",
+    "pronunciation": "/ˈfriːkwənsi/",
+    "partOfSpeech": "n.",
+    "definition": "the rate of occurrence",
+    "chineseDef": "频率",
+    "example": "The frequency is increasing."
+  },
+  {
+    "word": "function",
+    "pronunciation": "/ˈfʌŋkʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a purpose or role",
+    "chineseDef": "功能",
+    "example": "What is the function of this button?"
+  },
+  {
+    "word": "fundamental",
+    "pronunciation": "/ˌfʌndəˈmentəl/",
+    "partOfSpeech": "adj.",
+    "definition": "basic and essential",
+    "chineseDef": "基本的",
+    "example": "There are fundamental differences."
+  },
+  {
+    "word": "generate",
+    "pronunciation": "/ˈdʒenəreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to produce or create",
+    "chineseDef": "产生",
+    "example": "The machine generates electricity."
+  },
+  {
+    "word": "generous",
+    "pronunciation": "/ˈdʒenərəs/",
+    "partOfSpeech": "adj.",
+    "definition": "giving freely",
+    "chineseDef": "慷慨的",
+    "example": "She is very generous."
+  },
+  {
+    "word": "genuine",
+    "pronunciation": "/ˈdʒenjuɪn/",
+    "partOfSpeech": "adj.",
+    "definition": "real and authentic",
+    "chineseDef": "真正的",
+    "example": "She showed genuine concern."
+  },
+  {
+    "word": "global",
+    "pronunciation": "/ˈɡləʊbəl/",
+    "partOfSpeech": "adj.",
+    "definition": "worldwide",
+    "chineseDef": "全球的",
+    "example": "Climate change is a global issue."
+  },
+  {
+    "word": "govern",
+    "pronunciation": "/ˈɡʌvən/",
+    "partOfSpeech": "v.",
+    "definition": "to rule or control",
+    "chineseDef": "统治",
+    "example": "The country is governed by law."
+  },
+  {
+    "word": "gradual",
+    "pronunciation": "/ˈɡrædʒuəl/",
+    "partOfSpeech": "adj.",
+    "definition": "happening step by step",
+    "chineseDef": "逐渐的",
+    "example": "There has been gradual improvement."
+  },
+  {
+    "word": "grant",
+    "pronunciation": "/ɡrɑːnt/",
+    "partOfSpeech": "v.",
+    "definition": "to give or allow",
+    "chineseDef": "授予",
+    "example": "The foundation granted a scholarship."
+  },
+  {
+    "word": "grasp",
+    "pronunciation": "/ɡrɑːsp/",
+    "partOfSpeech": "v.",
+    "definition": "to hold or understand",
+    "chineseDef": "抓住",
+    "example": "She grasped the concept."
+  },
+  {
+    "word": "grateful",
+    "pronunciation": "/ˈɡreɪtfl/",
+    "partOfSpeech": "adj.",
+    "definition": "feeling thanks",
+    "chineseDef": "感激的",
+    "example": "I am grateful for your help."
+  },
+  {
+    "word": "guarantee",
+    "pronunciation": "/ˌɡærənˈtiː/",
+    "partOfSpeech": "n.",
+    "definition": "a promise or assurance",
+    "chineseDef": "保证",
+    "example": "This product comes with a guarantee."
+  },
+  {
+    "word": "guilty",
+    "pronunciation": "/ˈɡɪlti/",
+    "partOfSpeech": "adj.",
+    "definition": "responsible for a crime",
+    "chineseDef": "有罪的",
+    "example": "The jury found him guilty."
+  },
+  {
+    "word": "harmony",
+    "pronunciation": "/ˈhɑːməni/",
+    "partOfSpeech": "n.",
+    "definition": "peaceful agreement",
+    "chineseDef": "和谐",
+    "example": "They live in harmony."
+  },
+  {
+    "word": "harsh",
+    "pronunciation": "/hɑːʃ/",
+    "partOfSpeech": "adj.",
+    "definition": "rough and severe",
+    "chineseDef": "严厉的",
+    "example": "The punishment was harsh."
+  },
+  {
+    "word": "harvest",
+    "pronunciation": "/ˈhɑːvɪst/",
+    "partOfSpeech": "n.",
+    "definition": "the gathering of crops",
+    "chineseDef": "收获",
+    "example": "The harvest was abundant."
+  },
+  {
+    "word": "hesitate",
+    "pronunciation": "/ˈhezɪteɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to pause in uncertainty",
+    "chineseDef": "犹豫",
+    "example": "Don't hesitate to ask."
+  },
+  {
+    "word": "highlight",
+    "pronunciation": "/ˈhaɪlaɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to emphasize",
+    "chineseDef": "强调",
+    "example": "The report highlights key issues."
+  },
+  {
+    "word": "horizon",
+    "pronunciation": "/həˈraɪzən/",
+    "partOfSpeech": "n.",
+    "definition": "the line where sky meets land",
+    "chineseDef": "地平线",
+    "example": "The sun set below the horizon."
+  },
+  {
+    "word": "hostile",
+    "pronunciation": "/ˈhɒstaɪl/",
+    "partOfSpeech": "adj.",
+    "definition": "unfriendly and aggressive",
+    "chineseDef": "敌对的",
+    "example": "The atmosphere was hostile."
+  },
+  {
+    "word": "household",
+    "pronunciation": "/ˈhaʊshəʊld/",
+    "partOfSpeech": "n.",
+    "definition": "a family unit",
+    "chineseDef": "家庭",
+    "example": "The household has five people."
+  },
+  {
+    "word": "humble",
+    "pronunciation": "/ˈhʌmbl/",
+    "partOfSpeech": "adj.",
+    "definition": "modest",
+    "chineseDef": "谦逊的",
+    "example": "He remained humble."
+  },
+  {
+    "word": "identical",
+    "pronunciation": "/aɪˈdentɪkəl/",
+    "partOfSpeech": "adj.",
+    "definition": "exactly the same",
+    "chineseDef": "相同的",
+    "example": "The two houses are identical."
+  },
+  {
+    "word": "identify",
+    "pronunciation": "/aɪˈdentɪfaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to recognize and name",
+    "chineseDef": "识别",
+    "example": "She identified the suspect."
+  },
+  {
+    "word": "ignore",
+    "pronunciation": "/ɪɡˈnɔːr/",
+    "partOfSpeech": "v.",
+    "definition": "to pay no attention to",
+    "chineseDef": "忽视",
+    "example": "Don't ignore the warning."
+  },
+  {
+    "word": "illustrate",
+    "pronunciation": "/ˈɪləstreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to explain with examples",
+    "chineseDef": "阐明",
+    "example": "The diagram illustrates the process."
+  },
+  {
+    "word": "imagination",
+    "pronunciation": "/ɪˌmædʒɪˈneɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "the ability to form ideas",
+    "chineseDef": "想象力",
+    "example": "Children have vivid imaginations."
+  },
+  {
+    "word": "immediate",
+    "pronunciation": "/ɪˈmiːdiət/",
+    "partOfSpeech": "adj.",
+    "definition": "happening at once",
+    "chineseDef": "立即的",
+    "example": "Take immediate action."
+  },
+  {
+    "word": "immense",
+    "pronunciation": "/ɪˈmens/",
+    "partOfSpeech": "adj.",
+    "definition": "extremely large",
+    "chineseDef": "巨大的",
+    "example": "The task is immense."
+  },
+  {
+    "word": "immigrant",
+    "pronunciation": "/ˈɪmɪɡrənt/",
+    "partOfSpeech": "n.",
+    "definition": "a person moving to a new country",
+    "chineseDef": "移民",
+    "example": "The city has many immigrants."
+  },
+  {
+    "word": "impact",
+    "pronunciation": "/ˈɪmpækt/",
+    "partOfSpeech": "n.",
+    "definition": "a strong effect",
+    "chineseDef": "影响",
+    "example": "The policy had a positive impact."
+  },
+  {
+    "word": "implement",
+    "pronunciation": "/ˈɪmplɪment/",
+    "partOfSpeech": "v.",
+    "definition": "to put into practice",
+    "chineseDef": "实施",
+    "example": "The plan was implemented."
+  },
+  {
+    "word": "imply",
+    "pronunciation": "/ɪmˈplaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to suggest without stating",
+    "chineseDef": "暗示",
+    "example": "What are you implying?"
+  },
+  {
+    "word": "impose",
+    "pronunciation": "/ɪmˈpəʊz/",
+    "partOfSpeech": "v.",
+    "definition": "to force upon",
+    "chineseDef": "强加",
+    "example": "The government imposed new taxes."
+  },
+  {
+    "word": "impress",
+    "pronunciation": "/ɪmˈpres/",
+    "partOfSpeech": "v.",
+    "definition": "to affect strongly",
+    "chineseDef": "给...深刻印象",
+    "example": "Her performance impressed the judges."
+  },
+  {
+    "word": "incredible",
+    "pronunciation": "/ɪnˈkredəbl/",
+    "partOfSpeech": "adj.",
+    "definition": "hard to believe",
+    "chineseDef": "难以置信的",
+    "example": "The view was incredible."
+  },
+  {
+    "word": "independent",
+    "pronunciation": "/ˌɪndɪˈpendənt/",
+    "partOfSpeech": "adj.",
+    "definition": "free from control",
+    "chineseDef": "独立的",
+    "example": "She is very independent."
+  },
+  {
+    "word": "indicate",
+    "pronunciation": "/ˈɪndɪkeɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to show or point out",
+    "chineseDef": "表明",
+    "example": "The sign indicates the way."
+  },
+  {
+    "word": "individual",
+    "pronunciation": "/ˌɪndɪˈvɪdʒuəl/",
+    "partOfSpeech": "adj.",
+    "definition": "single or separate",
+    "chineseDef": "个人的",
+    "example": "Each individual has rights."
+  },
+  {
+    "word": "inevitable",
+    "pronunciation": "/ɪnˈevɪtəbl/",
+    "partOfSpeech": "adj.",
+    "definition": "unavoidable",
+    "chineseDef": "不可避免的",
+    "example": "Change is inevitable."
+  },
+  {
+    "word": "influence",
+    "pronunciation": "/ˈɪnfluəns/",
+    "partOfSpeech": "n.",
+    "definition": "the power to affect",
+    "chineseDef": "影响",
+    "example": "Social media has great influence."
+  },
+  {
+    "word": "inform",
+    "pronunciation": "/ɪnˈfɔːm/",
+    "partOfSpeech": "v.",
+    "definition": "to give information",
+    "chineseDef": "通知",
+    "example": "Please inform us."
+  },
+  {
+    "word": "initial",
+    "pronunciation": "/ɪˈnɪʃəl/",
+    "partOfSpeech": "adj.",
+    "definition": "first or beginning",
+    "chineseDef": "最初的",
+    "example": "The initial test was successful."
+  },
+  {
+    "word": "injure",
+    "pronunciation": "/ˈɪndʒər/",
+    "partOfSpeech": "v.",
+    "definition": "to cause physical harm",
+    "chineseDef": "伤害",
+    "example": "He injured his leg."
+  },
+  {
+    "word": "innovate",
+    "pronunciation": "/ˈɪnəveɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to introduce something new",
+    "chineseDef": "创新",
+    "example": "The company continues to innovate."
+  },
+  {
+    "word": "inspire",
+    "pronunciation": "/ɪnˈspaɪər/",
+    "partOfSpeech": "v.",
+    "definition": "to fill with the urge to do",
+    "chineseDef": "激励",
+    "example": "Her speech inspired the team."
+  },
+  {
+    "word": "instrument",
+    "pronunciation": "/ˈɪnstrʊmənt/",
+    "partOfSpeech": "n.",
+    "definition": "a tool or device",
+    "chineseDef": "工具",
+    "example": "A piano is a musical instrument."
+  },
+  {
+    "word": "integrity",
+    "pronunciation": "/ɪnˈteɡrəti/",
+    "partOfSpeech": "n.",
+    "definition": "honesty and moral uprightness",
+    "chineseDef": "正直",
+    "example": "He is a man of integrity."
+  },
+  {
+    "word": "intelligent",
+    "pronunciation": "/ɪnˈtelɪdʒənt/",
+    "partOfSpeech": "adj.",
+    "definition": "smart and bright",
+    "chineseDef": "聪明的",
+    "example": "Dolphins are intelligent."
+  },
+  {
+    "word": "intense",
+    "pronunciation": "/ɪnˈtens/",
+    "partOfSpeech": "adj.",
+    "definition": "very strong or extreme",
+    "chineseDef": "强烈的",
+    "example": "The heat was intense."
+  },
+  {
+    "word": "interfere",
+    "pronunciation": "/ˌɪntəˈfɪər/",
+    "partOfSpeech": "v.",
+    "definition": "to get in the way",
+    "chineseDef": "干涉",
+    "example": "Don't interfere."
+  },
+  {
+    "word": "interpret",
+    "pronunciation": "/ɪnˈtɜːprɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to explain or translate",
+    "chineseDef": "解释",
+    "example": "She interpreted the speech."
+  },
+  {
+    "word": "investigate",
+    "pronunciation": "/ɪnˈvestɪɡeɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to examine thoroughly",
+    "chineseDef": "调查",
+    "example": "The police are investigating."
+  },
+  {
+    "word": "involve",
+    "pronunciation": "/ɪnˈvɒlv/",
+    "partOfSpeech": "v.",
+    "definition": "to include as a part",
+    "chineseDef": "涉及",
+    "example": "The project involves many people."
+  },
+  {
+    "word": "isolate",
+    "pronunciation": "/ˈaɪsəleɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to separate from others",
+    "chineseDef": "隔离",
+    "example": "The patient was isolated."
+  },
+  {
+    "word": "journey",
+    "pronunciation": "/ˈdʒɜːni/",
+    "partOfSpeech": "n.",
+    "definition": "a long trip",
+    "chineseDef": "旅程",
+    "example": "The journey took three days."
+  },
+  {
+    "word": "judgment",
+    "pronunciation": "/ˈdʒʌdʒmənt/",
+    "partOfSpeech": "n.",
+    "definition": "the ability to make decisions",
+    "chineseDef": "判断",
+    "example": "Use your best judgment."
+  },
+  {
+    "word": "justify",
+    "pronunciation": "/ˈdʒʌstɪfaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to show to be right",
+    "chineseDef": "证明正当",
+    "example": "Can you justify your actions?"
+  },
+  {
+    "word": "knowledge",
+    "pronunciation": "/ˈnɒlɪdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "information and understanding",
+    "chineseDef": "知识",
+    "example": "Knowledge is power."
+  },
+  {
+    "word": "landscape",
+    "pronunciation": "/ˈlændskeɪp/",
+    "partOfSpeech": "n.",
+    "definition": "a view of scenery",
+    "chineseDef": "风景",
+    "example": "The landscape is beautiful."
+  },
+  {
+    "word": "launch",
+    "pronunciation": "/lɔːntʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to send off or start",
+    "chineseDef": "发射",
+    "example": "The company launched a new product."
+  },
+  {
+    "word": "layer",
+    "pronunciation": "/ˈleɪər/",
+    "partOfSpeech": "n.",
+    "definition": "a sheet or level",
+    "chineseDef": "层",
+    "example": "The cake has three layers."
+  },
+  {
+    "word": "legal",
+    "pronunciation": "/ˈliːɡəl/",
+    "partOfSpeech": "adj.",
+    "definition": "allowed by law",
+    "chineseDef": "合法的",
+    "example": "Is it legal to park here?"
+  },
+  {
+    "word": "legend",
+    "pronunciation": "/ˈledʒənd/",
+    "partOfSpeech": "n.",
+    "definition": "a traditional story",
+    "chineseDef": "传说",
+    "example": "The legend of King Arthur."
+  },
+  {
+    "word": "liberal",
+    "pronunciation": "/ˈlɪbərəl/",
+    "partOfSpeech": "adj.",
+    "definition": "open to new ideas",
+    "chineseDef": "自由的",
+    "example": "She holds liberal views."
+  },
+  {
+    "word": "liberty",
+    "pronunciation": "/ˈlɪbəti/",
+    "partOfSpeech": "n.",
+    "definition": "freedom",
+    "chineseDef": "自由",
+    "example": "The statue symbolizes liberty."
+  },
+  {
+    "word": "limitation",
+    "pronunciation": "/ˌlɪmɪˈteɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a restriction",
+    "chineseDef": "限制",
+    "example": "Know your limitations."
+  },
+  {
+    "word": "literacy",
+    "pronunciation": "/ˈlɪtərəsi/",
+    "partOfSpeech": "n.",
+    "definition": "the ability to read and write",
+    "chineseDef": "读写能力",
+    "example": "Literacy rates have improved."
+  },
+  {
+    "word": "literature",
+    "pronunciation": "/ˈlɪtərətʃər/",
+    "partOfSpeech": "n.",
+    "definition": "written works of art",
+    "chineseDef": "文学",
+    "example": "English literature is her passion."
+  },
+  {
+    "word": "logical",
+    "pronunciation": "/ˈlɒdʒɪkəl/",
+    "partOfSpeech": "adj.",
+    "definition": "based on reason",
+    "chineseDef": "逻辑的",
+    "example": "That is a logical conclusion."
+  },
+  {
+    "word": "loyal",
+    "pronunciation": "/ˈlɔɪəl/",
+    "partOfSpeech": "adj.",
+    "definition": "faithful and devoted",
+    "chineseDef": "忠诚的",
+    "example": "He is a loyal friend."
+  },
+  {
+    "word": "maintain",
+    "pronunciation": "/meɪnˈteɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to keep in good condition",
+    "chineseDef": "维持",
+    "example": "Exercise helps maintain health."
+  },
+  {
+    "word": "major",
+    "pronunciation": "/ˈmeɪdʒər/",
+    "partOfSpeech": "adj.",
+    "definition": "great in importance",
+    "chineseDef": "主要的",
+    "example": "This is a major problem."
+  },
+  {
+    "word": "manufacture",
+    "pronunciation": "/ˌmænjuˈfæktʃər/",
+    "partOfSpeech": "v.",
+    "definition": "to make on a large scale",
+    "chineseDef": "制造",
+    "example": "The company manufactures cars."
+  },
+  {
+    "word": "margin",
+    "pronunciation": "/ˈmɑːdʒɪn/",
+    "partOfSpeech": "n.",
+    "definition": "an edge or gap",
+    "chineseDef": "边缘",
+    "example": "He won by a narrow margin."
+  },
+  {
+    "word": "massive",
+    "pronunciation": "/ˈmæsɪv/",
+    "partOfSpeech": "adj.",
+    "definition": "very large and heavy",
+    "chineseDef": "大量的",
+    "example": "A massive wave hit the shore."
+  },
+  {
+    "word": "material",
+    "pronunciation": "/məˈtɪəriəl/",
+    "partOfSpeech": "n.",
+    "definition": "substance or fabric",
+    "chineseDef": "材料",
+    "example": "The building materials are strong."
+  },
+  {
+    "word": "mature",
+    "pronunciation": "/məˈtʃʊər/",
+    "partOfSpeech": "adj.",
+    "definition": "fully developed",
+    "chineseDef": "成熟的",
+    "example": "She is mature for her age."
+  },
+  {
+    "word": "maximum",
+    "pronunciation": "/ˈmæksɪməm/",
+    "partOfSpeech": "n.",
+    "definition": "the greatest amount",
+    "chineseDef": "最大值",
+    "example": "The maximum speed is 120."
+  },
+  {
+    "word": "medium",
+    "pronunciation": "/ˈmiːdiəm/",
+    "partOfSpeech": "adj.",
+    "definition": "in the middle",
+    "chineseDef": "中等的",
+    "example": "Cook on medium heat."
+  },
+  {
+    "word": "mental",
+    "pronunciation": "/ˈmentəl/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to the mind",
+    "chineseDef": "精神的",
+    "example": "Mental health is important."
+  },
+  {
+    "word": "mention",
+    "pronunciation": "/ˈmenʃən/",
+    "partOfSpeech": "v.",
+    "definition": "to refer to briefly",
+    "chineseDef": "提到",
+    "example": "She mentioned your name."
+  },
+  {
+    "word": "miracle",
+    "pronunciation": "/ˈmɪrəkl/",
+    "partOfSpeech": "n.",
+    "definition": "an amazing event",
+    "chineseDef": "奇迹",
+    "example": "It's a miracle she survived."
+  },
+  {
+    "word": "mission",
+    "pronunciation": "/ˈmɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "an important task",
+    "chineseDef": "任务",
+    "example": "The mission was successful."
+  },
+  {
+    "word": "moderate",
+    "pronunciation": "/ˈmɒdərət/",
+    "partOfSpeech": "adj.",
+    "definition": "not extreme",
+    "chineseDef": "适度的",
+    "example": "Drink in moderation."
+  },
+  {
+    "word": "modify",
+    "pronunciation": "/ˈmɒdɪfaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to change or adjust",
+    "chineseDef": "修改",
+    "example": "We need to modify the plan."
+  },
+  {
+    "word": "monitor",
+    "pronunciation": "/ˈmɒnɪtər/",
+    "partOfSpeech": "v.",
+    "definition": "to watch and check",
+    "chineseDef": "监控",
+    "example": "The nurse monitored his condition."
+  },
+  {
+    "word": "moral",
+    "pronunciation": "/ˈmɒrəl/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to right and wrong",
+    "chineseDef": "道德的",
+    "example": "It's a moral question."
+  },
+  {
+    "word": "motivate",
+    "pronunciation": "/ˈməʊtɪveɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to provide a reason to act",
+    "chineseDef": "激励",
+    "example": "The teacher motivated her students."
+  },
+  {
+    "word": "multiple",
+    "pronunciation": "/ˈmʌltɪpl/",
+    "partOfSpeech": "adj.",
+    "definition": "many",
+    "chineseDef": "多个的",
+    "example": "There are multiple options."
+  },
+  {
+    "word": "mutual",
+    "pronunciation": "/ˈmjuːtʃuəl/",
+    "partOfSpeech": "adj.",
+    "definition": "shared by two or more",
+    "chineseDef": "相互的",
+    "example": "The feeling is mutual."
+  },
+  {
+    "word": "mystery",
+    "pronunciation": "/ˈmɪstəri/",
+    "partOfSpeech": "n.",
+    "definition": "something unexplained",
+    "chineseDef": "神秘",
+    "example": "The mystery remains unsolved."
+  },
+  {
+    "word": "narrow",
+    "pronunciation": "/ˈnærəʊ/",
+    "partOfSpeech": "adj.",
+    "definition": "not wide",
+    "chineseDef": "狭窄的",
+    "example": "The road is very narrow."
+  },
+  {
+    "word": "native",
+    "pronunciation": "/ˈneɪtɪv/",
+    "partOfSpeech": "adj.",
+    "definition": "belonging by birth",
+    "chineseDef": "本地的",
+    "example": "She is a native speaker."
+  },
+  {
+    "word": "necessity",
+    "pronunciation": "/nəˈsesəti/",
+    "partOfSpeech": "n.",
+    "definition": "something essential",
+    "chineseDef": "必需品",
+    "example": "Water is a necessity."
+  },
+  {
+    "word": "negotiate",
+    "pronunciation": "/nɪˈɡəʊʃieɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to discuss to reach agreement",
+    "chineseDef": "谈判",
+    "example": "They negotiated a peace deal."
+  },
+  {
+    "word": "neutral",
+    "pronunciation": "/ˈnjuːtrəl/",
+    "partOfSpeech": "adj.",
+    "definition": "not taking sides",
+    "chineseDef": "中立的",
+    "example": "Switzerland remained neutral."
+  },
+  {
+    "word": "nevertheless",
+    "pronunciation": "/ˌnevəðəˈles/",
+    "partOfSpeech": "adv.",
+    "definition": "in spite of that",
+    "chineseDef": "然而",
+    "example": "Nevertheless, we went."
+  },
+  {
+    "word": "normal",
+    "pronunciation": "/ˈnɔːməl/",
+    "partOfSpeech": "adj.",
+    "definition": "usual and typical",
+    "chineseDef": "正常的",
+    "example": "Everything is back to normal."
+  },
+  {
+    "word": "numerous",
+    "pronunciation": "/ˈnjuːmərəs/",
+    "partOfSpeech": "adj.",
+    "definition": "many",
+    "chineseDef": "许多的",
+    "example": "There are numerous reasons."
+  },
+  {
+    "word": "objective",
+    "pronunciation": "/əbˈdʒektɪv/",
+    "partOfSpeech": "n.",
+    "definition": "a goal or aim",
+    "chineseDef": "目标",
+    "example": "Our objective is clear."
+  },
+  {
+    "word": "obligation",
+    "pronunciation": "/ˌɒblɪˈɡeɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a duty",
+    "chineseDef": "义务",
+    "example": "You have an obligation."
+  },
+  {
+    "word": "observe",
+    "pronunciation": "/əbˈzɜːv/",
+    "partOfSpeech": "v.",
+    "definition": "to watch carefully",
+    "chineseDef": "观察",
+    "example": "The scientist observed the behavior."
+  },
+  {
+    "word": "obstacle",
+    "pronunciation": "/ˈɒbstəkl/",
+    "partOfSpeech": "n.",
+    "definition": "something that blocks",
+    "chineseDef": "障碍",
+    "example": "Lack of money is an obstacle."
+  },
+  {
+    "word": "obtain",
+    "pronunciation": "/əbˈteɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to get or acquire",
+    "chineseDef": "获得",
+    "example": "She obtained a visa."
+  },
+  {
+    "word": "obvious",
+    "pronunciation": "/ˈɒbviəs/",
+    "partOfSpeech": "adj.",
+    "definition": "easily seen",
+    "chineseDef": "明显的",
+    "example": "The answer is obvious."
+  },
+  {
+    "word": "occasion",
+    "pronunciation": "/əˈkeɪʒən/",
+    "partOfSpeech": "n.",
+    "definition": "a particular time or event",
+    "chineseDef": "场合",
+    "example": "This is a special occasion."
+  },
+  {
+    "word": "occupy",
+    "pronunciation": "/ˈɒkjʊpaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to take up space or time",
+    "chineseDef": "占据",
+    "example": "The meeting occupied the morning."
+  },
+  {
+    "word": "offend",
+    "pronunciation": "/əˈfend/",
+    "partOfSpeech": "v.",
+    "definition": "to cause hurt feelings",
+    "chineseDef": "冒犯",
+    "example": "I didn't mean to offend you."
+  },
+  {
+    "word": "operate",
+    "pronunciation": "/ˈɒpəreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to work or function",
+    "chineseDef": "操作",
+    "example": "The machine operates smoothly."
+  },
+  {
+    "word": "opinion",
+    "pronunciation": "/əˈpɪnjən/",
+    "partOfSpeech": "n.",
+    "definition": "a personal view",
+    "chineseDef": "意见",
+    "example": "In my opinion, it's a good idea."
+  },
+  {
+    "word": "opponent",
+    "pronunciation": "/əˈpəʊnənt/",
+    "partOfSpeech": "n.",
+    "definition": "a person one competes against",
+    "chineseDef": "对手",
+    "example": "He defeated his opponent."
+  },
+  {
+    "word": "opportunity",
+    "pronunciation": "/ˌɒpəˈtjuːnəti/",
+    "partOfSpeech": "n.",
+    "definition": "a favorable chance",
+    "chineseDef": "机会",
+    "example": "This is a great opportunity."
+  },
+  {
+    "word": "oppose",
+    "pronunciation": "/əˈpəʊz/",
+    "partOfSpeech": "v.",
+    "definition": "to be against",
+    "chineseDef": "反对",
+    "example": "The public opposed the new law."
+  },
+  {
+    "word": "organize",
+    "pronunciation": "/ˈɔːɡənaɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to arrange systematically",
+    "chineseDef": "组织",
+    "example": "She organized the event."
+  },
+  {
+    "word": "origin",
+    "pronunciation": "/ˈɒrɪdʒɪn/",
+    "partOfSpeech": "n.",
+    "definition": "the beginning or source",
+    "chineseDef": "起源",
+    "example": "The origin of the word is Latin."
+  },
+  {
+    "word": "outcome",
+    "pronunciation": "/ˈaʊtkʌm/",
+    "partOfSpeech": "n.",
+    "definition": "a final result",
+    "chineseDef": "结果",
+    "example": "The outcome was surprising."
+  },
+  {
+    "word": "overcome",
+    "pronunciation": "/ˌəʊvəˈkʌm/",
+    "partOfSpeech": "v.",
+    "definition": "to defeat or conquer",
+    "chineseDef": "克服",
+    "example": "She overcame many difficulties."
+  },
+  {
+    "word": "overlook",
+    "pronunciation": "/ˌəʊvəˈlʊk/",
+    "partOfSpeech": "v.",
+    "definition": "to fail to notice",
+    "chineseDef": "忽视",
+    "example": "Don't overlook the details."
+  },
+  {
+    "word": "overseas",
+    "pronunciation": "/ˌəʊvəˈsiːz/",
+    "partOfSpeech": "adv.",
+    "definition": "in a foreign country",
+    "chineseDef": "在海外",
+    "example": "She studied overseas."
+  },
+  {
+    "word": "participate",
+    "pronunciation": "/pɑːˈtɪsɪpeɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to take part",
+    "chineseDef": "参加",
+    "example": "Everyone should participate."
+  },
+  {
+    "word": "passion",
+    "pronunciation": "/ˈpæʃən/",
+    "partOfSpeech": "n.",
+    "definition": "strong emotion or enthusiasm",
+    "chineseDef": "热情",
+    "example": "She has a passion for music."
+  },
+  {
+    "word": "patience",
+    "pronunciation": "/ˈpeɪʃəns/",
+    "partOfSpeech": "n.",
+    "definition": "the ability to wait calmly",
+    "chineseDef": "耐心",
+    "example": "You need patience to learn."
+  },
+  {
+    "word": "payment",
+    "pronunciation": "/ˈpeɪmənt/",
+    "partOfSpeech": "n.",
+    "definition": "money paid",
+    "chineseDef": "付款",
+    "example": "The payment is due next week."
+  },
+  {
+    "word": "perceive",
+    "pronunciation": "/pəˈsiːv/",
+    "partOfSpeech": "v.",
+    "definition": "to become aware of",
+    "chineseDef": "察觉",
+    "example": "She perceived a change."
+  },
+  {
+    "word": "perform",
+    "pronunciation": "/pəˈfɔːm/",
+    "partOfSpeech": "v.",
+    "definition": "to carry out an action",
+    "chineseDef": "表演",
+    "example": "The team performed well."
+  },
+  {
+    "word": "permanent",
+    "pronunciation": "/ˈpɜːmənənt/",
+    "partOfSpeech": "adj.",
+    "definition": "lasting forever",
+    "chineseDef": "永久的",
+    "example": "This is his permanent address."
+  },
+  {
+    "word": "permit",
+    "pronunciation": "/pəˈmɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to allow",
+    "chineseDef": "允许",
+    "example": "Smoking is not permitted."
+  },
+  {
+    "word": "persist",
+    "pronunciation": "/pəˈsɪst/",
+    "partOfSpeech": "v.",
+    "definition": "to continue firmly",
+    "chineseDef": "坚持",
+    "example": "She persisted in her efforts."
+  },
+  {
+    "word": "personality",
+    "pronunciation": "/ˌpɜːsəˈnæləti/",
+    "partOfSpeech": "n.",
+    "definition": "character traits",
+    "chineseDef": "个性",
+    "example": "She has a friendly personality."
+  },
+  {
+    "word": "perspective",
+    "pronunciation": "/pəˈspektɪv/",
+    "partOfSpeech": "n.",
+    "definition": "a particular way of viewing",
+    "chineseDef": "视角",
+    "example": "Look from another perspective."
+  },
+  {
+    "word": "persuade",
+    "pronunciation": "/pəˈsweɪd/",
+    "partOfSpeech": "v.",
+    "definition": "to convince",
+    "chineseDef": "说服",
+    "example": "She persuaded him to stay."
+  },
+  {
+    "word": "phenomenon",
+    "pronunciation": "/fɪˈnɒmɪnən/",
+    "partOfSpeech": "n.",
+    "definition": "a remarkable event",
+    "chineseDef": "现象",
+    "example": "The phenomenon occurs rarely."
+  },
+  {
+    "word": "philosophy",
+    "pronunciation": "/fɪˈlɒsəfi/",
+    "partOfSpeech": "n.",
+    "definition": "the study of knowledge",
+    "chineseDef": "哲学",
+    "example": "His philosophy is simple."
+  },
+  {
+    "word": "physical",
+    "pronunciation": "/ˈfɪzɪkəl/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to the body",
+    "chineseDef": "身体的",
+    "example": "Physical exercise is important."
+  },
+  {
+    "word": "policy",
+    "pronunciation": "/ˈpɒləsi/",
+    "partOfSpeech": "n.",
+    "definition": "a plan or course of action",
+    "chineseDef": "政策",
+    "example": "The company has a strict policy."
+  },
+  {
+    "word": "pollute",
+    "pronunciation": "/pəˈluːt/",
+    "partOfSpeech": "v.",
+    "definition": "to make dirty",
+    "chineseDef": "污染",
+    "example": "Factories pollute the air."
+  },
+  {
+    "word": "popular",
+    "pronunciation": "/ˈpɒpjʊlər/",
+    "partOfSpeech": "adj.",
+    "definition": "liked by many",
+    "chineseDef": "流行的",
+    "example": "This song is very popular."
+  },
+  {
+    "word": "possess",
+    "pronunciation": "/pəˈzes/",
+    "partOfSpeech": "v.",
+    "definition": "to have or own",
+    "chineseDef": "拥有",
+    "example": "She possesses great talent."
+  },
+  {
+    "word": "potential",
+    "pronunciation": "/pəˈtenʃəl/",
+    "partOfSpeech": "adj.",
+    "definition": "possible but not yet realized",
+    "chineseDef": "潜在的",
+    "example": "He has great potential."
+  },
+  {
+    "word": "poverty",
+    "pronunciation": "/ˈpɒvəti/",
+    "partOfSpeech": "n.",
+    "definition": "the state of being poor",
+    "chineseDef": "贫穷",
+    "example": "They live in poverty."
+  },
+  {
+    "word": "practical",
+    "pronunciation": "/ˈpræktɪkəl/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to actual use",
+    "chineseDef": "实际的",
+    "example": "The advice was very practical."
+  },
+  {
+    "word": "precise",
+    "pronunciation": "/prɪˈsaɪs/",
+    "partOfSpeech": "adj.",
+    "definition": "exact and accurate",
+    "chineseDef": "精确的",
+    "example": "The measurements must be precise."
+  },
+  {
+    "word": "predict",
+    "pronunciation": "/prɪˈdɪkt/",
+    "partOfSpeech": "v.",
+    "definition": "to say what will happen",
+    "chineseDef": "预测",
+    "example": "The forecast predicts rain."
+  },
+  {
+    "word": "preserve",
+    "pronunciation": "/prɪˈzɜːv/",
+    "partOfSpeech": "v.",
+    "definition": "to keep safe or maintain",
+    "chineseDef": "保存",
+    "example": "We must preserve the environment."
+  },
+  {
+    "word": "pressure",
+    "pronunciation": "/ˈpreʃər/",
+    "partOfSpeech": "n.",
+    "definition": "force or stress",
+    "chineseDef": "压力",
+    "example": "She works well under pressure."
+  },
+  {
+    "word": "previous",
+    "pronunciation": "/ˈpriːviəs/",
+    "partOfSpeech": "adj.",
+    "definition": "existing before",
+    "chineseDef": "以前的",
+    "example": "In previous years."
+  },
+  {
+    "word": "principle",
+    "pronunciation": "/ˈprɪnsɪpl/",
+    "partOfSpeech": "n.",
+    "definition": "a fundamental truth",
+    "chineseDef": "原则",
+    "example": "Honesty is a basic principle."
+  },
+  {
+    "word": "priority",
+    "pronunciation": "/praɪˈɒrəti/",
+    "partOfSpeech": "n.",
+    "definition": "something more important",
+    "chineseDef": "优先",
+    "example": "Safety is our top priority."
+  },
+  {
+    "word": "privilege",
+    "pronunciation": "/ˈprɪvɪlɪdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "a special advantage",
+    "chineseDef": "特权",
+    "example": "Education is a privilege."
+  },
+  {
+    "word": "procedure",
+    "pronunciation": "/prəˈsiːdʒər/",
+    "partOfSpeech": "n.",
+    "definition": "a series of steps",
+    "chineseDef": "程序",
+    "example": "Follow the correct procedure."
+  },
+  {
+    "word": "process",
+    "pronunciation": "/ˈprəʊses/",
+    "partOfSpeech": "n.",
+    "definition": "a series of actions",
+    "chineseDef": "过程",
+    "example": "The manufacturing process is complex."
+  },
+  {
+    "word": "produce",
+    "pronunciation": "/prəˈdjuːs/",
+    "partOfSpeech": "v.",
+    "definition": "to make or create",
+    "chineseDef": "生产",
+    "example": "The factory produces cars."
+  },
+  {
+    "word": "profession",
+    "pronunciation": "/prəˈfeʃən/",
+    "partOfSpeech": "n.",
+    "definition": "an occupation requiring training",
+    "chineseDef": "职业",
+    "example": "Teaching is a noble profession."
+  },
+  {
+    "word": "profit",
+    "pronunciation": "/ˈprɒfɪt/",
+    "partOfSpeech": "n.",
+    "definition": "financial gain",
+    "chineseDef": "利润",
+    "example": "The company made a profit."
+  },
+  {
+    "word": "progress",
+    "pronunciation": "/ˈprəʊɡres/",
+    "partOfSpeech": "n.",
+    "definition": "forward movement or development",
+    "chineseDef": "进步",
+    "example": "She is making good progress."
+  },
+  {
+    "word": "prohibit",
+    "pronunciation": "/prəˈhɪbɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to forbid",
+    "chineseDef": "禁止",
+    "example": "Smoking is prohibited."
+  },
+  {
+    "word": "project",
+    "pronunciation": "/ˈprɒdʒekt/",
+    "partOfSpeech": "n.",
+    "definition": "a planned piece of work",
+    "chineseDef": "项目",
+    "example": "The project was completed."
+  },
+  {
+    "word": "prominent",
+    "pronunciation": "/ˈprɒmɪnənt/",
+    "partOfSpeech": "adj.",
+    "definition": "important and well-known",
+    "chineseDef": "突出的",
+    "example": "She is a prominent scientist."
+  },
+  {
+    "word": "promote",
+    "pronunciation": "/prəˈməʊt/",
+    "partOfSpeech": "v.",
+    "definition": "to help grow or advance",
+    "chineseDef": "促进",
+    "example": "The campaign promotes healthy eating."
+  },
+  {
+    "word": "property",
+    "pronunciation": "/ˈprɒpəti/",
+    "partOfSpeech": "n.",
+    "definition": "something owned",
+    "chineseDef": "财产",
+    "example": "The property is worth a lot."
+  },
+  {
+    "word": "proportion",
+    "pronunciation": "/prəˈpɔːʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a part or share",
+    "chineseDef": "比例",
+    "example": "A large proportion voted."
+  },
+  {
+    "word": "propose",
+    "pronunciation": "/prəˈpəʊz/",
+    "partOfSpeech": "v.",
+    "definition": "to suggest a plan",
+    "chineseDef": "提议",
+    "example": "He proposed a new solution."
+  },
+  {
+    "word": "prospect",
+    "pronunciation": "/ˈprɒspekt/",
+    "partOfSpeech": "n.",
+    "definition": "a possibility or outlook",
+    "chineseDef": "前景",
+    "example": "The job prospects are good."
+  },
+  {
+    "word": "protect",
+    "pronunciation": "/prəˈtekt/",
+    "partOfSpeech": "v.",
+    "definition": "to keep safe",
+    "chineseDef": "保护",
+    "example": "Wear sunscreen to protect your skin."
+  },
+  {
+    "word": "protest",
+    "pronunciation": "/ˈprəʊtest/",
+    "partOfSpeech": "n.",
+    "definition": "a statement of objection",
+    "chineseDef": "抗议",
+    "example": "The workers held a protest."
+  },
+  {
+    "word": "provide",
+    "pronunciation": "/prəˈvaɪd/",
+    "partOfSpeech": "v.",
+    "definition": "to give or supply",
+    "chineseDef": "提供",
+    "example": "The company provides good benefits."
+  },
+  {
+    "word": "province",
+    "pronunciation": "/ˈprɒvɪns/",
+    "partOfSpeech": "n.",
+    "definition": "a main administrative division",
+    "chineseDef": "省",
+    "example": "She comes from a northern province."
+  },
+  {
+    "word": "publish",
+    "pronunciation": "/ˈpʌblɪʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to make available to the public",
+    "chineseDef": "出版",
+    "example": "She published her first novel."
+  },
+  {
+    "word": "purchase",
+    "pronunciation": "/ˈpɜːtʃəs/",
+    "partOfSpeech": "v.",
+    "definition": "to buy",
+    "chineseDef": "购买",
+    "example": "We purchased a new house."
+  },
+  {
+    "word": "pursue",
+    "pronunciation": "/pəˈsjuː/",
+    "partOfSpeech": "v.",
+    "definition": "to follow or try to achieve",
+    "chineseDef": "追求",
+    "example": "She pursued a career in law."
+  },
+  {
+    "word": "qualify",
+    "pronunciation": "/ˈkwɒlɪfaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to meet the requirements",
+    "chineseDef": "取得资格",
+    "example": "She qualified for the Olympics."
+  },
+  {
+    "word": "quantity",
+    "pronunciation": "/ˈkwɒntəti/",
+    "partOfSpeech": "n.",
+    "definition": "an amount or number",
+    "chineseDef": "数量",
+    "example": "We need a large quantity."
+  },
+  {
+    "word": "range",
+    "pronunciation": "/reɪndʒ/",
+    "partOfSpeech": "n.",
+    "definition": "a variety or span",
+    "chineseDef": "范围",
+    "example": "The price range is wide."
+  },
+  {
+    "word": "rank",
+    "pronunciation": "/ræŋk/",
+    "partOfSpeech": "n.",
+    "definition": "a position in a hierarchy",
+    "chineseDef": "等级",
+    "example": "He achieved the rank of captain."
+  },
+  {
+    "word": "rapid",
+    "pronunciation": "/ˈræpɪd/",
+    "partOfSpeech": "adj.",
+    "definition": "very fast",
+    "chineseDef": "迅速的",
+    "example": "There has been rapid growth."
+  },
+  {
+    "word": "reaction",
+    "pronunciation": "/riˈækʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a response",
+    "chineseDef": "反应",
+    "example": "Her reaction was immediate."
+  },
+  {
+    "word": "realistic",
+    "pronunciation": "/ˌriːəˈlɪstɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "practical and achievable",
+    "chineseDef": "现实的",
+    "example": "Set realistic goals."
+  },
+  {
+    "word": "reality",
+    "pronunciation": "/riˈæləti/",
+    "partOfSpeech": "n.",
+    "definition": "the state of things as they are",
+    "chineseDef": "现实",
+    "example": "We must face reality."
+  },
+  {
+    "word": "reasonable",
+    "pronunciation": "/ˈriːzənəbl/",
+    "partOfSpeech": "adj.",
+    "definition": "fair and sensible",
+    "chineseDef": "合理的",
+    "example": "The price is reasonable."
+  },
+  {
+    "word": "recent",
+    "pronunciation": "/ˈriːsənt/",
+    "partOfSpeech": "adj.",
+    "definition": "not long past",
+    "chineseDef": "最近的",
+    "example": "Recent events have changed everything."
+  },
+  {
+    "word": "recognition",
+    "pronunciation": "/ˌrekəɡˈnɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "identification or acknowledgment",
+    "chineseDef": "认可",
+    "example": "She received recognition."
+  },
+  {
+    "word": "recover",
+    "pronunciation": "/rɪˈkʌvər/",
+    "partOfSpeech": "v.",
+    "definition": "to get back to normal",
+    "chineseDef": "恢复",
+    "example": "She is recovering from surgery."
+  },
+  {
+    "word": "reduce",
+    "pronunciation": "/rɪˈdjuːs/",
+    "partOfSpeech": "v.",
+    "definition": "to make less",
+    "chineseDef": "减少",
+    "example": "We need to reduce costs."
+  },
+  {
+    "word": "refer",
+    "pronunciation": "/rɪˈfɜːr/",
+    "partOfSpeech": "v.",
+    "definition": "to mention or direct to",
+    "chineseDef": "提及",
+    "example": "Refer to the manual."
+  },
+  {
+    "word": "reflect",
+    "pronunciation": "/rɪˈflekt/",
+    "partOfSpeech": "v.",
+    "definition": "to show or throw back",
+    "chineseDef": "反映",
+    "example": "The mirror reflects your image."
+  },
+  {
+    "word": "reform",
+    "pronunciation": "/rɪˈfɔːm/",
+    "partOfSpeech": "n.",
+    "definition": "change for improvement",
+    "chineseDef": "改革",
+    "example": "The education reform is needed."
+  },
+  {
+    "word": "refuse",
+    "pronunciation": "/rɪˈfjuːz/",
+    "partOfSpeech": "v.",
+    "definition": "to decline",
+    "chineseDef": "拒绝",
+    "example": "She refused the offer."
+  },
+  {
+    "word": "region",
+    "pronunciation": "/ˈriːdʒən/",
+    "partOfSpeech": "n.",
+    "definition": "an area or district",
+    "chineseDef": "地区",
+    "example": "The region is known for its wine."
+  },
+  {
+    "word": "register",
+    "pronunciation": "/ˈredʒɪstər/",
+    "partOfSpeech": "v.",
+    "definition": "to record officially",
+    "chineseDef": "登记",
+    "example": "Please register online."
+  },
+  {
+    "word": "regulate",
+    "pronunciation": "/ˈreɡjuleɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to control by rules",
+    "chineseDef": "调节",
+    "example": "The government regulates the industry."
+  },
+  {
+    "word": "reject",
+    "pronunciation": "/rɪˈdʒekt/",
+    "partOfSpeech": "v.",
+    "definition": "to refuse to accept",
+    "chineseDef": "拒绝",
+    "example": "The proposal was rejected."
+  },
+  {
+    "word": "relate",
+    "pronunciation": "/rɪˈleɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to connect or tell",
+    "chineseDef": "关联",
+    "example": "The two events are related."
+  },
+  {
+    "word": "release",
+    "pronunciation": "/rɪˈliːs/",
+    "partOfSpeech": "v.",
+    "definition": "to set free or make public",
+    "chineseDef": "释放，发布",
+    "example": "The movie was released last week."
+  },
+  {
+    "word": "relevant",
+    "pronunciation": "/ˈreləvənt/",
+    "partOfSpeech": "adj.",
+    "definition": "directly related",
+    "chineseDef": "相关的",
+    "example": "Is this information relevant?"
+  },
+  {
+    "word": "relief",
+    "pronunciation": "/rɪˈliːf/",
+    "partOfSpeech": "n.",
+    "definition": "a feeling of comfort",
+    "chineseDef": "缓解",
+    "example": "The medicine brought relief."
+  },
+  {
+    "word": "religion",
+    "pronunciation": "/rɪˈlɪdʒən/",
+    "partOfSpeech": "n.",
+    "definition": "a system of faith",
+    "chineseDef": "宗教",
+    "example": "She practices her religion."
+  },
+  {
+    "word": "rely",
+    "pronunciation": "/rɪˈlaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to depend on",
+    "chineseDef": "依赖",
+    "example": "You can rely on me."
+  },
+  {
+    "word": "remain",
+    "pronunciation": "/rɪˈmeɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to stay or continue",
+    "chineseDef": "保持",
+    "example": "Please remain seated."
+  },
+  {
+    "word": "remove",
+    "pronunciation": "/rɪˈmuːv/",
+    "partOfSpeech": "v.",
+    "definition": "to take away",
+    "chineseDef": "移除",
+    "example": "Please remove your shoes."
+  },
+  {
+    "word": "replace",
+    "pronunciation": "/rɪˈpleɪs/",
+    "partOfSpeech": "v.",
+    "definition": "to take the place of",
+    "chineseDef": "替换",
+    "example": "We need to replace the battery."
+  },
+  {
+    "word": "represent",
+    "pronunciation": "/ˌreprɪˈzent/",
+    "partOfSpeech": "v.",
+    "definition": "to stand for",
+    "chineseDef": "代表",
+    "example": "She represents the company."
+  },
+  {
+    "word": "reputation",
+    "pronunciation": "/ˌrepjuˈteɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "the general opinion",
+    "chineseDef": "声誉",
+    "example": "He has a good reputation."
+  },
+  {
+    "word": "request",
+    "pronunciation": "/rɪˈkwest/",
+    "partOfSpeech": "n.",
+    "definition": "a polite demand",
+    "chineseDef": "请求",
+    "example": "She made a request."
+  },
+  {
+    "word": "require",
+    "pronunciation": "/rɪˈkwaɪər/",
+    "partOfSpeech": "v.",
+    "definition": "to need or demand",
+    "chineseDef": "需要",
+    "example": "This job requires patience."
+  },
+  {
+    "word": "rescue",
+    "pronunciation": "/ˈreskjuː/",
+    "partOfSpeech": "v.",
+    "definition": "to save from danger",
+    "chineseDef": "营救",
+    "example": "The firefighter rescued the child."
+  },
+  {
+    "word": "research",
+    "pronunciation": "/rɪˈsɜːtʃ/",
+    "partOfSpeech": "n.",
+    "definition": "systematic investigation",
+    "chineseDef": "研究",
+    "example": "She conducts scientific research."
+  },
+  {
+    "word": "reserve",
+    "pronunciation": "/rɪˈzɜːv/",
+    "partOfSpeech": "v.",
+    "definition": "to keep for future use",
+    "chineseDef": "保留",
+    "example": "Please reserve a table."
+  },
+  {
+    "word": "resolve",
+    "pronunciation": "/rɪˈzɒlv/",
+    "partOfSpeech": "v.",
+    "definition": "to find a solution",
+    "chineseDef": "解决",
+    "example": "We must resolve this issue."
+  },
+  {
+    "word": "resource",
+    "pronunciation": "/rɪˈzɔːs/",
+    "partOfSpeech": "n.",
+    "definition": "a supply or support",
+    "chineseDef": "资源",
+    "example": "Natural resources are limited."
+  },
+  {
+    "word": "respond",
+    "pronunciation": "/rɪˈspɒnd/",
+    "partOfSpeech": "v.",
+    "definition": "to answer or react",
+    "chineseDef": "回应",
+    "example": "Please respond to my email."
+  },
+  {
+    "word": "responsibility",
+    "pronunciation": "/rɪˌspɒnsəˈbɪləti/",
+    "partOfSpeech": "n.",
+    "definition": "a duty or obligation",
+    "chineseDef": "责任",
+    "example": "It's your responsibility."
+  },
+  {
+    "word": "restore",
+    "pronunciation": "/rɪˈstɔːr/",
+    "partOfSpeech": "v.",
+    "definition": "to bring back to original",
+    "chineseDef": "恢复",
+    "example": "The building was restored."
+  },
+  {
+    "word": "restrict",
+    "pronunciation": "/rɪˈstrɪkt/",
+    "partOfSpeech": "v.",
+    "definition": "to limit or control",
+    "chineseDef": "限制",
+    "example": "The speed is restricted."
+  },
+  {
+    "word": "reveal",
+    "pronunciation": "/rɪˈviːl/",
+    "partOfSpeech": "v.",
+    "definition": "to make known",
+    "chineseDef": "揭示",
+    "example": "The investigation revealed the truth."
+  },
+  {
+    "word": "revise",
+    "pronunciation": "/rɪˈvaɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to review and change",
+    "chineseDef": "修订",
+    "example": "She revised her essay."
+  },
+  {
+    "word": "revolution",
+    "pronunciation": "/ˌrevəˈluːʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a complete change",
+    "chineseDef": "革命",
+    "example": "The Industrial Revolution changed everything."
+  },
+  {
+    "word": "reward",
+    "pronunciation": "/rɪˈwɔːd/",
+    "partOfSpeech": "n.",
+    "definition": "something given in return",
+    "chineseDef": "奖励",
+    "example": "A reward was offered."
+  },
+  {
+    "word": "rural",
+    "pronunciation": "/ˈrʊərəl/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to the countryside",
+    "chineseDef": "乡村的",
+    "example": "She lives in a rural area."
+  },
+  {
+    "word": "sacrifice",
+    "pronunciation": "/ˈsækrɪfaɪs/",
+    "partOfSpeech": "n.",
+    "definition": "giving up something valuable",
+    "chineseDef": "牺牲",
+    "example": "She made many sacrifices."
+  },
+  {
+    "word": "schedule",
+    "pronunciation": "/ˈʃedjuːl/",
+    "partOfSpeech": "n.",
+    "definition": "a plan of events",
+    "chineseDef": "时间表",
+    "example": "What's your schedule?"
+  },
+  {
+    "word": "scheme",
+    "pronunciation": "/skiːm/",
+    "partOfSpeech": "n.",
+    "definition": "a plan or system",
+    "chineseDef": "计划",
+    "example": "They devised a new scheme."
+  },
+  {
+    "word": "scholar",
+    "pronunciation": "/ˈskɒlər/",
+    "partOfSpeech": "n.",
+    "definition": "a learned person",
+    "chineseDef": "学者",
+    "example": "She is a respected scholar."
+  },
+  {
+    "word": "secure",
+    "pronunciation": "/sɪˈkjʊər/",
+    "partOfSpeech": "adj.",
+    "definition": "safe and protected",
+    "chineseDef": "安全的",
+    "example": "Make sure the door is secure."
+  },
+  {
+    "word": "seek",
+    "pronunciation": "/siːk/",
+    "partOfSpeech": "v.",
+    "definition": "to look for",
+    "chineseDef": "寻找",
+    "example": "She sought advice."
+  },
+  {
+    "word": "select",
+    "pronunciation": "/sɪˈlekt/",
+    "partOfSpeech": "v.",
+    "definition": "to choose carefully",
+    "chineseDef": "选择",
+    "example": "Select the best option."
+  },
+  {
+    "word": "senior",
+    "pronunciation": "/ˈsiːniər/",
+    "partOfSpeech": "adj.",
+    "definition": "older or higher in rank",
+    "chineseDef": "年长的",
+    "example": "He is a senior manager."
+  },
+  {
+    "word": "sense",
+    "pronunciation": "/sens/",
+    "partOfSpeech": "n.",
+    "definition": "awareness or meaning",
+    "chineseDef": "感觉",
+    "example": "She has a good sense of humor."
+  },
+  {
+    "word": "sensitive",
+    "pronunciation": "/ˈsensətɪv/",
+    "partOfSpeech": "adj.",
+    "definition": "easily affected or offended",
+    "chineseDef": "敏感的",
+    "example": "She is sensitive to criticism."
+  },
+  {
+    "word": "sequence",
+    "pronunciation": "/ˈsiːkwəns/",
+    "partOfSpeech": "n.",
+    "definition": "a series in order",
+    "chineseDef": "序列",
+    "example": "The events happened in sequence."
+  },
+  {
+    "word": "session",
+    "pronunciation": "/ˈseʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a period of activity",
+    "chineseDef": "会议",
+    "example": "The training session was useful."
+  },
+  {
+    "word": "settle",
+    "pronunciation": "/ˈsetl/",
+    "partOfSpeech": "v.",
+    "definition": "to resolve or live in",
+    "chineseDef": "解决",
+    "example": "They settled the dispute."
+  },
+  {
+    "word": "severe",
+    "pronunciation": "/sɪˈvɪər/",
+    "partOfSpeech": "adj.",
+    "definition": "very serious",
+    "chineseDef": "严重的",
+    "example": "The storm caused severe damage."
+  },
+  {
+    "word": "shadow",
+    "pronunciation": "/ˈʃædəʊ/",
+    "partOfSpeech": "n.",
+    "definition": "a dark area caused by light",
+    "chineseDef": "阴影",
+    "example": "He saw a shadow."
+  },
+  {
+    "word": "shelter",
+    "pronunciation": "/ˈʃeltər/",
+    "partOfSpeech": "n.",
+    "definition": "a place of protection",
+    "chineseDef": "庇护所",
+    "example": "They took shelter."
+  },
+  {
+    "word": "shift",
+    "pronunciation": "/ʃɪft/",
+    "partOfSpeech": "v.",
+    "definition": "to change position",
+    "chineseDef": "转移",
+    "example": "The wind shifted direction."
+  },
+  {
+    "word": "shortage",
+    "pronunciation": "/ˈʃɔːtɪdʒ/",
+    "partOfSpeech": "n.",
+    "definition": "a lack or deficit",
+    "chineseDef": "短缺",
+    "example": "There is a water shortage."
+  },
+  {
+    "word": "similar",
+    "pronunciation": "/ˈsɪmɪlər/",
+    "partOfSpeech": "adj.",
+    "definition": "alike in some way",
+    "chineseDef": "相似的",
+    "example": "They have similar tastes."
+  },
+  {
+    "word": "simplify",
+    "pronunciation": "/ˈsɪmplɪfaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to make simpler",
+    "chineseDef": "简化",
+    "example": "Try to simplify the process."
+  },
+  {
+    "word": "sincere",
+    "pronunciation": "/sɪnˈsɪər/",
+    "partOfSpeech": "adj.",
+    "definition": "honest and genuine",
+    "chineseDef": "真诚的",
+    "example": "Please accept my sincere apologies."
+  },
+  {
+    "word": "skilled",
+    "pronunciation": "/skɪld/",
+    "partOfSpeech": "adj.",
+    "definition": "having special ability",
+    "chineseDef": "熟练的",
+    "example": "She is a skilled pianist."
+  },
+  {
+    "word": "smooth",
+    "pronunciation": "/smuːð/",
+    "partOfSpeech": "adj.",
+    "definition": "even and flat",
+    "chineseDef": "光滑的",
+    "example": "The surface is smooth."
+  },
+  {
+    "word": "solar",
+    "pronunciation": "/ˈsəʊlər/",
+    "partOfSpeech": "adj.",
+    "definition": "relating to the sun",
+    "chineseDef": "太阳的",
+    "example": "Solar energy is renewable."
+  },
+  {
+    "word": "sole",
+    "pronunciation": "/səʊl/",
+    "partOfSpeech": "adj.",
+    "definition": "only or single",
+    "chineseDef": "唯一的",
+    "example": "He is the sole owner."
+  },
+  {
+    "word": "solid",
+    "pronunciation": "/ˈsɒlɪd/",
+    "partOfSpeech": "adj.",
+    "definition": "firm and hard",
+    "chineseDef": "坚固的",
+    "example": "The ice was solid."
+  },
+  {
+    "word": "sophisticated",
+    "pronunciation": "/səˈfɪstɪkeɪtɪd/",
+    "partOfSpeech": "adj.",
+    "definition": "complex and refined",
+    "chineseDef": "复杂的",
+    "example": "The software is sophisticated."
+  },
+  {
+    "word": "source",
+    "pronunciation": "/sɔːs/",
+    "partOfSpeech": "n.",
+    "definition": "the origin or provider",
+    "chineseDef": "来源",
+    "example": "The source of the river is in the mountains."
+  },
+  {
+    "word": "span",
+    "pronunciation": "/spæn/",
+    "partOfSpeech": "n.",
+    "definition": "the full extent or reach",
+    "chineseDef": "跨度",
+    "example": "Her career spanned 30 years."
+  },
+  {
+    "word": "specialize",
+    "pronunciation": "/ˈspeʃəlaɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to focus on one area",
+    "chineseDef": "专门从事",
+    "example": "She specializes in heart surgery."
+  },
+  {
+    "word": "species",
+    "pronunciation": "/ˈspiːʃiːz/",
+    "partOfSpeech": "n.",
+    "definition": "a group of living things",
+    "chineseDef": "物种",
+    "example": "This species is endangered."
+  },
+  {
+    "word": "specific",
+    "pronunciation": "/spəˈsɪfɪk/",
+    "partOfSpeech": "adj.",
+    "definition": "exact and particular",
+    "chineseDef": "具体的",
+    "example": "Give me specific details."
+  },
+  {
+    "word": "spot",
+    "pronunciation": "/spɒt/",
+    "partOfSpeech": "n.",
+    "definition": "a small area or place",
+    "chineseDef": "地点",
+    "example": "This is a beautiful spot."
+  },
+  {
+    "word": "spread",
+    "pronunciation": "/spred/",
+    "partOfSpeech": "v.",
+    "definition": "to extend or distribute",
+    "chineseDef": "传播",
+    "example": "The news spread quickly."
+  },
+  {
+    "word": "stable",
+    "pronunciation": "/ˈsteɪbl/",
+    "partOfSpeech": "adj.",
+    "definition": "firm and not changing",
+    "chineseDef": "稳定的",
+    "example": "The patient is stable."
+  },
+  {
+    "word": "staff",
+    "pronunciation": "/stɑːf/",
+    "partOfSpeech": "n.",
+    "definition": "a group of employees",
+    "chineseDef": "员工",
+    "example": "The staff are very helpful."
+  },
+  {
+    "word": "standard",
+    "pronunciation": "/ˈstændəd/",
+    "partOfSpeech": "n.",
+    "definition": "a level of quality",
+    "chineseDef": "标准",
+    "example": "The work meets our standards."
+  },
+  {
+    "word": "status",
+    "pronunciation": "/ˈsteɪtəs/",
+    "partOfSpeech": "n.",
+    "definition": "a position or condition",
+    "chineseDef": "地位",
+    "example": "What is your status?"
+  },
+  {
+    "word": "steady",
+    "pronunciation": "/ˈstedi/",
+    "partOfSpeech": "adj.",
+    "definition": "firm and regular",
+    "chineseDef": "稳定的",
+    "example": "He has a steady job."
+  },
+  {
+    "word": "stimulate",
+    "pronunciation": "/ˈstɪmjʊleɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to encourage activity",
+    "chineseDef": "刺激",
+    "example": "Exercise stimulates blood flow."
+  },
+  {
+    "word": "strategy",
+    "pronunciation": "/ˈstrætədʒi/",
+    "partOfSpeech": "n.",
+    "definition": "a long-term plan",
+    "chineseDef": "策略",
+    "example": "We need a new strategy."
+  },
+  {
+    "word": "strengthen",
+    "pronunciation": "/ˈstreŋθən/",
+    "partOfSpeech": "v.",
+    "definition": "to make stronger",
+    "chineseDef": "加强",
+    "example": "Exercise strengthens the heart."
+  },
+  {
+    "word": "stress",
+    "pronunciation": "/stres/",
+    "partOfSpeech": "n.",
+    "definition": "pressure or emphasis",
+    "chineseDef": "压力",
+    "example": "She is under a lot of stress."
+  },
+  {
+    "word": "stretch",
+    "pronunciation": "/stretʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to extend or pull",
+    "chineseDef": "伸展",
+    "example": "Stretch before exercising."
+  },
+  {
+    "word": "strict",
+    "pronunciation": "/strɪkt/",
+    "partOfSpeech": "adj.",
+    "definition": "demanding obedience",
+    "chineseDef": "严格的",
+    "example": "The rules are very strict."
+  },
+  {
+    "word": "structure",
+    "pronunciation": "/ˈstrʌktʃər/",
+    "partOfSpeech": "n.",
+    "definition": "the arrangement of parts",
+    "chineseDef": "结构",
+    "example": "The building's structure is sound."
+  },
+  {
+    "word": "struggle",
+    "pronunciation": "/ˈstrʌɡl/",
+    "partOfSpeech": "v.",
+    "definition": "to try very hard",
+    "chineseDef": "挣扎",
+    "example": "She struggled to finish."
+  },
+  {
+    "word": "submit",
+    "pronunciation": "/səbˈmɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to present for approval",
+    "chineseDef": "提交",
+    "example": "Please submit your report."
+  },
+  {
+    "word": "substance",
+    "pronunciation": "/ˈsʌbstəns/",
+    "partOfSpeech": "n.",
+    "definition": "material or matter",
+    "chineseDef": "物质",
+    "example": "The substance is poisonous."
+  },
+  {
+    "word": "substantial",
+    "pronunciation": "/səbˈstænʃəl/",
+    "partOfSpeech": "adj.",
+    "definition": "large and significant",
+    "chineseDef": "大量的",
+    "example": "There was a substantial increase."
+  },
+  {
+    "word": "substitute",
+    "pronunciation": "/ˈsʌbstɪtjuːt/",
+    "partOfSpeech": "n.",
+    "definition": "a replacement",
+    "chineseDef": "替代品",
+    "example": "Honey can be a substitute for sugar."
+  },
+  {
+    "word": "succeed",
+    "pronunciation": "/səkˈsiːd/",
+    "partOfSpeech": "v.",
+    "definition": "to achieve a goal",
+    "chineseDef": "成功",
+    "example": "She succeeded in her career."
+  },
+  {
+    "word": "sufficient",
+    "pronunciation": "/səˈfɪʃənt/",
+    "partOfSpeech": "adj.",
+    "definition": "enough",
+    "chineseDef": "足够的",
+    "example": "The supply is sufficient."
+  },
+  {
+    "word": "suggest",
+    "pronunciation": "/səˈdʒest/",
+    "partOfSpeech": "v.",
+    "definition": "to propose an idea",
+    "chineseDef": "建议",
+    "example": "I suggest we leave early."
+  },
+  {
+    "word": "suitable",
+    "pronunciation": "/ˈsuːtəbl/",
+    "partOfSpeech": "adj.",
+    "definition": "appropriate",
+    "chineseDef": "合适的",
+    "example": "This dress is suitable for the party."
+  },
+  {
+    "word": "summarize",
+    "pronunciation": "/ˈsʌməraɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to give a brief statement",
+    "chineseDef": "总结",
+    "example": "Summarize the main points."
+  },
+  {
+    "word": "superior",
+    "pronunciation": "/suːˈpɪəriər/",
+    "partOfSpeech": "adj.",
+    "definition": "higher in quality",
+    "chineseDef": "优越的",
+    "example": "The quality is superior."
+  },
+  {
+    "word": "supply",
+    "pronunciation": "/səˈplaɪ/",
+    "partOfSpeech": "n.",
+    "definition": "an amount available",
+    "chineseDef": "供给",
+    "example": "The water supply is clean."
+  },
+  {
+    "word": "support",
+    "pronunciation": "/səˈpɔːt/",
+    "partOfSpeech": "v.",
+    "definition": "to hold up or encourage",
+    "chineseDef": "支持",
+    "example": "Thank you for your support."
+  },
+  {
+    "word": "suppose",
+    "pronunciation": "/səˈpəʊz/",
+    "partOfSpeech": "v.",
+    "definition": "to assume or think",
+    "chineseDef": "假设",
+    "example": "I suppose you're right."
+  },
+  {
+    "word": "surface",
+    "pronunciation": "/ˈsɜːfɪs/",
+    "partOfSpeech": "n.",
+    "definition": "the outer layer",
+    "chineseDef": "表面",
+    "example": "The surface of the table is smooth."
+  },
+  {
+    "word": "surgery",
+    "pronunciation": "/ˈsɜːdʒəri/",
+    "partOfSpeech": "n.",
+    "definition": "medical operation",
+    "chineseDef": "外科手术",
+    "example": "He underwent heart surgery."
+  },
+  {
+    "word": "surplus",
+    "pronunciation": "/ˈsɜːpləs/",
+    "partOfSpeech": "n.",
+    "definition": "an excess amount",
+    "chineseDef": "过剩",
+    "example": "The budget has a surplus."
+  },
+  {
+    "word": "surrender",
+    "pronunciation": "/səˈrendər/",
+    "partOfSpeech": "v.",
+    "definition": "to give up or yield",
+    "chineseDef": "投降",
+    "example": "The army surrendered."
+  },
+  {
+    "word": "surround",
+    "pronunciation": "/səˈraʊnd/",
+    "partOfSpeech": "v.",
+    "definition": "to encircle",
+    "chineseDef": "围绕",
+    "example": "The house is surrounded by trees."
+  },
+  {
+    "word": "survey",
+    "pronunciation": "/ˈsɜːveɪ/",
+    "partOfSpeech": "n.",
+    "definition": "a study or examination",
+    "chineseDef": "调查",
+    "example": "The survey shows satisfaction."
+  },
+  {
+    "word": "survive",
+    "pronunciation": "/səˈvaɪv/",
+    "partOfSpeech": "v.",
+    "definition": "to continue to live",
+    "chineseDef": "幸存",
+    "example": "Only a few survived."
+  },
+  {
+    "word": "suspect",
+    "pronunciation": "/səˈspekt/",
+    "partOfSpeech": "v.",
+    "definition": "to think likely or true",
+    "chineseDef": "怀疑",
+    "example": "I suspect he is lying."
+  },
+  {
+    "word": "suspend",
+    "pronunciation": "/səˈspend/",
+    "partOfSpeech": "v.",
+    "definition": "to hang or pause",
+    "chineseDef": "悬挂",
+    "example": "The meeting was suspended."
+  },
+  {
+    "word": "sustain",
+    "pronunciation": "/səˈsteɪn/",
+    "partOfSpeech": "v.",
+    "definition": "to keep going or support",
+    "chineseDef": "维持",
+    "example": "The soil cannot sustain crops."
+  },
+  {
+    "word": "symbol",
+    "pronunciation": "/ˈsɪmbəl/",
+    "partOfSpeech": "n.",
+    "definition": "a sign representing something",
+    "chineseDef": "象征",
+    "example": "The dove is a symbol of peace."
+  },
+  {
+    "word": "sympathy",
+    "pronunciation": "/ˈsɪmpəθi/",
+    "partOfSpeech": "n.",
+    "definition": "shared feeling of sadness",
+    "chineseDef": "同情",
+    "example": "I have sympathy for your loss."
+  },
+  {
+    "word": "symptom",
+    "pronunciation": "/ˈsɪmptəm/",
+    "partOfSpeech": "n.",
+    "definition": "a sign of illness",
+    "chineseDef": "症状",
+    "example": "The symptoms include fever."
+  },
+  {
+    "word": "tackle",
+    "pronunciation": "/ˈtækl/",
+    "partOfSpeech": "v.",
+    "definition": "to take on a problem",
+    "chineseDef": "处理",
+    "example": "We must tackle the issue."
+  },
+  {
+    "word": "talent",
+    "pronunciation": "/ˈtælənt/",
+    "partOfSpeech": "n.",
+    "definition": "natural ability",
+    "chineseDef": "才能",
+    "example": "She has a talent for music."
+  },
+  {
+    "word": "target",
+    "pronunciation": "/ˈtɑːɡɪt/",
+    "partOfSpeech": "n.",
+    "definition": "a goal or objective",
+    "chineseDef": "目标",
+    "example": "Set clear targets."
+  },
+  {
+    "word": "technique",
+    "pronunciation": "/tekˈniːk/",
+    "partOfSpeech": "n.",
+    "definition": "a method or skill",
+    "chineseDef": "技术",
+    "example": "She mastered the technique."
+  },
+  {
+    "word": "technology",
+    "pronunciation": "/tekˈnɒlədʒi/",
+    "partOfSpeech": "n.",
+    "definition": "applied science",
+    "chineseDef": "技术",
+    "example": "Technology is advancing."
+  },
+  {
+    "word": "temporary",
+    "pronunciation": "/ˈtempərəri/",
+    "partOfSpeech": "adj.",
+    "definition": "lasting for a limited time",
+    "chineseDef": "临时的",
+    "example": "This is a temporary solution."
+  },
+  {
+    "word": "tend",
+    "pronunciation": "/tend/",
+    "partOfSpeech": "v.",
+    "definition": "to be likely or care for",
+    "chineseDef": "倾向",
+    "example": "She tends to be optimistic."
+  },
+  {
+    "word": "tendency",
+    "pronunciation": "/ˈtendənsi/",
+    "partOfSpeech": "n.",
+    "definition": "a natural inclination",
+    "chineseDef": "趋势",
+    "example": "There is a tendency to overspend."
+  },
+  {
+    "word": "tense",
+    "pronunciation": "/tens/",
+    "partOfSpeech": "adj.",
+    "definition": "nervous and tight",
+    "chineseDef": "紧张的",
+    "example": "She felt tense before the exam."
+  },
+  {
+    "word": "theory",
+    "pronunciation": "/ˈθɪəri/",
+    "partOfSpeech": "n.",
+    "definition": "a system of ideas",
+    "chineseDef": "理论",
+    "example": "The theory explains the phenomenon."
+  },
+  {
+    "word": "thorough",
+    "pronunciation": "/ˈθʌrə/",
+    "partOfSpeech": "adj.",
+    "definition": "complete and careful",
+    "chineseDef": "彻底的",
+    "example": "Do a thorough check."
+  },
+  {
+    "word": "threaten",
+    "pronunciation": "/ˈθretən/",
+    "partOfSpeech": "v.",
+    "definition": "to express a threat",
+    "chineseDef": "威胁",
+    "example": "The storm threatens the coast."
+  },
+  {
+    "word": "thrill",
+    "pronunciation": "/θrɪl/",
+    "partOfSpeech": "n.",
+    "definition": "a sudden excitement",
+    "chineseDef": "激动",
+    "example": "The roller coaster gave her a thrill."
+  },
+  {
+    "word": "thrive",
+    "pronunciation": "/θraɪv/",
+    "partOfSpeech": "v.",
+    "definition": "to grow and prosper",
+    "chineseDef": "繁荣",
+    "example": "Plants thrive in sunlight."
+  },
+  {
+    "word": "tolerate",
+    "pronunciation": "/ˈtɒləreɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to allow or endure",
+    "chineseDef": "容忍",
+    "example": "I cannot tolerate such behavior."
+  },
+  {
+    "word": "tough",
+    "pronunciation": "/tʌf/",
+    "partOfSpeech": "adj.",
+    "definition": "strong and durable",
+    "chineseDef": "坚韧的",
+    "example": "The test was tough."
+  },
+  {
+    "word": "tradition",
+    "pronunciation": "/trəˈdɪʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a long-established custom",
+    "chineseDef": "传统",
+    "example": "It is a family tradition."
+  },
+  {
+    "word": "tragedy",
+    "pronunciation": "/ˈtrædʒədi/",
+    "partOfSpeech": "n.",
+    "definition": "a very sad event",
+    "chineseDef": "悲剧",
+    "example": "The tragedy shocked the nation."
+  },
+  {
+    "word": "transfer",
+    "pronunciation": "/trænsˈfɜːr/",
+    "partOfSpeech": "v.",
+    "definition": "to move from one place",
+    "chineseDef": "转移",
+    "example": "She transferred to a new school."
+  },
+  {
+    "word": "transform",
+    "pronunciation": "/trænsˈfɔːm/",
+    "partOfSpeech": "v.",
+    "definition": "to change completely",
+    "chineseDef": "转变",
+    "example": "The city has been transformed."
+  },
+  {
+    "word": "transport",
+    "pronunciation": "/ˈtrænspɔːt/",
+    "partOfSpeech": "n.",
+    "definition": "a means of moving goods",
+    "chineseDef": "运输",
+    "example": "Public transport is efficient."
+  },
+  {
+    "word": "trap",
+    "pronunciation": "/træp/",
+    "partOfSpeech": "n.",
+    "definition": "a device for catching animals",
+    "chineseDef": "陷阱",
+    "example": "The mouse was caught in a trap."
+  },
+  {
+    "word": "treasure",
+    "pronunciation": "/ˈtreʒər/",
+    "partOfSpeech": "n.",
+    "definition": "valuable items",
+    "chineseDef": "珍宝",
+    "example": "They searched for buried treasure."
+  },
+  {
+    "word": "treat",
+    "pronunciation": "/triːt/",
+    "partOfSpeech": "v.",
+    "definition": "to handle or give medical care",
+    "chineseDef": "对待",
+    "example": "The doctor treated the wound."
+  },
+  {
+    "word": "tremendous",
+    "pronunciation": "/trɪˈmendəs/",
+    "partOfSpeech": "adj.",
+    "definition": "very large",
+    "chineseDef": "巨大的",
+    "example": "The project was a great success."
+  },
+  {
+    "word": "trend",
+    "pronunciation": "/trend/",
+    "partOfSpeech": "n.",
+    "definition": "a general direction or pattern",
+    "chineseDef": "趋势",
+    "example": "The fashion trend is changing."
+  },
+  {
+    "word": "trial",
+    "pronunciation": "/ˈtraɪəl/",
+    "partOfSpeech": "n.",
+    "definition": "a test or court session",
+    "chineseDef": "试验",
+    "example": "The clinical trial was successful."
+  },
+  {
+    "word": "trigger",
+    "pronunciation": "/ˈtrɪɡər/",
+    "partOfSpeech": "v.",
+    "definition": "to cause to start",
+    "chineseDef": "触发",
+    "example": "The event triggered a crisis."
+  },
+  {
+    "word": "triumph",
+    "pronunciation": "/ˈtraɪəmf/",
+    "partOfSpeech": "n.",
+    "definition": "a great victory",
+    "chineseDef": "胜利",
+    "example": "The team celebrated their triumph."
+  },
+  {
+    "word": "typical",
+    "pronunciation": "/ˈtɪpɪkəl/",
+    "partOfSpeech": "adj.",
+    "definition": "representing a type",
+    "chineseDef": "典型的",
+    "example": "This is a typical example."
+  },
+  {
+    "word": "ultimate",
+    "pronunciation": "/ˈʌltɪmət/",
+    "partOfSpeech": "adj.",
+    "definition": "final or best",
+    "chineseDef": "最终的",
+    "example": "The ultimate goal is peace."
+  },
+  {
+    "word": "undergo",
+    "pronunciation": "/ˌʌndəˈɡəʊ/",
+    "partOfSpeech": "v.",
+    "definition": "to experience",
+    "chineseDef": "经历",
+    "example": "She underwent surgery."
+  },
+  {
+    "word": "undertake",
+    "pronunciation": "/ˌʌndəˈteɪk/",
+    "partOfSpeech": "v.",
+    "definition": "to start a task",
+    "chineseDef": "承担",
+    "example": "She undertook the project."
+  },
+  {
+    "word": "unemployment",
+    "pronunciation": "/ˌʌnɪmˈplɔɪmənt/",
+    "partOfSpeech": "n.",
+    "definition": "the state of being without work",
+    "chineseDef": "失业",
+    "example": "Unemployment rates are high."
+  },
+  {
+    "word": "unexpected",
+    "pronunciation": "/ˌʌnɪkˈspektɪd/",
+    "partOfSpeech": "adj.",
+    "definition": "surprising",
+    "chineseDef": "意外的",
+    "example": "The news was unexpected."
+  },
+  {
+    "word": "unite",
+    "pronunciation": "/juːˈnaɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to come together",
+    "chineseDef": "联合",
+    "example": "The people united."
+  },
+  {
+    "word": "universal",
+    "pronunciation": "/ˌjuːnɪˈvɜːsəl/",
+    "partOfSpeech": "adj.",
+    "definition": "applying to everyone",
+    "chineseDef": "普遍的",
+    "example": "Education is a universal right."
+  },
+  {
+    "word": "universe",
+    "pronunciation": "/ˈjuːnɪvɜːs/",
+    "partOfSpeech": "n.",
+    "definition": "all existing matter and space",
+    "chineseDef": "宇宙",
+    "example": "The universe is vast."
+  },
+  {
+    "word": "urgent",
+    "pronunciation": "/ˈɜːdʒənt/",
+    "partOfSpeech": "adj.",
+    "definition": "needing immediate attention",
+    "chineseDef": "紧急的",
+    "example": "This is an urgent matter."
+  },
+  {
+    "word": "utility",
+    "pronunciation": "/juːˈtɪləti/",
+    "partOfSpeech": "n.",
+    "definition": "usefulness or public services",
+    "chineseDef": "效用",
+    "example": "The utility bills are due."
+  },
+  {
+    "word": "utilize",
+    "pronunciation": "/ˈjuːtɪlaɪz/",
+    "partOfSpeech": "v.",
+    "definition": "to make practical use of",
+    "chineseDef": "利用",
+    "example": "We need to utilize our resources."
+  },
+  {
+    "word": "vacant",
+    "pronunciation": "/ˈveɪkənt/",
+    "partOfSpeech": "adj.",
+    "definition": "empty or unoccupied",
+    "chineseDef": "空的",
+    "example": "The position is vacant."
+  },
+  {
+    "word": "vague",
+    "pronunciation": "/veɪɡ/",
+    "partOfSpeech": "adj.",
+    "definition": "not clear or definite",
+    "chineseDef": "模糊的",
+    "example": "His explanation was vague."
+  },
+  {
+    "word": "valid",
+    "pronunciation": "/ˈvælɪd/",
+    "partOfSpeech": "adj.",
+    "definition": "legally or logically acceptable",
+    "chineseDef": "有效的",
+    "example": "The ticket is still valid."
+  },
+  {
+    "word": "vanish",
+    "pronunciation": "/ˈvænɪʃ/",
+    "partOfSpeech": "v.",
+    "definition": "to disappear suddenly",
+    "chineseDef": "消失",
+    "example": "The magician made the rabbit vanish."
+  },
+  {
+    "word": "vast",
+    "pronunciation": "/vɑːst/",
+    "partOfSpeech": "adj.",
+    "definition": "very large in area",
+    "chineseDef": "广阔的",
+    "example": "The desert is vast."
+  },
+  {
+    "word": "venture",
+    "pronunciation": "/ˈventʃər/",
+    "partOfSpeech": "n.",
+    "definition": "a risky business undertaking",
+    "chineseDef": "冒险",
+    "example": "The business venture succeeded."
+  },
+  {
+    "word": "verify",
+    "pronunciation": "/ˈverɪfaɪ/",
+    "partOfSpeech": "v.",
+    "definition": "to confirm the truth",
+    "chineseDef": "验证",
+    "example": "Please verify your identity."
+  },
+  {
+    "word": "version",
+    "pronunciation": "/ˈvɜːʃən/",
+    "partOfSpeech": "n.",
+    "definition": "a particular form or edition",
+    "chineseDef": "版本",
+    "example": "This is the latest version."
+  },
+  {
+    "word": "victim",
+    "pronunciation": "/ˈvɪktɪm/",
+    "partOfSpeech": "n.",
+    "definition": "a person harmed",
+    "chineseDef": "受害者",
+    "example": "The victim was taken to the hospital."
+  },
+  {
+    "word": "vigorous",
+    "pronunciation": "/ˈvɪɡərəs/",
+    "partOfSpeech": "adj.",
+    "definition": "strong and energetic",
+    "chineseDef": "精力充沛的",
+    "example": "She took vigorous exercise."
+  },
+  {
+    "word": "violate",
+    "pronunciation": "/ˈvaɪəleɪt/",
+    "partOfSpeech": "v.",
+    "definition": "to break a law",
+    "chineseDef": "违反",
+    "example": "He violated the agreement."
+  },
+  {
+    "word": "virtue",
+    "pronunciation": "/ˈvɜːtʃuː/",
+    "partOfSpeech": "n.",
+    "definition": "a good moral quality",
+    "chineseDef": "美德",
+    "example": "Honesty is a virtue."
+  },
+  {
+    "word": "visible",
+    "pronunciation": "/ˈvɪzɪbl/",
+    "partOfSpeech": "adj.",
+    "definition": "able to be seen",
+    "chineseDef": "可见的",
+    "example": "The stars are visible."
+  },
+  {
+    "word": "vision",
+    "pronunciation": "/ˈvɪʒən/",
+    "partOfSpeech": "n.",
+    "definition": "the ability to see or imagine",
+    "chineseDef": "视力，愿景",
+    "example": "She has a clear vision."
+  },
+  {
+    "word": "vital",
+    "pronunciation": "/ˈvaɪtəl/",
+    "partOfSpeech": "adj.",
+    "definition": "absolutely necessary",
+    "chineseDef": "至关重要的",
+    "example": "Water is vital for survival."
+  },
+  {
+    "word": "vivid",
+    "pronunciation": "/ˈvɪvɪd/",
+    "partOfSpeech": "adj.",
+    "definition": "bright and clear",
+    "chineseDef": "生动的",
+    "example": "She has a vivid imagination."
+  },
+  {
+    "word": "volume",
+    "pronunciation": "/ˈvɒljuːm/",
+    "partOfSpeech": "n.",
+    "definition": "a quantity or loudness",
+    "chineseDef": "体积，音量",
+    "example": "Turn up the volume."
+  },
+  {
+    "word": "voluntary",
+    "pronunciation": "/ˈvɒləntri/",
+    "partOfSpeech": "adj.",
+    "definition": "done by choice",
+    "chineseDef": "自愿的",
+    "example": "She does voluntary work."
+  },
+  {
+    "word": "vulnerable",
+    "pronunciation": "/ˈvʌlnərəbl/",
+    "partOfSpeech": "adj.",
+    "definition": "open to attack",
+    "chineseDef": "脆弱的",
+    "example": "The elderly are vulnerable."
+  },
+  {
+    "word": "welfare",
+    "pronunciation": "/ˈwelfeər/",
+    "partOfSpeech": "n.",
+    "definition": "health and well-being",
+    "chineseDef": "福利",
+    "example": "The government provides welfare."
+  },
+  {
+    "word": "widespread",
+    "pronunciation": "/ˈwaɪdspred/",
+    "partOfSpeech": "adj.",
+    "definition": "found in many places",
+    "chineseDef": "广泛的",
+    "example": "The disease is widespread."
+  },
+  {
+    "word": "wisdom",
+    "pronunciation": "/ˈwɪzdəm/",
+    "partOfSpeech": "n.",
+    "definition": "knowledge and good judgment",
+    "chineseDef": "智慧",
+    "example": "With age comes wisdom."
+  },
+  {
+    "word": "withdraw",
+    "pronunciation": "/wɪðˈdrɔː/",
+    "partOfSpeech": "v.",
+    "definition": "to pull back or remove",
+    "chineseDef": "撤回",
+    "example": "He withdrew his support."
+  },
+  {
+    "word": "witness",
+    "pronunciation": "/ˈwɪtnəs/",
+    "partOfSpeech": "n.",
+    "definition": "a person who sees an event",
+    "chineseDef": "目击者",
+    "example": "She was a witness."
+  },
+  {
+    "word": "workforce",
+    "pronunciation": "/ˈwɜːkfɔːs/",
+    "partOfSpeech": "n.",
+    "definition": "all the workers",
+    "chineseDef": "劳动力",
+    "example": "The workforce is highly skilled."
+  },
+  {
+    "word": "worthwhile",
+    "pronunciation": "/ˌwɜːθˈwaɪl/",
+    "partOfSpeech": "adj.",
+    "definition": "worth the time or effort",
+    "chineseDef": "值得的",
+    "example": "The effort was worthwhile."
+  },
+  {
+    "word": "wound",
+    "pronunciation": "/wuːnd/",
+    "partOfSpeech": "n.",
+    "definition": "an injury",
+    "chineseDef": "伤口",
+    "example": "The wound healed slowly."
+  },
+  {
+    "word": "yield",
+    "pronunciation": "/jiːld/",
+    "partOfSpeech": "v.",
+    "definition": "to produce or give way",
+    "chineseDef": "产生，屈服",
+    "example": "The farm yields a good harvest."
+  },
+  {
+    "word": "zone",
+    "pronunciation": "/zəʊn/",
+    "partOfSpeech": "n.",
+    "definition": "an area with a specific characteristic",
+    "chineseDef": "区域",
+    "example": "This is a no-parking zone."
+  }
+]
