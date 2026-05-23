@@ -48,6 +48,12 @@ const State = {
   readingExtractedWords: [],
   readingUnknownWords: [],
   readingUnknownSet: new Set(),
+
+  // Dictation state
+  dictationState: null, // { questions, currentIndex, score, wrongWords }
+
+  // Cloze state
+  clozeState: null, // { questions, currentIndex, score, wrongWords }
 };
 
 /* =========================================================
@@ -62,6 +68,8 @@ const DOM = {
   screenDone:    document.getElementById('screenDone'),
   screenReview:  document.getElementById('screenReview'),
   screenQuiz:    document.getElementById('screenQuiz'),
+  screenDictation: document.getElementById('screenDictation'),
+  screenCloze:   document.getElementById('screenCloze'),
 
   // Header
   sessionInfo:   document.getElementById('sessionInfo'),
@@ -114,6 +122,35 @@ const DOM = {
   quizContent:    document.getElementById('quizContent'),
   quizScore:      document.getElementById('quizScore'),
 
+  // Dictation
+  btnDictationBack: document.getElementById('btnDictationBack'),
+  dictationContent: document.getElementById('dictationContent'),
+  dictationScore:   document.getElementById('dictationScore'),
+
+  // Cloze
+  btnClozeBack:  document.getElementById('btnClozeBack'),
+  clozeContent:  document.getElementById('clozeContent'),
+  clozeScore:    document.getElementById('clozeScore'),
+
+  // Anki Export
+  btnExportAnki:       document.getElementById('btnExportAnki'),
+  btnExportAnkiWelcome: document.getElementById('btnExportAnkiWelcome'),
+
+  // Dictation / Cloze entry on done
+  btnDictation: document.getElementById('btnDictation'),
+  btnCloze:     document.getElementById('btnCloze'),
+
+  // Sync
+  btnSyncTest: document.getElementById('btnSyncTest'),
+  btnSyncPush: document.getElementById('btnSyncPush'),
+  btnSyncPull: document.getElementById('btnSyncPull'),
+  inputSyncUrl: document.getElementById('inputSyncUrl'),
+  inputSyncUser: document.getElementById('inputSyncUser'),
+  inputSyncPass: document.getElementById('inputSyncPass'),
+  toggleSyncPass: document.getElementById('toggleSyncPass'),
+  inputAutoSync: document.getElementById('inputAutoSync'),
+  syncStatus: document.getElementById('syncStatus'),
+
   // Settings modal
   btnSettings:     document.getElementById('btnSettings'),
   modalSettings:   document.getElementById('modalSettings'),
@@ -162,7 +199,7 @@ const DOM = {
    Screen Management
    ========================================================= */
 function showScreen(name) {
-  ['screenWelcome','screenLoading','screenGrid','screenDetail','screenDone','screenReview','screenQuiz','screenReading'].forEach(id => {
+  ['screenWelcome','screenLoading','screenGrid','screenDetail','screenDone','screenReview','screenQuiz','screenDictation','screenCloze','screenReading'].forEach(id => {
     document.getElementById(id).classList.remove('active');
   });
   document.getElementById('screen' + capitalize(name)).classList.add('active');
@@ -246,6 +283,23 @@ function init() {
 
   // Show heatmap if there's history
   renderHeatmap();
+
+  // Init WebDAV sync
+  initSync();
+
+  // Auto-pull on page load if configured
+  setTimeout(() => {
+    const syncCfg = SyncSettings.getAll();
+    if (syncCfg.url && syncCfg.lastSyncTime > 0) {
+      // Silent auto-pull in background
+      SyncClient.configure(syncCfg.url, syncCfg.username, syncCfg.password);
+      SyncClient.pull().then(result => {
+        if (result.changed) {
+          console.log('Auto-sync: data pulled from server');
+        }
+      }).catch(() => {});
+    }
+  }, 2000);
 
   // Show keyboard shortcut hint on first visit
   const shortcutPref = Settings.getAll();
@@ -438,6 +492,36 @@ function wireEvents() {
 
   // Keyboard shortcuts
   document.addEventListener('keydown', handleKeyboardShortcut);
+
+  // -------------------------------------------------------
+  // Dictation
+  // -------------------------------------------------------
+  DOM.btnDictation.addEventListener('click', openDictationScreen);
+  DOM.btnDictationBack.addEventListener('click', () => showScreen('done'));
+
+  // -------------------------------------------------------
+  // Cloze
+  // -------------------------------------------------------
+  DOM.btnCloze.addEventListener('click', openClozeScreen);
+  DOM.btnClozeBack.addEventListener('click', () => showScreen('done'));
+
+  // -------------------------------------------------------
+  // Anki Export
+  // -------------------------------------------------------
+  DOM.btnExportAnki.addEventListener('click', () => showAnkiExportModal());
+  DOM.btnExportAnkiWelcome.addEventListener('click', () => showAnkiExportModal());
+
+  // -------------------------------------------------------
+  // Sync
+  // -------------------------------------------------------
+  DOM.btnSyncTest.addEventListener('click', handleSyncTest);
+  DOM.btnSyncPush.addEventListener('click', handleSyncPush);
+  DOM.btnSyncPull.addEventListener('click', handleSyncPull);
+  DOM.toggleSyncPass.addEventListener('click', () => {
+    const isHidden = DOM.inputSyncPass.type === 'password';
+    DOM.inputSyncPass.type = isHidden ? 'text' : 'password';
+    DOM.toggleSyncPass.textContent = isHidden ? 'Hide' : 'Show';
+  });
 }
 
 /* =========================================================
@@ -520,6 +604,17 @@ function saveSettings() {
   const showShortcuts = DOM.inputShowShortcuts.checked;
 
   Settings.saveAll({ apiKey, wordsPerBatch, difficulty, autoPronounce, showShortcuts });
+
+  // Save sync settings too
+  const syncUrl = DOM.inputSyncUrl.value.trim();
+  const syncUser = DOM.inputSyncUser.value.trim();
+  const syncPass = DOM.inputSyncPass.value;
+  const syncAuto = DOM.inputAutoSync.checked;
+  SyncSettings.saveAll({ url: syncUrl, username: syncUser, password: syncPass, autoSync: syncAuto });
+  if (syncUrl) {
+    SyncClient.configure(syncUrl, syncUser, syncPass);
+  }
+
   closeModal(DOM.modalSettings);
   showToast('Settings saved.', 'success');
 }
@@ -938,6 +1033,9 @@ function finalizeAndDone(unfamiliarWords) {
   DOM.historySection.style.display = 'block';
 
   showScreen('done');
+
+  // Auto-sync after batch completion
+  autoSyncIfEnabled();
 }
 
 /* =========================================================
@@ -2011,6 +2109,797 @@ function handleReadingAddAll() {
     btn.textContent = '✓';
     btn.style.color = 'var(--color-success)';
   });
+}
+
+/* =========================================================
+   听写模式 — Dictation
+   ========================================================= */
+
+/**
+ * 打开听写模式
+ */
+function openDictationScreen() {
+  State.dictationState = null;
+  showScreen('dictation');
+  renderDictationModeSelect();
+}
+
+/**
+ * 渲染听写模式选择（从哪些词出题）
+ */
+function renderDictationModeSelect() {
+  const content = DOM.dictationContent;
+  DOM.dictationScore.textContent = '0 / 10';
+
+  const familiar = Session.getFamiliarWords();
+  const unfamiliar = Session.getUnfamiliarWords();
+  const allSessionWords = [...new Set([...familiar, ...unfamiliar])];
+
+  // 加入当前批次词
+  State.currentWords.forEach(w => {
+    if (!allSessionWords.includes(w)) allSessionWords.push(w);
+  });
+
+  if (allSessionWords.length < 4) {
+    content.innerHTML = `
+      <div class="review-empty">
+        <div class="review-empty-icon">🎧</div>
+        <p>Not enough words yet!</p>
+        <p>Complete a batch first to build up your word pool.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('btnDictationBack').click()">← Back</button>
+      </div>
+    `;
+    return;
+  }
+
+  content.innerHTML = `
+    <div class="quiz-mode-select">
+      <h3>Dictation Practice</h3>
+      <p>Listen to the word, then type what you hear.</p>
+      <div class="quiz-mode-options">
+        <button class="quiz-mode-btn" data-source="all">
+          <span class="mode-icon">📚</span>
+          <span class="mode-info">
+            <strong>All Session Words</strong>
+            <span>${allSessionWords.length} words from today's sessions</span>
+          </span>
+        </button>
+        <button class="quiz-mode-btn" data-source="unfamiliar">
+          <span class="mode-icon">✗</span>
+          <span class="mode-info">
+            <strong>Unfamiliar Words Only</strong>
+            <span>${unfamiliar.length} words you marked as unknown</span>
+          </span>
+        </button>
+        <button class="quiz-mode-btn" data-source="review">
+          <span class="mode-icon">🔄</span>
+          <span class="mode-info">
+            <strong>Review Pool</strong>
+            <span>${ReviewPool.getTotalCount()} words in your review pool</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  content.querySelectorAll('.quiz-mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => startDictation(btn.dataset.source));
+  });
+}
+
+/**
+ * 开始听写
+ * @param {string} source - 'all' | 'unfamiliar' | 'review'
+ */
+function startDictation(source) {
+  let words = [];
+  switch (source) {
+    case 'all':
+      words = [...new Set([...Session.getFamiliarWords(), ...Session.getUnfamiliarWords()])];
+      State.currentWords.forEach(w => { if (!words.includes(w)) words.push(w); });
+      break;
+    case 'unfamiliar':
+      words = Session.getUnfamiliarWords();
+      break;
+    case 'review':
+      words = ReviewPool.getAll().map(e => e.word);
+      break;
+    default:
+      words = [...new Set([...Session.getFamiliarWords(), ...Session.getUnfamiliarWords()])];
+  }
+
+  const detailData = buildDictationDetailData();
+  const questions = generateDictation(words, detailData, 10);
+
+  if (questions.length === 0) {
+    showToast('No words available for dictation.', 'error');
+    return;
+  }
+
+  State.dictationState = {
+    questions,
+    currentIndex: 0,
+    score: 0,
+    wrongWords: [],
+  };
+
+  renderDictationQuestion(0);
+}
+
+/**
+ * 构建听写用的 detail 数据
+ */
+function buildDictationDetailData() {
+  // 从 State 和缓存获取
+  const data = [];
+  if (State.wordDetails && Array.isArray(State.wordDetails)) {
+    State.wordDetails.forEach(d => data.push(d));
+  }
+  try {
+    const cached = JSON.parse(localStorage.getItem('vocab_detail_cache') || 'null');
+    if (cached && Array.isArray(cached.data)) {
+      const existingWords = new Set(data.map(d => d.word?.toLowerCase()));
+      cached.data.forEach(d => {
+        if (d.word && !existingWords.has(d.word.toLowerCase())) {
+          data.push(d);
+          existingWords.add(d.word.toLowerCase());
+        }
+      });
+    }
+  } catch (_) {}
+  return data;
+}
+
+/**
+ * 渲染当前听写题目
+ */
+function renderDictationQuestion(index) {
+  const ds = State.dictationState;
+  if (!ds || index >= ds.questions.length) {
+    renderDictationResult();
+    return;
+  }
+
+  ds.currentIndex = index;
+  const question = ds.questions[index];
+  const total = ds.questions.length;
+
+  DOM.dictationScore.textContent = `${ds.score} / ${total}`;
+
+  // Progress bar
+  let progressHTML = '';
+  for (let i = 0; i < total; i++) {
+    let cls = 'quiz-progress-dot';
+    if (i < index) cls += ' done';
+    else if (i === index) cls += ' current';
+    progressHTML += `<span class="${cls}"></span>`;
+  }
+
+  DOM.dictationContent.innerHTML = `
+    <div class="quiz-progress-bar">${progressHTML}</div>
+    <div class="dictation-question">
+      <div class="dictation-prompt">
+        <p class="dictation-hint">Listen to the word, then type it below:</p>
+        <button class="btn btn-primary dictation-speak-btn" id="dictationPlayBtn">🔊 Play Word</button>
+      </div>
+      <div class="quiz-spelling-input">
+        <input type="text" id="dictationInput" placeholder="Type the word you heard..." autocomplete="off" autofocus />
+        <button class="btn btn-primary" id="dictationSubmit">Submit</button>
+      </div>
+      <div id="dictationFeedback"></div>
+    </div>
+  `;
+
+  // Auto-play the word
+  const autoPlay = setTimeout(() => {
+    TTS.speakWord(question.word);
+  }, 400);
+
+  // Wire up play button
+  DOM.dictationContent.querySelector('#dictationPlayBtn').addEventListener('click', () => {
+    TTS.speakWord(question.word);
+  });
+
+  // Wire up input
+  const input = DOM.dictationContent.querySelector('#dictationInput');
+  input.focus();
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleDictationAnswer();
+    }
+  });
+
+  DOM.dictationContent.querySelector('#dictationSubmit').addEventListener('click', handleDictationAnswer);
+}
+
+/**
+ * 处理听写答案
+ */
+function handleDictationAnswer() {
+  const ds = State.dictationState;
+  if (!ds) return;
+
+  const question = ds.questions[ds.currentIndex];
+  const input = DOM.dictationContent.querySelector('#dictationInput');
+  const userAnswer = input ? input.value : '';
+
+  const isCorrect = checkDictationAnswer(userAnswer, question.word);
+  const feedbackEl = DOM.dictationContent.querySelector('#dictationFeedback');
+
+  if (isCorrect) {
+    ds.score++;
+    feedbackEl.innerHTML = `<div class="quiz-feedback correct">✓ Correct! <strong>${escHtml(question.word)}</strong></div>`;
+  } else {
+    ds.wrongWords.push(question.word);
+    let feedback = `<div class="quiz-feedback wrong">✗ Incorrect. The word was: <strong>${escHtml(question.word)}</strong>`;
+
+    // Check if close match
+    if (isCloseMatch(userAnswer, question.word)) {
+      feedback += `<br><span style="font-size:0.85rem">Close! You wrote: ${escHtml(userAnswer)}</span>`;
+    }
+    feedback += '</div>';
+    feedbackEl.innerHTML = feedback;
+  }
+
+  // Add definition/pronunciation info
+  if (question.pronunciation || question.definition) {
+    feedbackEl.innerHTML += `
+      <div style="margin-top:8px;padding:8px 12px;background:var(--color-surface-2);border-radius:6px;font-size:0.85rem">
+        ${question.pronunciation ? `<span style="color:var(--color-text-muted)">${escHtml(question.pronunciation)}</span><br>` : ''}
+        ${question.definition ? `<span>${escHtml(question.definition)}</span>` : ''}
+        ${question.chineseDef ? `<br><span style="color:var(--color-text-muted)">${escHtml(question.chineseDef)}</span>` : ''}
+      </div>
+    `;
+  }
+
+  // Disable input
+  if (input) input.disabled = true;
+  DOM.dictationContent.querySelector('#dictationSubmit').disabled = true;
+  DOM.dictationContent.querySelector('#dictationPlayBtn')?.remove();
+
+  const total = ds.questions.length;
+  DOM.dictationScore.textContent = `${ds.score} / ${total}`;
+
+  // Update progress dots
+  const dots = DOM.dictationContent.querySelectorAll('.quiz-progress-dot');
+  if (dots[ds.currentIndex]) {
+    dots[ds.currentIndex].classList.remove('current');
+    dots[ds.currentIndex].classList.add(isCorrect ? 'correct' : 'wrong');
+  }
+
+  // Auto-advance after brief delay
+  const speakBtn = document.createElement('button');
+  setTimeout(() => {
+    renderDictationQuestion(ds.currentIndex + 1);
+  }, 1500);
+}
+
+/**
+ * 渲染听写结果
+ */
+function renderDictationResult() {
+  const ds = State.dictationState;
+  if (!ds) return;
+
+  const total = ds.questions.length;
+  const pct = total > 0 ? Math.round((ds.score / total) * 100) : 0;
+
+  // Add wrong words to review pool
+  if (ds.wrongWords.length > 0) {
+    ReviewPool.addWords(ds.wrongWords);
+  }
+
+  let wrongListHTML = '';
+  if (ds.wrongWords.length > 0) {
+    wrongListHTML = `
+      <div class="quiz-wrong-list">
+        <h4>✗ Missed Words (${ds.wrongWords.length})</h4>
+        ${ds.wrongWords.map(w => `
+          <div class="quiz-wrong-word">
+            <span class="wrong-word">${escHtml(w)}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  DOM.dictationContent.innerHTML = `
+    <div class="quiz-result">
+      <span class="quiz-result-score">${ds.score}/${total}</span>
+      <span class="quiz-result-label">${pct >= 80 ? '🌟 Great listening skills!' : pct >= 50 ? '👍 Keep practicing!' : '💪 More practice needed!'}</span>
+      <div class="quiz-result-actions">
+        <button class="btn btn-primary" id="dictationRetry">Try Again</button>
+        <button class="btn btn-secondary" id="dictationBack">Back</button>
+      </div>
+      ${wrongListHTML}
+      ${ds.wrongWords.length > 0 ? '<p style="color: var(--color-text-muted); font-size: 0.82rem; margin-top: 12px;">Missed words have been added to your review pool.</p>' : ''}
+    </div>
+  `;
+
+  DOM.dictationScore.textContent = `${ds.score} / ${total}`;
+
+  document.getElementById('dictationRetry')?.addEventListener('click', openDictationScreen);
+  document.getElementById('dictationBack')?.addEventListener('click', () => showScreen('done'));
+}
+
+/* =========================================================
+   完形填空模式 — Cloze
+   ========================================================= */
+
+/**
+ * 打开完形填空模式
+ */
+function openClozeScreen() {
+  State.clozeState = null;
+  showScreen('cloze');
+  renderClozeModeSelect();
+}
+
+/**
+ * 渲染完形填空模式选择
+ */
+function renderClozeModeSelect() {
+  const content = DOM.clozeContent;
+  DOM.clozeScore.textContent = '0 / 10';
+
+  const familiar = Session.getFamiliarWords();
+  const unfamiliar = Session.getUnfamiliarWords();
+  const allSessionWords = [...new Set([...familiar, ...unfamiliar])];
+
+  State.currentWords.forEach(w => {
+    if (!allSessionWords.includes(w)) allSessionWords.push(w);
+  });
+
+  if (allSessionWords.length < 4) {
+    content.innerHTML = `
+      <div class="review-empty">
+        <div class="review-empty-icon">📝</div>
+        <p>Not enough words yet!</p>
+        <p>Complete a batch first to build up your word pool.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('btnClozeBack').click()">← Back</button>
+      </div>
+    `;
+    return;
+  }
+
+  content.innerHTML = `
+    <div class="quiz-mode-select">
+      <h3>Cloze (Fill-in-the-Blank)</h3>
+      <p>Complete the sentence by choosing the correct word.</p>
+      <div class="quiz-mode-options">
+        <button class="quiz-mode-btn" data-source="all">
+          <span class="mode-icon">📚</span>
+          <span class="mode-info">
+            <strong>All Session Words</strong>
+            <span>${allSessionWords.length} words from today's sessions</span>
+          </span>
+        </button>
+        <button class="quiz-mode-btn" data-source="unfamiliar">
+          <span class="mode-icon">✗</span>
+          <span class="mode-info">
+            <strong>Unfamiliar Words Only</strong>
+            <span>${unfamiliar.length} words you marked as unknown</span>
+          </span>
+        </button>
+        <button class="quiz-mode-btn" data-source="review">
+          <span class="mode-icon">🔄</span>
+          <span class="mode-info">
+            <strong>Review Pool</strong>
+            <span>${ReviewPool.getTotalCount()} words in your review pool</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  content.querySelectorAll('.quiz-mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => startCloze(btn.dataset.source));
+  });
+}
+
+/**
+ * 开始完形填空
+ * @param {string} source
+ */
+function startCloze(source) {
+  let words = [];
+  switch (source) {
+    case 'all':
+      words = [...new Set([...Session.getFamiliarWords(), ...Session.getUnfamiliarWords()])];
+      State.currentWords.forEach(w => { if (!words.includes(w)) words.push(w); });
+      break;
+    case 'unfamiliar':
+      words = Session.getUnfamiliarWords();
+      break;
+    case 'review':
+      words = ReviewPool.getAll().map(e => e.word);
+      break;
+    default:
+      words = [...new Set([...Session.getFamiliarWords(), ...Session.getUnfamiliarWords()])];
+  }
+
+  const detailData = buildDictationDetailData();
+  const questions = generateCloze(words, detailData, 10);
+
+  if (questions.length === 0) {
+    showToast('Not enough words with example sentences for cloze exercises.', 'error');
+    return;
+  }
+
+  State.clozeState = {
+    questions,
+    currentIndex: 0,
+    score: 0,
+    wrongWords: [],
+  };
+
+  renderClozeQuestion(0);
+}
+
+/**
+ * 渲染当前完形填空题目
+ */
+function renderClozeQuestion(index) {
+  const cs = State.clozeState;
+  if (!cs || index >= cs.questions.length) {
+    renderClozeResult();
+    return;
+  }
+
+  cs.currentIndex = index;
+  const question = cs.questions[index];
+  const total = cs.questions.length;
+
+  DOM.clozeScore.textContent = `${cs.score} / ${total}`;
+
+  // Progress bar
+  let progressHTML = '';
+  for (let i = 0; i < total; i++) {
+    let cls = 'quiz-progress-dot';
+    if (i < index) cls += ' done';
+    else if (i === index) cls += ' current';
+    progressHTML += `<span class="${cls}"></span>`;
+  }
+
+  DOM.clozeContent.innerHTML = `
+    <div class="quiz-progress-bar">${progressHTML}</div>
+    <div class="cloze-question">
+      <div class="cloze-sentence">${escHtml(question.sentence)}</div>
+      <div class="cloze-definition">${escHtml(question.definition)}${question.chineseDef ? '<br><span style="color:var(--color-text-muted);font-size:0.85rem">' + escHtml(question.chineseDef) + '</span>' : ''}</div>
+      <div class="cloze-options" id="clozeOptions">
+        ${question.options.map((opt, i) => `
+          <button class="quiz-option cloze-option" data-index="${i}" data-value="${escHtml(opt)}">
+            ${String.fromCharCode(65 + i)}. ${escHtml(opt)}
+          </button>
+        `).join('')}
+      </div>
+      <div id="clozeFeedback"></div>
+    </div>
+  `;
+
+  // Wire up option buttons
+  const optionsContainer = document.getElementById('clozeOptions');
+  if (optionsContainer) {
+    optionsContainer.querySelectorAll('.cloze-option').forEach(btn => {
+      btn.addEventListener('click', () => handleClozeAnswer(index, parseInt(btn.dataset.index), question));
+    });
+  }
+}
+
+/**
+ * 处理完形填空答案
+ */
+function handleClozeAnswer(index, selectedIdx, question) {
+  const cs = State.clozeState;
+  if (!cs || index !== cs.currentIndex) return;
+
+  const isCorrect = selectedIdx === question.correctIndex;
+  const feedbackEl = document.getElementById('clozeFeedback');
+  const options = document.querySelectorAll('.cloze-option');
+
+  if (isCorrect) {
+    cs.score++;
+    feedbackEl.innerHTML = `<div class="quiz-feedback correct">✓ Correct!</div>`;
+  } else {
+    cs.wrongWords.push(question.blankWord);
+    feedbackEl.innerHTML = `<div class="quiz-feedback wrong">✗ Incorrect. The correct answer was: <strong>${escHtml(question.blankWord)}</strong></div>`;
+  }
+
+  // Show correct/wrong on options
+  options.forEach(btn => {
+    const idx = parseInt(btn.dataset.index);
+    if (idx === question.correctIndex) {
+      btn.classList.add('correct');
+    } else if (idx === selectedIdx && !isCorrect) {
+      btn.classList.add('wrong');
+    }
+    btn.disabled = true;
+  });
+
+  // Update progress dots
+  const dots = DOM.clozeContent.querySelectorAll('.quiz-progress-dot');
+  if (dots[index]) {
+    dots[index].classList.remove('current');
+    dots[index].classList.add(isCorrect ? 'correct' : 'wrong');
+  }
+
+  DOM.clozeScore.textContent = `${cs.score} / ${cs.questions.length}`;
+
+  // Show original example sentence if available
+  if (question.example && !isCorrect) {
+    feedbackEl.innerHTML += `
+      <div style="margin-top:8px;padding:8px 12px;background:var(--color-surface-2);border-radius:6px;font-size:0.85rem;color:var(--color-text-muted);font-style:italic">
+        Original: "${escHtml(question.example)}"
+      </div>
+    `;
+  }
+
+  setTimeout(() => {
+    renderClozeQuestion(index + 1);
+  }, 1200);
+}
+
+/**
+ * 渲染完形填空结果
+ */
+function renderClozeResult() {
+  const cs = State.clozeState;
+  if (!cs) return;
+
+  const total = cs.questions.length;
+  const pct = total > 0 ? Math.round((cs.score / total) * 100) : 0;
+
+  // Add wrong words to review pool
+  if (cs.wrongWords.length > 0) {
+    ReviewPool.addWords(cs.wrongWords);
+  }
+
+  let wrongListHTML = '';
+  if (cs.wrongWords.length > 0) {
+    wrongListHTML = `
+      <div class="quiz-wrong-list">
+        <h4>✗ Missed Words (${cs.wrongWords.length})</h4>
+        ${cs.wrongWords.map(w => `
+          <div class="quiz-wrong-word">
+            <span class="wrong-word">${escHtml(w)}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  DOM.clozeContent.innerHTML = `
+    <div class="quiz-result">
+      <span class="quiz-result-score">${cs.score}/${total}</span>
+      <span class="quiz-result-label">${pct >= 80 ? '🌟 Great reading comprehension!' : pct >= 50 ? '👍 Keep practicing!' : '💪 More practice needed!'}</span>
+      <div class="quiz-result-actions">
+        <button class="btn btn-primary" id="clozeRetry">Try Again</button>
+        <button class="btn btn-secondary" id="clozeBack">Back</button>
+      </div>
+      ${wrongListHTML}
+      ${cs.wrongWords.length > 0 ? '<p style="color: var(--color-text-muted); font-size: 0.82rem; margin-top: 12px;">Missed words have been added to your review pool.</p>' : ''}
+    </div>
+  `;
+
+  DOM.clozeScore.textContent = `${cs.score} / ${total}`;
+
+  document.getElementById('clozeRetry')?.addEventListener('click', openClozeScreen);
+  document.getElementById('clozeBack')?.addEventListener('click', () => showScreen('done'));
+}
+
+/* =========================================================
+   Anki Export — UI Modal
+   ========================================================= */
+
+/**
+ * 显示 Anki 导出选择 Modal
+ */
+function showAnkiExportModal() {
+  // Create modal dynamically
+  const backdrop = document.createElement('div');
+  backdrop.className = 'modal-backdrop';
+  backdrop.addEventListener('click', e => {
+    if (e.target === backdrop) backdrop.remove();
+  });
+
+  const familiarCount = Session.getFamiliarWords().length;
+  const unfamiliarCount = Session.getUnfamiliarWords().length;
+  const reviewCount = ReviewPool.getTotalCount();
+  const batchCount = State.currentWords ? State.currentWords.length : 0;
+
+  backdrop.innerHTML = `
+    <div class="modal">
+      <div class="modal-header">
+        <h3>📤 Export to Anki</h3>
+        <button class="modal-close" id="closeAnkiExport">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:16px;color:var(--color-text-muted);font-size:0.85rem">
+          Export vocabulary as a CSV file compatible with Anki.
+          Import via <strong>File → Import</strong> in Anki desktop.
+        </p>
+        <div class="form-group">
+          <label>Export Range</label>
+          <div class="anki-export-options">
+            <button class="btn anki-export-btn" data-range="unfamiliar" ${unfamiliarCount === 0 ? 'disabled' : ''}>
+              ✗ Unfamiliar Words (${unfamiliarCount})
+            </button>
+            <button class="btn anki-export-btn" data-range="familiar" ${familiarCount === 0 ? 'disabled' : ''}>
+              ✓ Familiar Words (${familiarCount})
+            </button>
+            <button class="btn anki-export-btn" data-range="sessionAll">
+              📅 Today's Session (${familiarCount + unfamiliarCount})
+            </button>
+            <button class="btn anki-export-btn" data-range="reviewPool" ${reviewCount === 0 ? 'disabled' : ''}>
+              🗂 Review Pool (${reviewCount})
+            </button>
+            <button class="btn anki-export-btn" data-range="batch" ${batchCount === 0 ? 'disabled' : ''}>
+              📄 Current Batch (${batchCount})
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(backdrop);
+
+  document.getElementById('closeAnkiExport')?.addEventListener('click', () => backdrop.remove());
+
+  backdrop.querySelectorAll('.anki-export-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const range = btn.dataset.range;
+      exportToAnki({ range });
+      backdrop.remove();
+    });
+  });
+}
+
+/* =========================================================
+   WebDAV Sync — Event Handlers
+   ========================================================= */
+
+/**
+ * 初始化同步配置（从本地存储加载）
+ */
+function initSync() {
+  const syncCfg = SyncSettings.getAll();
+  DOM.inputSyncUrl.value = syncCfg.url;
+  DOM.inputSyncUser.value = syncCfg.username;
+  DOM.inputSyncPass.value = syncCfg.password;
+  DOM.inputAutoSync.checked = syncCfg.autoSync;
+
+  if (syncCfg.url) {
+    SyncClient.configure(syncCfg.url, syncCfg.username, syncCfg.password);
+    DOM.syncStatus.textContent = SyncSettings.getFormattedLastSync();
+    if (syncCfg.lastSyncStatus === 'error') {
+      DOM.syncStatus.style.color = 'var(--color-danger)';
+    } else {
+      DOM.syncStatus.style.color = '';
+    }
+  }
+}
+
+/**
+ * 保存同步设置
+ */
+function saveSyncSettings() {
+  const url = DOM.inputSyncUrl.value.trim();
+  const username = DOM.inputSyncUser.value.trim();
+  const password = DOM.inputSyncPass.value;
+  const autoSync = DOM.inputAutoSync.checked;
+
+  SyncSettings.saveAll({ url, username, password, autoSync });
+
+  if (url) {
+    SyncClient.configure(url, username, password);
+  }
+}
+
+/**
+ * 测试 WebDAV 连接
+ */
+async function handleSyncTest() {
+  saveSyncSettings();
+
+  if (!DOM.inputSyncUrl.value.trim()) {
+    showToast('Please enter a WebDAV server URL first.', 'error');
+    return;
+  }
+
+  DOM.syncStatus.textContent = 'Testing connection...';
+  DOM.syncStatus.style.color = 'var(--color-text-muted)';
+
+  const result = await SyncClient.testConnection();
+
+  if (result.ok) {
+    DOM.syncStatus.textContent = '✅ ' + result.message;
+    DOM.syncStatus.style.color = 'var(--color-success)';
+    showToast('WebDAV connection successful!', 'success');
+  } else {
+    DOM.syncStatus.textContent = '❌ ' + result.message;
+    DOM.syncStatus.style.color = 'var(--color-danger)';
+    showToast('WebDAV connection failed: ' + result.message, 'error');
+  }
+}
+
+/**
+ * 上传数据到 WebDAV
+ */
+async function handleSyncPush() {
+  saveSyncSettings();
+
+  if (!DOM.inputSyncUrl.value.trim()) {
+    showToast('Please configure WebDAV settings first.', 'error');
+    return;
+  }
+
+  DOM.syncStatus.textContent = 'Uploading data...';
+  DOM.syncStatus.style.color = 'var(--color-text-muted)';
+
+  const result = await SyncClient.push();
+
+  if (result.ok) {
+    DOM.syncStatus.textContent = '✅ ' + result.message;
+    DOM.syncStatus.style.color = 'var(--color-success)';
+    showToast('Data pushed to WebDAV server.', 'success');
+  } else {
+    DOM.syncStatus.textContent = '❌ ' + result.message;
+    DOM.syncStatus.style.color = 'var(--color-danger)';
+    showToast('Push failed: ' + result.message, 'error');
+  }
+}
+
+/**
+ * 从 WebDAV 拉取数据
+ */
+async function handleSyncPull() {
+  saveSyncSettings();
+
+  if (!DOM.inputSyncUrl.value.trim()) {
+    showToast('Please configure WebDAV settings first.', 'error');
+    return;
+  }
+
+  DOM.syncStatus.textContent = 'Downloading data...';
+  DOM.syncStatus.style.color = 'var(--color-text-muted)';
+
+  const result = await SyncClient.pull();
+
+  if (result.ok) {
+    DOM.syncStatus.textContent = '✅ ' + result.message;
+    DOM.syncStatus.style.color = 'var(--color-success)';
+    if (result.changed) {
+      showToast('Data synced from server. Refreshing...', 'success');
+      setTimeout(() => location.reload(), 1500);
+    } else {
+      showToast('No new data to sync.', 'info');
+    }
+  } else {
+    DOM.syncStatus.textContent = '❌ ' + result.message;
+    DOM.syncStatus.style.color = 'var(--color-danger)';
+    showToast('Pull failed: ' + result.message, 'error');
+  }
+}
+
+/**
+ * 自动同步（在完成批次后调用）
+ */
+async function autoSyncIfEnabled() {
+  if (!SyncSettings.getAutoSync()) return;
+  const cfg = SyncSettings.getAll();
+  if (!cfg.url) return;
+
+  SyncClient.configure(cfg.url, cfg.username, cfg.password);
+
+  try {
+    await SyncClient.push();
+    console.log('Auto-sync completed.');
+  } catch (err) {
+    console.warn('Auto-sync failed:', err);
+  }
 }
 
 /* =========================================================

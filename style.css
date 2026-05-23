@@ -1737,6 +1737,234 @@ input:focus, select:focus {
 }
 
 /* =========================================================
+   DICTATION MODE
+   ========================================================= */
+#screenDictation {
+  padding: 0;
+}
+
+.dictation-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dictation-toolbar-left,
+.dictation-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dictation-toolbar-left h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.dictation-score {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-glow);
+  border: 1px solid var(--color-primary);
+  border-radius: 20px;
+  padding: 4px 14px;
+}
+
+.dictation-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dictation-question {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  text-align: center;
+  animation: modalIn 0.2s ease;
+}
+
+.dictation-prompt {
+  margin-bottom: 24px;
+}
+
+.dictation-hint {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+
+.dictation-speak-btn {
+  font-size: 1.1rem;
+  padding: 12px 32px;
+}
+
+.dictation-question .quiz-spelling-input {
+  justify-content: center;
+}
+
+.dictation-question .quiz-spelling-input input {
+  max-width: 400px;
+  font-size: 1.3rem;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+/* =========================================================
+   CLOZE MODE
+   ========================================================= */
+#screenCloze {
+  padding: 0;
+}
+
+.cloze-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cloze-toolbar-left,
+.cloze-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cloze-toolbar-left h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cloze-score {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-glow);
+  border: 1px solid var(--color-primary);
+  border-radius: 20px;
+  padding: 4px 14px;
+}
+
+.cloze-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.cloze-question {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  animation: modalIn 0.2s ease;
+}
+
+.cloze-sentence {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  word-wrap: break-word;
+  color: var(--color-text);
+}
+
+.cloze-sentence::before {
+  content: '"';}
+
+.cloze-sentence::after {
+  content: '"';
+}
+
+.cloze-definition {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-sm);
+  line-height: 1.5;
+}
+
+.cloze-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.cloze-option {
+  text-align: left !important;
+  font-size: 0.95rem !important;
+  padding: 14px 18px !important;
+}
+
+/* =========================================================
+   SYNC PANEL
+   ========================================================= */
+.sync-section {
+  padding: 0;
+}
+
+.sync-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.sync-buttons .btn {
+  flex: 1;
+  min-width: 100px;
+  justify-content: center;
+}
+
+/* =========================================================
+   ANKI EXPORT MODAL
+   ========================================================= */
+.anki-export-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.anki-export-btn {
+  justify-content: flex-start !important;
+  padding: 14px 16px !important;
+  font-size: 0.9rem !important;
+  background: var(--color-surface-2) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+.anki-export-btn:hover:not(:disabled) {
+  border-color: var(--color-primary) !important;
+  background: rgba(91, 110, 245, 0.08) !important;
+}
+
+.anki-export-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
    BUILT-IN VOCABULARY (Source Panel)
    ========================================================= */
 .builtin-source-panel {

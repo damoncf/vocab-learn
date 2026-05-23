@@ -82,6 +82,9 @@
           <button class="btn btn-secondary btn-large" id="btnBuiltin">
             📚 Built-in Vocab
           </button>
+          <button class="btn btn-secondary btn-large" id="btnExportAnkiWelcome">
+            📤 Export to Anki
+          </button>
           <button class="btn btn-secondary btn-large" id="btnReview" style="display:none">
             Review <span id="reviewBadge"></span>
           </button>
@@ -156,6 +159,9 @@
           <button class="btn btn-secondary btn-large" id="btnStartQuiz">Start Quiz</button>
           <button class="btn btn-secondary btn-large" id="btnDownloadRecord">Download Record</button>
           <button class="btn btn-secondary btn-large" id="btnRestart">Start Over</button>
+          <button class="btn btn-secondary btn-large" id="btnDictation">🎧 Dictation</button>
+          <button class="btn btn-secondary btn-large" id="btnCloze">📝 Cloze</button>
+          <button class="btn btn-secondary btn-large" id="btnExportAnki">📤 Export to Anki</button>
         </div>
         <p class="done-note" id="doneNote"></p>
         <p class="done-note" id="historySection" style="display:none">
@@ -196,6 +202,34 @@
     </section>
 
   </main>
+
+    <!-- === SCREEN: Dictation === -->
+    <section id="screenDictation" class="screen">
+      <div class="dictation-toolbar">
+        <div class="dictation-toolbar-left">
+          <button class="btn btn-ghost" id="btnDictationBack">← Back</button>
+          <h2>Dictation</h2>
+        </div>
+        <div class="dictation-toolbar-right">
+          <span class="dictation-score" id="dictationScore">0 / 10</span>
+        </div>
+      </div>
+      <div class="dictation-content" id="dictationContent"></div>
+    </section>
+
+    <!-- === SCREEN: Cloze === -->
+    <section id="screenCloze" class="screen">
+      <div class="cloze-toolbar">
+        <div class="cloze-toolbar-left">
+          <button class="btn btn-ghost" id="btnClozeBack">← Back</button>
+          <h2>Cloze (Fill-in-the-Blank)</h2>
+        </div>
+        <div class="cloze-toolbar-right">
+          <span class="cloze-score" id="clozeScore">0 / 10</span>
+        </div>
+      </div>
+      <div class="cloze-content" id="clozeContent"></div>
+    </section>
 
     <!-- === SCREEN: Reading === -->
     <section id="screenReading" class="screen">
@@ -275,6 +309,38 @@
             <input type="checkbox" id="inputShowShortcuts" checked />
             <span>Show keyboard shortcut hints</span>
           </label>
+        </div>
+        <hr style="border-color:var(--color-border);margin:20px 0" />
+        <div class="sync-section" id="syncSection">
+          <h4 style="font-size:0.95rem;font-weight:600;margin-bottom:12px;color:var(--color-text)">🔄 WebDAV Sync</h4>
+          <div class="form-group">
+            <label for="inputSyncUrl">WebDAV Server URL</label>
+            <input type="text" id="inputSyncUrl" placeholder="https://example.com/remote.php/dav/files/user/" />
+          </div>
+          <div class="form-group">
+            <label for="inputSyncUser">Username</label>
+            <input type="text" id="inputSyncUser" placeholder="WebDAV username" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="inputSyncPass">Password</label>
+            <div class="input-with-toggle">
+              <input type="password" id="inputSyncPass" placeholder="App password" autocomplete="off" />
+              <button class="btn-toggle-pw" id="toggleSyncPass" type="button">Show</button>
+            </div>
+            <span class="form-hint">Stored locally in your browser. Use an app-specific password for security.</span>
+          </div>
+          <div class="form-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="inputAutoSync" />
+              <span>Auto-sync after each batch</span>
+            </label>
+          </div>
+          <div class="sync-buttons">
+            <button class="btn btn-secondary" id="btnSyncTest">🔌 Test Connection</button>
+            <button class="btn btn-primary" id="btnSyncPush">⬆ Push Data</button>
+            <button class="btn btn-secondary" id="btnSyncPull">⬇ Pull Data</button>
+          </div>
+          <p class="form-hint" id="syncStatus">Not synced yet.</p>
         </div>
         <hr style="border-color:var(--color-border);margin:20px 0" />
         <div class="form-group danger-zone">
@@ -380,6 +446,10 @@
   <script src="review.js"></script>
   <script src="quiz.js"></script>
   <script src="tts.js"></script>
+  <script src="anki.js"></script>
+  <script src="dictation.js"></script>
+  <script src="cloze.js"></script>
+  <script src="sync.js"></script>
   <script src="reading.js"></script>
   <script src="app.js"></script>
   <script>
