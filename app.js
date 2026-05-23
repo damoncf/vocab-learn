@@ -2650,6 +2650,13 @@ function createConfetti() {
 /**
  * Load the vocabulary index and populate the list in the source modal
  */
+/**
+ * v6.0: 内置词库加载（含路径模式和自由模式切换）
+ * 也缓存 index 供 VocabMastery 使用
+ */
+let _vocabIndexCache = null;
+let _vocabDataCache = {};
+
 async function loadBuiltinVocabList() {
   const listEl = DOM.builtinVocabList;
   if (!listEl) return;
@@ -2661,34 +2668,155 @@ async function loadBuiltinVocabList() {
     const resp = await fetch('vocabulary/index.json');
     if (!resp.ok) throw new Error('Failed to load vocabulary index');
     const data = await resp.json();
+    _vocabIndexCache = data;
 
     if (!data.vocabularies || data.vocabularies.length === 0) {
       listEl.innerHTML = '<p class="form-hint">No built-in vocabulary found.</p>';
       return;
     }
 
+    // v6.0: 预加载所有词库数据（用于掌握率计算）
+    await preloadAllVocabData(data.vocabularies);
+
     const currentId = State.builtinVocabId || BuiltinVocab.get();
+
+    // v6.0: 添加路径/自由模式切换
     let html = '';
+    if (data.paths) {
+      html += '<div class="builtin-view-toggle" id="builtinViewToggle">';
+      html += '<button class="builtin-view-btn active" data-view="path">📋 学习路径</button>';
+      html += '<button class="builtin-view-btn" data-view="free">🎯 自由模式</button>';
+      html += '</div>';
+    }
+    html += '<div id="builtinPathView" class="builtin-path-view">';
+
+    // v6.0: 路径模式
+    if (data.paths) {
+      Object.keys(data.paths).forEach(pathId => {
+        if (pathId === 'free') return;
+        const path = data.paths[pathId];
+        const vocabsInPath = data.vocabularies
+          .filter(v => v.path === pathId)
+          .sort((a, b) => (a.order || 999) - (b.order || 999));
+
+        if (vocabsInPath.length === 0) return;
+
+        html += `<div class="builtin-path-group">`;
+        html += `<div class="builtin-path-header">${escHtml(path.name)}</div>`;
+        html += `<div class="builtin-path-desc">${escHtml(path.description)}</div>`;
+
+        vocabsInPath.forEach(v => {
+          const mastery = _vocabDataCache[v.id]
+            ? VocabMastery.getMastery(v.id, _vocabDataCache[v.id])
+            : { mastered: 0, total: v.wordCount || 0, pct: 0 };
+          const unlock = VocabMastery.isUnlocked(v, data.vocabularies, _vocabDataCache);
+
+          if (unlock.unlocked) {
+            const checked = v.id === currentId ? 'checked' : '';
+            html += `
+              <label class="builtin-vocab-item">
+                <input type="radio" name="builtinVocab" value="${v.id}" ${checked} />
+                <div class="builtin-vocab-card">
+                  <div class="builtin-vocab-card-row">
+                    <div class="builtin-vocab-name">${escHtml(v.nameCn || v.name)}</div>
+                  </div>
+                  <div class="builtin-vocab-meta">
+                    <span class="builtin-vocab-level">${escHtml(v.name)}</span>
+                    <span class="builtin-vocab-desc">${escHtml(v.description)}</span>
+                  </div>
+                  <div class="builtin-vocab-progress-bar">
+                    <div class="builtin-vocab-progress-fill" style="width:${mastery.pct}%"></div>
+                  </div>
+                  <div class="builtin-vocab-progress-label">${mastery.mastered}/${mastery.total}·${mastery.pct}%</div>
+                </div>
+              </label>
+            `;
+          } else {
+            // 未解锁
+            html += `
+              <div class="builtin-vocab-item builtin-vocab-locked">
+                <div class="builtin-vocab-card">
+                  <div class="builtin-vocab-card-row">
+                    <span class="builtin-vocab-lock-icon">🔒</span>
+                    <span class="builtin-vocab-name">${escHtml(v.nameCn || v.name)}</span>
+                    <span class="builtin-vocab-level">${escHtml(v.name)}</span>
+                  </div>
+                  <div class="builtin-vocab-lock-reason">${escHtml(unlock.reason)}</div>
+                </div>
+              </div>
+            `;
+          }
+        });
+
+        html += '</div>';
+      });
+    }
+
+    html += '</div>'; // builtinPathView
+
+    // v6.0: 自由模式视图
+    html += '<div id="builtinFreeView" class="builtin-free-view" style="display:none">';
     data.vocabularies.forEach(v => {
+      const mastery = _vocabDataCache[v.id]
+        ? VocabMastery.getMastery(v.id, _vocabDataCache[v.id])
+        : { mastered: 0, total: v.wordCount || 0, pct: 0 };
       const checked = v.id === currentId ? 'checked' : '';
       html += `
         <label class="builtin-vocab-item">
           <input type="radio" name="builtinVocab" value="${v.id}" ${checked} />
           <div class="builtin-vocab-card">
-            <div class="builtin-vocab-name">${escHtml(v.nameCn) || escHtml(v.name)}</div>
+            <div class="builtin-vocab-name">${escHtml(v.nameCn || v.name)}</div>
             <div class="builtin-vocab-meta">
               <span class="builtin-vocab-level">${escHtml(v.name)}</span>
               <span class="builtin-vocab-desc">${escHtml(v.description)}</span>
             </div>
+            <div class="builtin-vocab-progress-bar">
+              <div class="builtin-vocab-progress-fill" style="width:${mastery.pct}%"></div>
+            </div>
+            <div class="builtin-vocab-progress-label">掌握 ${mastery.mastered}/${mastery.total}·${mastery.pct}%</div>
           </div>
         </label>
       `;
     });
+    html += '</div>'; // builtinFreeView
 
     listEl.innerHTML = html;
+
+    // 绑定视图切换
+    const toggleBtns = document.getElementById('builtinViewToggle');
+    if (toggleBtns) {
+      toggleBtns.querySelectorAll('.builtin-view-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          toggleBtns.querySelectorAll('.builtin-view-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const view = btn.dataset.view;
+          const pathView = document.getElementById('builtinPathView');
+          const freeView = document.getElementById('builtinFreeView');
+          if (pathView) pathView.style.display = view === 'path' ? '' : 'none';
+          if (freeView) freeView.style.display = view === 'free' ? '' : 'none';
+        });
+      });
+    }
+
   } catch (err) {
     listEl.innerHTML = `<p class="form-hint" style="color:var(--color-danger)">Failed to load: ${escHtml(err.message)}</p>`;
   }
+}
+
+/**
+ * v6.0: 预加载所有词库数据
+ */
+async function preloadAllVocabData(vocabularies) {
+  const promises = vocabularies.map(async (v) => {
+    if (_vocabDataCache[v.id]) return;
+    try {
+      const resp = await fetch(`vocabulary/${v.id}.json`);
+      if (resp.ok) {
+        _vocabDataCache[v.id] = await resp.json();
+      }
+    } catch (_) {}
+  });
+  await Promise.all(promises);
 }
 
 /**

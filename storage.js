@@ -431,6 +431,81 @@ function collectHistoryRecordsGlobal() {
 }
 
 /* -------------------------------------------------------
+   v6.0 — 词库掌握率计算
+   ------------------------------------------------------- */
+const VocabMastery = {
+  /**
+   * 计算指定词库的掌握率
+   * @param {string} vocabId - 词库 ID
+   * @param {Array} vocabData - 词库数据数组
+   * @returns {{ mastered: number, total: number, pct: number }}
+   */
+  getMastery(vocabId, vocabData) {
+    if (!vocabData || !Array.isArray(vocabData) || vocabData.length === 0) {
+      return { mastered: 0, total: 0, pct: 0 };
+    }
+
+    const pool = ReviewPool.getAll();
+    if (!pool || pool.length === 0) {
+      return { mastered: 0, total: vocabData.length, pct: 0 };
+    }
+
+    const masteredSet = new Set();
+    pool.forEach(entry => {
+      if (entry.status === 'mastered') {
+        masteredSet.add(entry.word.toLowerCase());
+      }
+    });
+
+    let masteredCount = 0;
+    vocabData.forEach(item => {
+      if (item && item.word && masteredSet.has(item.word.toLowerCase())) {
+        masteredCount++;
+      }
+    });
+
+    const total = vocabData.length;
+    const pct = Math.round((masteredCount / Math.max(1, total)) * 100);
+    return { mastered: masteredCount, total, pct };
+  },
+
+  /**
+   * 判断词库是否解锁
+   * @param {object} vocab - 词库定义
+   * @param {Array} allVocabs - 所有词库定义
+   * @param {object} loadedDataMap - { vocabId: dataArray }
+   * @returns {{ unlocked: boolean, reason: string }}
+   */
+  isUnlocked(vocab, allVocabs, loadedDataMap) {
+    if (!vocab.unlockCondition) {
+      return { unlocked: true, reason: '' };
+    }
+
+    const cond = vocab.unlockCondition;
+    if (!cond.prevVocabId) {
+      return { unlocked: true, reason: '' };
+    }
+
+    const prevData = loadedDataMap[cond.prevVocabId];
+    if (!prevData) {
+      return { unlocked: true, reason: '未加载到前一词库数据' };
+    }
+
+    const mastery = this.getMastery(cond.prevVocabId, prevData);
+    if (mastery.pct >= (cond.masteryThreshold || 80)) {
+      return { unlocked: true, reason: '' };
+    }
+
+    const prevVocab = allVocabs.find(v => v.id === cond.prevVocabId);
+    const prevName = prevVocab ? (prevVocab.nameCn || prevVocab.name) : cond.prevVocabId;
+    return {
+      unlocked: false,
+      reason: `需要 ${prevName} 掌握率达到 ${cond.masteryThreshold || 80}% 才解锁`
+    };
+  },
+};
+
+/* -------------------------------------------------------
    Session Snapshot — mid-batch progress persistence
    ------------------------------------------------------- */
 const SessionSnapshot = {

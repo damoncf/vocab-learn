@@ -8,7 +8,10 @@
       "wordCount": 453,
       "difficulty": "intermediate",
       "source": "builtin",
-      "file": "cet4.json"
+      "file": "cet4.json",
+      "path": "domestic",
+      "order": 3,
+      "unlockCondition": null
     },
     {
       "id": "cet6",
@@ -18,7 +21,10 @@
       "wordCount": 289,
       "difficulty": "advanced",
       "source": "builtin",
-      "file": "cet6.json"
+      "file": "cet6.json",
+      "path": "domestic",
+      "order": 4,
+      "unlockCondition": {"prevVocabId": "cet4", "masteryThreshold": 80}
     },
     {
       "id": "ielts",
@@ -28,7 +34,10 @@
       "wordCount": 291,
       "difficulty": "advanced",
       "source": "builtin",
-      "file": "ielts.json"
+      "file": "ielts.json",
+      "path": "abroad",
+      "order": 3,
+      "unlockCondition": {"prevVocabId": "collins", "masteryThreshold": 80}
     },
     {
       "id": "toefl",
@@ -38,7 +47,10 @@
       "wordCount": 356,
       "difficulty": "advanced",
       "source": "builtin",
-      "file": "toefl.json"
+      "file": "toefl.json",
+      "path": "abroad",
+      "order": 4,
+      "unlockCondition": {"prevVocabId": "ielts", "masteryThreshold": 80}
     },
     {
       "id": "gre",
@@ -48,7 +60,10 @@
       "wordCount": 411,
       "difficulty": "advanced",
       "source": "builtin",
-      "file": "gre.json"
+      "file": "gre.json",
+      "path": "abroad",
+      "order": 6,
+      "unlockCondition": {"prevVocabId": "sat", "masteryThreshold": 80}
     },
     {
       "id": "gaokao",
@@ -58,7 +73,10 @@
       "difficulty": "intermediate",
       "wordCount": 643,
       "source": "builtin",
-      "file": "gaokao.json"
+      "file": "gaokao.json",
+      "path": "domestic",
+      "order": 2,
+      "unlockCondition": {"prevVocabId": "k12", "masteryThreshold": 80}
     },
     {
       "id": "k12",
@@ -68,7 +86,10 @@
       "difficulty": "beginner",
       "wordCount": 100,
       "source": "builtin",
-      "file": "k12.json"
+      "file": "k12.json",
+      "path": "domestic",
+      "order": 1,
+      "unlockCondition": null
     },
     {
       "id": "business",
@@ -78,7 +99,10 @@
       "difficulty": "advanced",
       "wordCount": 109,
       "source": "builtin",
-      "file": "business.json"
+      "file": "business.json",
+      "path": "career",
+      "order": 2,
+      "unlockCondition": {"prevVocabId": "collins", "masteryThreshold": 80}
     },
     {
       "id": "sat",
@@ -88,7 +112,10 @@
       "difficulty": "advanced",
       "wordCount": 74,
       "source": "builtin",
-      "file": "sat.json"
+      "file": "sat.json",
+      "path": "abroad",
+      "order": 5,
+      "unlockCondition": {"prevVocabId": "toefl", "masteryThreshold": 80}
     },
     {
       "id": "phrasal-verbs",
@@ -98,7 +125,10 @@
       "difficulty": "intermediate",
       "wordCount": 50,
       "source": "builtin",
-      "file": "phrasal-verbs.json"
+      "file": "phrasal-verbs.json",
+      "path": null,
+      "order": null,
+      "unlockCondition": null
     },
     {
       "id": "collins",
@@ -108,7 +138,28 @@
       "difficulty": "beginner",
       "wordCount": 98,
       "source": "builtin",
-      "file": "collins.json"
+      "file": "collins.json",
+      "path": null,
+      "order": null,
+      "unlockCondition": null
     }
-  ]
+  ],
+  "paths": {
+    "domestic": {
+      "name": "🇨🇳 国内考试",
+      "description": "从中考到六级，系统攻破国内英语考试"
+    },
+    "abroad": {
+      "name": "🌍 出国留学",
+      "description": "从基础到GRE，为留学考试铺路"
+    },
+    "career": {
+      "name": "💼 职场英语",
+      "description": "提升商务英语能力"
+    },
+    "free": {
+      "name": "🎯 自由模式",
+      "description": "任意选择词库，无解锁限制"
+    }
+  }
 }
