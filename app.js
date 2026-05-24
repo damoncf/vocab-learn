@@ -1845,20 +1845,20 @@ function renderWordGrid(words) {
     // v8.1: Tap detection — pointer tracks position, click handles action
     // + touchstart for iOS where pointer events may delay
     chip.dataset.tapCancelled = 'false';
-    function _onPointerDown(e) {
+    chip.addEventListener('pointerdown', (e) => {
       chip.dataset.tapX = e.clientX;
       chip.dataset.tapY = e.clientY;
       chip.dataset.tapCancelled = 'false';
-    }
-    function _onPointerMove(e) {
+    });
+    chip.addEventListener('pointermove', (e) => {
       if (chip.dataset.tapCancelled !== 'true') {
         const dx = Math.abs(e.clientX - parseFloat(chip.dataset.tapX || 0));
         const dy = Math.abs(e.clientY - parseFloat(chip.dataset.tapY || 0));
         if (dx > 10 || dy > 10) chip.dataset.tapCancelled = 'true';
       }
-    }
-    function _onPointerCancel() { chip.dataset.tapCancelled = 'true'; }
-    function _onClick(e) {
+    });
+    chip.addEventListener('pointercancel', () => { chip.dataset.tapCancelled = 'true'; });
+    chip.addEventListener('click', (e) => {
       if (chip.dataset.tapCancelled === 'true') return;
       e.preventDefault();
       if (clickBehavior === 'peek') {
@@ -1868,11 +1868,7 @@ function renderWordGrid(words) {
         toggleMark(chip, origIdx);
       }
       chip.dataset.tapCancelled = 'true';
-    }
-    chip.addEventListener('pointerdown', _onPointerDown);
-    chip.addEventListener('pointermove', _onPointerMove);
-    chip.addEventListener('pointercancel', _onPointerCancel);
-    chip.addEventListener('click', _onClick);
+    });
 
     // v8.1: Long-press — uses unified pointer events
     addLongPressListener(chip, word);
