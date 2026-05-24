@@ -1865,6 +1865,7 @@ function renderWordGrid(words) {
       if (dx > 15 || dy > 15) return;
       // It's a tap
       e.preventDefault();
+      e.stopPropagation();
       if (clickBehavior === 'peek') {
         hidePeekPopup();
         showPeekPopup(e, word);
