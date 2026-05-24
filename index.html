@@ -217,6 +217,70 @@
 
         <!-- Legacy welcome hint for review due -->
         <p class="welcome-hint" id="reviewDueHint" style="display:none"></p>
+
+        <!-- === MOBILE-SPECIFIC WELCOME LAYOUT === -->
+        <div id="welcomeMobile" class="welcome-mobile">
+          <!-- Compact data row -->
+          <div class="mobile-data-row" id="mobileDataRow">
+            <div class="data-item">
+              <span>🔥</span>
+              <span class="value" id="mobileStreak">0</span>
+              <span class="label">天</span>
+            </div>
+            <div class="data-item">
+              <span>📅</span>
+              <span class="value" id="mobileTodayWords">0</span>
+              <span class="label">今日词</span>
+            </div>
+            <div class="data-item">
+              <span>📚</span>
+              <span class="value" id="mobileDueWords">0</span>
+              <span class="label">待复习</span>
+            </div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="daily-progress-bar mobile-progress">
+            <div class="daily-progress-fill" id="mobileProgressFill" style="width:0%"></div>
+          </div>
+          <div class="daily-progress-label" id="mobileProgressLabel" style="margin-bottom:0;font-size:var(--text-xs);">0 / 0 词</div>
+
+          <!-- 2×2 grid of big buttons -->
+          <div class="mobile-grid-2x2">
+            <button class="mobile-grid-btn primary" id="mobileBtnContinue">
+              <span class="icon">▶</span>
+              <span class="title">继续学习</span>
+              <span class="sub" id="mobileContinueSub">上次进度</span>
+            </button>
+            <button class="mobile-grid-btn badge-container" id="mobileBtnReview">
+              <span class="badge-dot" id="mobileReviewBadge" style="display:none">0</span>
+              <span class="icon">🔄</span>
+              <span class="title">复习生词</span>
+              <span class="sub">SM-2 间隔重复</span>
+            </button>
+            <button class="mobile-grid-btn" id="mobileBtnVocab">
+              <span class="icon">📚</span>
+              <span class="title">选择词库</span>
+              <span class="sub" id="mobileSourceDesc">AI / 内置 / 文件</span>
+            </button>
+            <button class="mobile-grid-btn" id="mobileBtnMore">
+              <span class="icon">⚡</span>
+              <span class="title">更多</span>
+              <span class="sub">学习日历 · 常错词 · 设置</span>
+            </button>
+          </div>
+
+          <!-- Embedded daily challenge -->
+          <div class="challenge-card" id="mobileChallengeCard" style="border:1px solid var(--color-border);border-radius:var(--radius-lg);">
+            <div class="challenge-header" style="padding:var(--space-3) var(--space-4);">
+              <span class="challenge-title">🌅 每日挑战</span>
+              <span class="challenge-streak" id="mobileChallengeStreak"></span>
+            </div>
+            <div class="challenge-body" id="mobileChallengeBody" style="padding:0 var(--space-4) var(--space-3);">
+              <div class="challenge-loading">加载中...</div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

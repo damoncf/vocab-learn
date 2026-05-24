@@ -320,6 +320,9 @@ main {
   margin-bottom: 0 !important;
 }
 
+/* Mobile-specific welcome layout (hidden by default) */
+.welcome-mobile { display: none; }
+
 /* Welcome scroll (v5.0) */
 .welcome-scroll {
   width: 100%;
@@ -2852,6 +2855,85 @@ html.theme-switching { transition: background-color 100ms ease; }
    RESPONSIVE — Base
    ========================================================= */
 @media (max-width: 600px) {
+  .welcome-scroll > .daily-card,
+  .welcome-scroll > .quick-start-grid,
+  .welcome-scroll > .quick-access-bar,
+  .welcome-scroll > .heatmap-section,
+  .welcome-scroll > .challenge-card,
+  .welcome-scroll > .badges-section {
+    display: none;
+  }
+  .welcome-mobile { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3); width: 100%; max-width: 520px; margin: 0 auto; }
+
+  /* Compact data row */
+  .mobile-data-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+  }
+  .mobile-data-row .data-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--text-sm);
+  }
+  .mobile-data-row .data-item .value { font-weight: 700; color: var(--color-text); }
+  .mobile-data-row .data-item .label { font-size: var(--text-xs); }
+
+  /* Progress bar */
+  .mobile-progress { height: 6px; margin: 0; }
+
+  /* 2×2 grid of big touchable buttons */
+  .mobile-grid-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  .mobile-grid-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: var(--space-5) var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    min-height: 80px;
+  }
+  .mobile-grid-btn:hover { border-color: var(--color-primary); }
+  .mobile-grid-btn:active { transform: scale(0.97); }
+  .mobile-grid-btn .icon { font-size: 1.5rem; }
+  .mobile-grid-btn .title { font-size: var(--text-sm); font-weight: 600; }
+  .mobile-grid-btn .sub { font-size: var(--text-xs); color: var(--color-text-muted); }
+  .mobile-grid-btn.primary {
+    background: linear-gradient(135deg, var(--mi-orange), var(--mi-orange-light));
+    border-color: transparent;
+    color: #fff;
+  }
+  .mobile-grid-btn.primary .sub { color: rgba(255,255,255,0.7); }
+  .mobile-grid-btn.badge-container { position: relative; }
+  .mobile-grid-btn .badge-dot {
+    position: absolute; top: 8px; right: 8px;
+    width: 18px; height: 18px;
+    background: var(--color-danger);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 700; color: #fff;
+  }
+
+  /* Mobile challenge card nested */
+  .welcome-mobile .challenge-card { margin: 0; }
+  .welcome-mobile .challenge-header { font-size: var(--text-sm); }
+  .welcome-mobile .challenge-body { font-size: var(--text-sm); }
+  .welcome-mobile .challenge-loading { font-size: var(--text-xs); }
+
   .app-header { padding: 0 var(--space-4); }
   .logo { font-size: var(--text-lg); }
   .session-info { display: none; }
@@ -2904,6 +2986,55 @@ html.theme-switching { transition: background-color 100ms ease; }
   .detail-card { touch-action: pan-x; }
 
   .btn-shortcut-help { bottom: 72px !important; }
+
+  /* ========================================
+     Touch targets ≥ 44px (Step 2)
+     ======================================== */
+  .btn { min-height: 36px; padding: 8px 14px; }
+  .btn-sm { min-height: 32px; }
+  .btn-lg { min-height: 48px; }
+  .word-chip { min-height: 48px !important; padding: 10px 8px !important; }
+  .source-card { min-height: 48px; padding: 12px 14px; }
+  .modal .btn { min-height: 40px; }
+  .sync-buttons .btn { min-height: 44px; flex: 1; }
+  .data-actions .btn { min-height: 44px; }
+  .challenge-options button { min-height: 48px; }
+  .batch-action-item { min-height: 44px; padding: 10px 16px; }
+
+  /* Quick access bar hidden on mobile, moved to "More" */
+  .quick-access-bar { display: none; }
+
+  /* ========================================
+     Learning flow mobile adaptation (Step 4)
+     ======================================== */
+  /* Done screen */
+  .done-card { padding: var(--space-4); }
+  .done-stats { gap: var(--space-2); }
+  .stat-pill { padding: 8px 12px; min-width: 60px; }
+  .stat-value { font-size: var(--text-lg); }
+
+  /* Quiz */
+  .quiz-question { padding: var(--space-4); }
+  .quiz-word { font-size: var(--text-xl); }
+  .quiz-option { min-height: 48px; display: flex; align-items: center; }
+
+  /* Dictation */
+  .dictation-input { font-size: 1.2rem; }
+
+  /* Cloze */
+  .cloze-sentence { font-size: var(--text-md); line-height: 1.7; }
+  .cloze-options { gap: var(--space-2); }
+  .cloze-option { min-height: 48px; padding: 12px 16px; }
+
+  /* Reading */
+  .reading-text { font-size: var(--text-base); line-height: 1.8; }
+
+  /* Review */
+  .review-word { font-size: var(--text-2xl); }
+
+  /* Settings modal */
+  .modal.modal-settings .modal-body { padding: var(--space-3); }
+  .settings-card { padding: var(--space-3); }
 }
 
 @media (max-width: 380px) {

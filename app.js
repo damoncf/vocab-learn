@@ -420,7 +420,13 @@ function init() {
   // Apply saved settings to form fields
   const s = Settings.getAllExtended();
   DOM.inputApiKey.value        = s.apiKey;
-  DOM.inputWordsPerBatch.value = s.wordsPerBatch;
+  // Mobile defaults: if user hasn't set wordsPerBatch manually, use 20 on mobile
+  const isMobile = window.innerWidth <= 600;
+  if (isMobile && !localStorage.getItem('vocab_words_per_batch')) {
+    DOM.inputWordsPerBatch.value = '20';
+  } else {
+    DOM.inputWordsPerBatch.value = s.wordsPerBatch;
+  }
   DOM.inputDifficulty.value    = s.difficulty;
   DOM.inputAutoPronounce.checked = s.autoPronounce !== false;
   DOM.inputShowShortcuts.checked = s.showShortcuts !== false;
@@ -731,6 +737,65 @@ function updateWelcomeDailyCard() {
 
   // Update QS cards
   updateQSCards();
+
+  // Update mobile welcome layout
+  updateMobileWelcome();
+}
+
+/**
+ * v8.0 — Update the mobile-specific welcome layout
+ */
+function updateMobileWelcome() {
+  const familiar = Session.getFamiliarWords();
+  const unfamiliar = Session.getUnfamiliarWords();
+  const todayTotal = familiar.length + unfamiliar.length;
+  const streak = calcContinuousStreak();
+  const dueCount = ReviewPool.getDueCount();
+  const goal = DailyGoal.get();
+  const goalPct = Math.min(100, Math.round((todayTotal / Math.max(1, goal)) * 100));
+
+  const elStreak = document.getElementById('mobileStreak');
+  const elToday = document.getElementById('mobileTodayWords');
+  const elDue = document.getElementById('mobileDueWords');
+  const elProgress = document.getElementById('mobileProgressFill');
+  const elLabel = document.getElementById('mobileProgressLabel');
+  const elSub = document.getElementById('mobileContinueSub');
+
+  if (elStreak) elStreak.textContent = streak;
+  if (elToday) elToday.textContent = todayTotal;
+  if (elDue) elDue.textContent = dueCount;
+  if (elProgress) elProgress.style.width = goalPct + '%';
+  if (elLabel) elLabel.textContent = `${todayTotal} / ${goal} 词`;
+  if (elSub) {
+    if (todayTotal > 0) {
+      elSub.textContent = `今日已学 ${todayTotal} 词`;
+    } else {
+      elSub.textContent = '开始今日学习';
+    }
+  }
+
+  // Review badge
+  const badge = document.getElementById('mobileReviewBadge');
+  if (badge) {
+    if (dueCount > 0) {
+      badge.style.display = 'flex';
+      badge.textContent = dueCount > 9 ? '9+' : dueCount;
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  // Source desc
+  const sourceDesc = document.getElementById('mobileSourceDesc');
+  if (sourceDesc) {
+    const sourceType = State.sourceType || 'ai';
+    if (sourceType === 'ai') sourceDesc.textContent = 'AI 生成';
+    else if (sourceType === 'file') sourceDesc.textContent = '文件导入';
+    else if (sourceType === 'builtin') sourceDesc.textContent = '内置词库';
+  }
+
+  // Challenge card embed (reuse existing logic)
+  updateChallengeCard();
 }
 
 /**
@@ -1248,6 +1313,35 @@ function wireEvents() {
     DOM.inputSyncPass.type = isHidden ? 'text' : 'password';
     DOM.toggleSyncPass.textContent = isHidden ? 'Hide' : 'Show';
   });
+
+  // -------------------------------------------------------
+  // Mobile welcome buttons
+  // -------------------------------------------------------
+  const mobileContinue = document.getElementById('mobileBtnContinue');
+  if (mobileContinue) {
+    mobileContinue.addEventListener('click', () => {
+      if (DOM.btnQSC) DOM.btnQSC.click();
+    });
+  }
+  const mobileReview = document.getElementById('mobileBtnReview');
+  if (mobileReview) {
+    mobileReview.addEventListener('click', () => {
+      if (DOM.btnQSReview) DOM.btnQSReview.click();
+    });
+  }
+  const mobileVocab = document.getElementById('mobileBtnVocab');
+  if (mobileVocab) {
+    mobileVocab.addEventListener('click', () => {
+      if (DOM.btnQSSource) DOM.btnQSSource.click();
+    });
+  }
+  const mobileMore = document.getElementById('mobileBtnMore');
+  if (mobileMore) {
+    mobileMore.addEventListener('click', () => {
+      // Open settings for now — can be enhanced to a custom "more" menu later
+      if (DOM.qaSettings) DOM.qaSettings.click();
+    });
+  }
 }
 
 /* =========================================================
@@ -3201,19 +3295,25 @@ function showBadgeDetailModal() {
 function updateChallengeCard() {
   const bodyEl = document.getElementById('challengeBody');
   const streakEl = document.getElementById('challengeStreak');
-  if (!bodyEl || !streakEl) return;
+  const mobileBodyEl = document.getElementById('mobileChallengeBody');
+  const mobileStreakEl = document.getElementById('mobileChallengeStreak');
 
   const challenge = Challenge.getTodaysChallenge();
   if (!challenge) {
-    bodyEl.innerHTML = '<div class="challenge-loading">词库数据不足，无法生成挑战</div>';
-    streakEl.textContent = '';
+    if (bodyEl) bodyEl.innerHTML = '<div class="challenge-loading">词库数据不足，无法生成挑战</div>';
+    if (streakEl) streakEl.textContent = '';
+    if (mobileBodyEl) mobileBodyEl.innerHTML = '<div class="challenge-loading">词库数据不足，无法生成挑战</div>';
+    if (mobileStreakEl) mobileStreakEl.textContent = '';
     return;
   }
 
   // 更新连续答对
   const streak = Challenge.getStreak();
-  streakEl.textContent = streak > 0 ? `🔥 连续 ${streak} 天` : '';
+  const streakText = streak > 0 ? `🔥 连续 ${streak} 天` : '';
+  if (streakEl) streakEl.textContent = streakText;
+  if (mobileStreakEl) mobileStreakEl.textContent = streakText;
 
+  let html = '';
   if (challenge.answered) {
     // 已答状态
     const resultClass = challenge.correct ? 'challenge-result-correct' : 'challenge-result-wrong';
@@ -3221,7 +3321,7 @@ function updateChallengeCard() {
     const resultText = challenge.correct ? '答对了！' : '答错了，下次加油！';
     const detail = challenge.detail || {};
 
-    bodyEl.innerHTML = `
+    html = `
       <div class="challenge-answered">
         <div class="challenge-result-icon">${resultIcon}</div>
         <div class="challenge-result-text ${resultClass}">${resultText}</div>
@@ -3237,7 +3337,7 @@ function updateChallengeCard() {
     `;
   } else {
     // 未答状态
-    bodyEl.innerHTML = `
+    html = `
       <div class="challenge-unanswered">
         <span class="challenge-word">${escHtml(challenge.word)}</span>
         <div class="challenge-prompt">选择正确的中文释义</div>
@@ -3248,11 +3348,20 @@ function updateChallengeCard() {
         </div>
       </div>
     `;
+  }
 
-    // Wire up option clicks
-    bodyEl.querySelectorAll('.challenge-option').forEach(btn => {
-      btn.addEventListener('click', () => {
-        handleChallengeAnswer(challenge, btn.dataset.value);
+  // Update both desktop and mobile containers
+  if (bodyEl) bodyEl.innerHTML = html;
+  if (mobileBodyEl) mobileBodyEl.innerHTML = html;
+
+  // Wire up option clicks (only if unanswered)
+  if (!challenge.answered) {
+    [bodyEl, mobileBodyEl].forEach(el => {
+      if (!el) return;
+      el.querySelectorAll('.challenge-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          handleChallengeAnswer(challenge, btn.dataset.value);
+        });
       });
     });
   }
