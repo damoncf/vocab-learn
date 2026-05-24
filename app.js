@@ -1842,34 +1842,39 @@ function renderWordGrid(words) {
       chip.classList.add('familiar');
     }
 
-    // v7.5: Use pointer events (unified desktop+mobile) with distance-based tap detection
-    chip.addEventListener('pointerdown', (e) => {
+    // v8.1: Tap detection — pointer tracks position, click handles action
+    // + touchstart for iOS where pointer events may delay
+    chip.dataset.tapCancelled = 'false';
+    function _onPointerDown(e) {
       chip.dataset.tapX = e.clientX;
       chip.dataset.tapY = e.clientY;
       chip.dataset.tapCancelled = 'false';
-    });
-    chip.addEventListener('pointermove', (e) => {
-      if (chip.dataset.tapCancelled === 'false') {
-        const dx = Math.abs(e.clientX - parseFloat(chip.dataset.tapX));
-        const dy = Math.abs(e.clientY - parseFloat(chip.dataset.tapY));
-        if (dx > 10 || dy > 10) {
-          chip.dataset.tapCancelled = 'true';
-        }
-      }
-    });
-    chip.addEventListener('pointerup', (e) => {
+    }
+    function _onPointerMove(e) {
       if (chip.dataset.tapCancelled !== 'true') {
-        if (clickBehavior === 'peek') {
-          hidePeekPopup();
-          showPeekPopup(e, word);
-        } else {
-          toggleMark(chip, origIdx);
-        }
+        const dx = Math.abs(e.clientX - parseFloat(chip.dataset.tapX || 0));
+        const dy = Math.abs(e.clientY - parseFloat(chip.dataset.tapY || 0));
+        if (dx > 10 || dy > 10) chip.dataset.tapCancelled = 'true';
+      }
+    }
+    function _onPointerCancel() { chip.dataset.tapCancelled = 'true'; }
+    function _onClick(e) {
+      if (chip.dataset.tapCancelled === 'true') return;
+      e.preventDefault();
+      if (clickBehavior === 'peek') {
+        hidePeekPopup();
+        showPeekPopup(e, word);
+      } else {
+        toggleMark(chip, origIdx);
       }
       chip.dataset.tapCancelled = 'true';
-    });
+    }
+    chip.addEventListener('pointerdown', _onPointerDown);
+    chip.addEventListener('pointermove', _onPointerMove);
+    chip.addEventListener('pointercancel', _onPointerCancel);
+    chip.addEventListener('click', _onClick);
 
-    // v6.5: Long-press (400ms) → direct mark unfamiliar (no popup)
+    // v8.1: Long-press — uses unified pointer events
     addLongPressListener(chip, word);
 
     DOM.wordGrid.appendChild(chip);
@@ -1999,7 +2004,22 @@ function addLongPressListener(chip, word) {
     }
   });
 
+  chip.addEventListener('pointercancel', () => {
+    if (chip._longPressTimer) {
+      clearTimeout(chip._longPressTimer);
+      chip._longPressTimer = null;
+    }
+  });
+
   chip.addEventListener('pointerleave', () => {
+    if (chip._longPressTimer) {
+      clearTimeout(chip._longPressTimer);
+      chip._longPressTimer = null;
+    }
+  });
+
+  // Fallback: click also clears — handles mobile where pointerup may not fire
+  chip.addEventListener('click', () => {
     if (chip._longPressTimer) {
       clearTimeout(chip._longPressTimer);
       chip._longPressTimer = null;
