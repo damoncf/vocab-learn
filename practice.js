@@ -49,20 +49,22 @@ const Practice = {
     // Init mode-specific content on first switch
     if (!this._initialized[mode]) {
       this._initialized[mode] = true;
+      this._initGuard = true;
       switch (mode) {
         case 'quiz':
-          openQuizScreen();
+          renderQuizContent();
           break;
         case 'dictation':
-          openDictationScreen();
+          renderDictationContent();
           break;
         case 'cloze':
-          openClozeScreen();
+          renderClozeContent();
           break;
         case 'reading':
           openReadingMode();
           break;
       }
+      this._initGuard = false;
     }
   },
 
@@ -71,8 +73,6 @@ const Practice = {
    * @param {string} mode - tab name
    */
   showTab(mode) {
-    // De-init so content refreshes
-    this._initialized = {};
     this.currentTab = mode;
 
     // Show the practice screen
@@ -87,21 +87,24 @@ const Practice = {
       pane.style.display = pane.dataset.tab === mode ? '' : 'none';
     });
 
-    // Call init
-    this._initialized[mode] = true;
-    switch (mode) {
-      case 'quiz':
-        openQuizScreen();
-        break;
-      case 'dictation':
-        openDictationScreen();
-        break;
-      case 'cloze':
-        openClozeScreen();
-        break;
-      case 'reading':
-        openReadingMode();
-        break;
+    // Call init only when triggered by tab click, not by open* functions
+    if (!this._initGuard) {
+      this._initGuard = true;
+      switch (mode) {
+        case 'quiz':
+          renderQuizContent();
+          break;
+        case 'dictation':
+          renderDictationContent();
+          break;
+        case 'cloze':
+          renderClozeContent();
+          break;
+        case 'reading':
+          openReadingMode();
+          break;
+      }
+      this._initGuard = false;
     }
   },
 };

@@ -2746,6 +2746,10 @@ function escapeForReview(word) {
 /* =========================================================
    QUIZ SCREEN
    ========================================================= */
+function renderQuizContent() {
+  renderQuizModeSelect();
+}
+
 function openQuizScreen() {
   // Reset quiz state
   State.quizState = null;
@@ -2755,7 +2759,7 @@ function openQuizScreen() {
   } else {
     showScreen('quiz');
   }
-  renderQuizModeSelect();
+  renderQuizContent();
 }
 
 function renderQuizModeSelect() {
@@ -4198,6 +4202,10 @@ function handleReadingAddAll() {
 /**
  * 打开听写模式
  */
+function renderDictationContent() {
+  renderDictationModeSelect();
+}
+
 function openDictationScreen() {
   State.dictationState = null;
   // v5.5: Route through Practice screen
@@ -4206,7 +4214,7 @@ function openDictationScreen() {
   } else {
     showScreen('dictation');
   }
-  renderDictationModeSelect();
+  renderDictationContent();
 }
 
 /**
@@ -4520,6 +4528,10 @@ function renderDictationResult() {
 /**
  * 打开完形填空模式
  */
+function renderClozeContent() {
+  renderClozeModeSelect();
+}
+
 function openClozeScreen() {
   State.clozeState = null;
   // v5.5: Route through Practice screen
@@ -4528,7 +4540,7 @@ function openClozeScreen() {
   } else {
     showScreen('cloze');
   }
-  renderClozeModeSelect();
+  renderClozeContent();
 }
 
 /**
