@@ -127,7 +127,9 @@ a:hover { text-decoration: underline; }
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--space-6);
-  height: 56px;
+  padding-top: env(safe-area-inset-top, 0px);
+  height: calc(56px + env(safe-area-inset-top, 0px));
+  min-height: 56px;
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
@@ -2015,7 +2017,8 @@ input:focus, select:focus {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 56px;
+  height: calc(56px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
   z-index: 200;
@@ -2026,23 +2029,31 @@ input:focus, select:focus {
 .mobile-nav-btn {
   background: none;
   border: none;
-  color: var(--color-text-muted);
+  color: rgba(255,255,255,0.35);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: color var(--transition-base);
+  transition: all var(--transition-base);
   font-family: var(--font-sans);
   font-size: 0.65rem;
   line-height: 1;
-  min-width: 48px;
+  min-width: 52px;
+  flex: 1;
 }
-.mobile-nav-btn svg { width: 20px; height: 20px; }
-.mobile-nav-btn.active { color: var(--color-primary); }
-.mobile-nav-btn:hover { color: var(--color-text); }
+.mobile-nav-btn svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.mobile-nav-btn.active {
+  color: var(--mi-orange) !important;
+  background: var(--mi-orange-glow);
+}
+.mobile-nav-btn.active svg { stroke-width: 2.5; }
+.mobile-nav-btn:hover { color: rgba(255,255,255,0.7); }
+[data-theme="light"] .mobile-nav-btn { color: rgba(0,0,0,0.35); }
+[data-theme="light"] .mobile-nav-btn:hover { color: rgba(0,0,0,0.6); }
 
 /* =========================================================
    GRID PROGRESS BAR
