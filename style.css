@@ -2863,7 +2863,17 @@ html.theme-switching { transition: background-color 100ms ease; }
   .welcome-scroll > .badges-section {
     display: none;
   }
-  .welcome-mobile { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-3); width: 100%; max-width: 520px; margin: 0 auto; }
+  .welcome-scroll { padding: var(--space-3); max-width: 100%; }
+  .welcome-mobile { display: flex; flex-direction: column; gap: var(--space-2); width: 100%; }
+
+  /* Mobile 2x2 grid: bigger buttons, simpler */
+  .mobile-grid-2x2 { gap: var(--space-2); }
+  .mobile-grid-btn { min-height: 72px; padding: var(--space-3) var(--space-2); gap: 4px; }
+  .mobile-grid-btn .icon { font-size: 1.3rem; }
+  .mobile-grid-btn .title { font-size: 0.85rem; }
+  .mobile-grid-btn .sub { font-size: 0.7rem; }
+  .mobile-data-row { padding: var(--space-2) var(--space-3); }
+  .mobile-progress { margin: 0; }
 
   /* Compact data row */
   .mobile-data-row {
