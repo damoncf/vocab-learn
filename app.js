@@ -1315,33 +1315,16 @@ function wireEvents() {
   });
 
   // -------------------------------------------------------
-  // Mobile welcome buttons
+  // Mobile welcome buttons — direct bind, no delegation
   // -------------------------------------------------------
-  const mobileContinue = document.getElementById('mobileBtnContinue');
-  if (mobileContinue) {
-    mobileContinue.addEventListener('click', () => {
-      if (DOM.btnQSC) DOM.btnQSC.click();
-    });
-  }
-  const mobileReview = document.getElementById('mobileBtnReview');
-  if (mobileReview) {
-    mobileReview.addEventListener('click', () => {
-      if (DOM.btnQSReview) DOM.btnQSReview.click();
-    });
-  }
-  const mobileVocab = document.getElementById('mobileBtnVocab');
-  if (mobileVocab) {
-    mobileVocab.addEventListener('click', () => {
-      if (DOM.btnQSSource) DOM.btnQSSource.click();
-    });
-  }
-  const mobileMore = document.getElementById('mobileBtnMore');
-  if (mobileMore) {
-    mobileMore.addEventListener('click', () => {
-      // Open settings for now — can be enhanced to a custom "more" menu later
-      if (DOM.qaSettings) DOM.qaSettings.click();
-    });
-  }
+  const mc = document.getElementById('mobileBtnContinue');
+  if (mc) mc.addEventListener('click', () => { startSession(); });
+  const mr = document.getElementById('mobileBtnReview');
+  if (mr) mr.addEventListener('click', () => { openReviewScreen(); });
+  const mv = document.getElementById('mobileBtnVocab');
+  if (mv) mv.addEventListener('click', () => { openSource(); });
+  const mm = document.getElementById('mobileBtnMore');
+  if (mm) mm.addEventListener('click', () => { openSettings(); });
 }
 
 /* =========================================================
@@ -1615,6 +1598,7 @@ function applySource() {
     }
     State.builtinVocabId = selectedId;
     BuiltinVocab.set(selectedId);
+    // Don't await — startSession will wait if data not ready
     loadBuiltinVocabData(selectedId);
   }
   State.sourceType = val;
@@ -1662,12 +1646,37 @@ async function startSession() {
     return;
   }
 
-  if (State.sourceType === 'builtin' && !State.builtinVocabData) {
-    showToast('Please select a built-in vocabulary list first.', 'error');
+  if (State.sourceType === 'builtin' && State.builtinVocabId && !State.builtinVocabData) {
+    // Data still loading — show loading, wait for it
+    showScreen('grid');
+    renderGridSkeleton();
+    DOM.loadingMsg.textContent = '加载词库中...';
+    DOM.loadingMsg.style.display = 'block';
+    // Poll for data every 200ms, max 10s
+    const waitForData = new Promise((resolve) => {
+      let waited = 0;
+      const check = setInterval(() => {
+        if (State.builtinVocabData) {
+          clearInterval(check);
+          resolve(true);
+        }
+        waited += 200;
+        if (waited > 10000) {
+          clearInterval(check);
+          resolve(false);
+        }
+      }, 200);
+    });
+    const hasData = await waitForData;
+    if (!hasData) {
+      document.querySelectorAll('.grid-skeleton').forEach(el => el.remove());
+      showScreen('welcome');
+      showToast('词库加载超时，请重试', 'error', 6000);
+      return;
+    }
+  } else if (State.sourceType === 'builtin' && !State.builtinVocabId) {
+    showToast('请先选择一个词库', 'error');
     openSource();
-    setTimeout(() => {
-      document.querySelector('input[name="source"][value="builtin"]').click();
-    }, 100);
     return;
   }
 
