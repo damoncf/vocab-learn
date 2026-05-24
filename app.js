@@ -1844,22 +1844,26 @@ function renderWordGrid(words) {
 
     // v8.1: Tap detection — pointer tracks position, click handles action
     // + touchstart for iOS where pointer events may delay
-    chip.dataset.tapCancelled = 'false';
+    chip.dataset.tapX = 0;
+    chip.dataset.tapY = 0;
+    chip.dataset._longPressHandled = 'false';
     chip.addEventListener('pointerdown', (e) => {
       chip.dataset.tapX = e.clientX;
       chip.dataset.tapY = e.clientY;
-      chip.dataset.tapCancelled = 'false';
     });
-    chip.addEventListener('pointermove', (e) => {
-      if (chip.dataset.tapCancelled !== 'true') {
-        const dx = Math.abs(e.clientX - parseFloat(chip.dataset.tapX || 0));
-        const dy = Math.abs(e.clientY - parseFloat(chip.dataset.tapY || 0));
-        if (dx > 10 || dy > 10) chip.dataset.tapCancelled = 'true';
-      }
-    });
-    chip.addEventListener('pointercancel', () => { chip.dataset.tapCancelled = 'true'; });
     chip.addEventListener('click', (e) => {
-      if (chip.dataset.tapCancelled === 'true') return;
+      // Skip if long press already handled this word
+      if (chip.dataset._longPressHandled === 'true') {
+        chip.dataset._longPressHandled = 'false';
+        return;
+      }
+      // Distance check: if finger moved > 15px, it was a scroll, not a tap
+      const tapX = parseFloat(chip.dataset.tapX || 0);
+      const tapY = parseFloat(chip.dataset.tapY || 0);
+      const dx = Math.abs(e.clientX - tapX);
+      const dy = Math.abs(e.clientY - tapY);
+      if (dx > 15 || dy > 15) return;
+      // It's a tap
       e.preventDefault();
       if (clickBehavior === 'peek') {
         hidePeekPopup();
@@ -1867,7 +1871,6 @@ function renderWordGrid(words) {
       } else {
         toggleMark(chip, origIdx);
       }
-      chip.dataset.tapCancelled = 'true';
     });
 
     // v8.1: Long-press — uses unified pointer events
@@ -1977,8 +1980,11 @@ function addLongPressListener(chip, word) {
     _lpStartY = e.clientY;
     chip._longPressTimer = setTimeout(() => {
       chip._longPressTimer = null;
+      chip.dataset._longPressHandled = 'true';
       markUnfamiliar(word, chip);
       showToast(`✗ 已标记 "${word}" 为不熟悉`, 'info', 1500);
+      // Reset after a short delay so subsequent clicks don't double-fire
+      setTimeout(() => { chip.dataset._longPressHandled = 'false'; }, 500);
     }, 400);
   });
 
@@ -2014,13 +2020,6 @@ function addLongPressListener(chip, word) {
     }
   });
 
-  // Fallback: click also clears — handles mobile where pointerup may not fire
-  chip.addEventListener('click', () => {
-    if (chip._longPressTimer) {
-      clearTimeout(chip._longPressTimer);
-      chip._longPressTimer = null;
-    }
-  });
 }
 
 /* =========================================================
