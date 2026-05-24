@@ -164,6 +164,8 @@ const DOM = {
   inputWordsPerBatch: document.getElementById('inputWordsPerBatch'),
   inputDifficulty:    document.getElementById('inputDifficulty'),
   btnSaveSettings:    document.getElementById('btnSaveSettings'),
+  btnSettingsBack:    document.getElementById('btnSettingsBack'),
+  btnSaveSettingsScreen: document.getElementById('btnSaveSettingsScreen'),
   inputDailyGoal:     document.getElementById('inputDailyGoal'),
   inputAdaptiveBatch: document.getElementById('inputAdaptiveBatch'),
 
@@ -371,6 +373,30 @@ function showScreen(name, transition = 'auto') {
   }
 
   _prevScreen = name;
+  updateMobileNav(name);
+}
+
+/**
+ * v8.5: Update mobile bottom nav active state
+ */
+function updateMobileNav(screenName) {
+  const map = {
+    'welcome': 'welcome',
+    'grid': 'welcome',   // 'Learn' button
+    'detail': 'welcome',
+    'done': 'welcome',
+    'review': 'review',
+    'practice': 'practice',
+    'quiz': 'practice',
+    'dictation': 'practice',
+    'cloze': 'practice',
+    'reading': 'reading',
+    'settings': 'settings',
+  };
+  const target = map[screenName] || 'welcome';
+  document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.target === target);
+  });
 }
 
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -1067,6 +1093,8 @@ function wireEvents() {
   DOM.closeSettings.addEventListener('click', closeModal.bind(null, DOM.modalSettings));
   DOM.modalSettings.addEventListener('click', e => { if (e.target === DOM.modalSettings) closeModal(DOM.modalSettings); });
   DOM.btnSaveSettings.addEventListener('click', saveSettings);
+  if (DOM.btnSaveSettingsScreen) DOM.btnSaveSettingsScreen.addEventListener('click', saveSettings);
+  if (DOM.btnSettingsBack) DOM.btnSettingsBack.addEventListener('click', () => showScreen('welcome'));
   DOM.toggleApiKey.addEventListener('click', () => {
     const isHidden = DOM.inputApiKey.type === 'password';
     DOM.inputApiKey.type = isHidden ? 'text' : 'password';
@@ -1493,7 +1521,17 @@ function handleKeyboardShortcut(e) {
 /* =========================================================
    Modals
    ========================================================= */
+function openSettingsScreen() {
+  showScreen('settings');
+  updateSettingsDataSummary();
+}
+
 function openSettings() {
+  // Mobile: use full-screen settings page
+  if (window.innerWidth <= 600) {
+    openSettingsScreen();
+    return;
+  }
   DOM.modalSettings.style.display = 'flex';
   updateSettingsDataSummary();
   // Show last sync time

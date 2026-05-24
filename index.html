@@ -548,6 +548,152 @@
     <section id="screenReading" class="screen" style="display:none">
     </section>
 
+    <!-- === SCREEN: Settings (mobile full-screen) === -->
+    <section id="screenSettings" class="screen">
+      <div style="display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--color-border);position:sticky;top:0;background:var(--color-bg);z-index:10;">
+        <button class="btn btn-ghost" id="btnSettingsBack">← Back</button>
+        <h2 style="font-size:var(--text-lg);font-weight:600;">设置</h2>
+      </div>
+      <div style="padding:var(--space-3);padding-bottom:80px;">
+
+        <!-- 🎯 Learning -->
+        <div class="settings-card">
+          <div class="settings-card-header">🎯 Learning</div>
+          <div class="form-group">
+            <label>每日目标</label>
+            <input type="number" id="inputDailyGoal" min="5" max="500" value="50" style="width:100px" />
+          </div>
+          <div class="form-group">
+            <label for="inputWordsPerBatch">每批词数</label>
+            <input type="number" id="inputWordsPerBatch" min="10" max="500" value="100" />
+          </div>
+          <div class="form-group">
+            <label for="inputDifficulty">词汇难度</label>
+            <select id="inputDifficulty">
+              <option value="beginner">Beginner (A1–A2)</option>
+              <option value="intermediate" selected>Intermediate (B1–B2)</option>
+              <option value="advanced">Advanced (C1–C2)</option>
+              <option value="academic">Academic / GRE</option>
+              <option value="business">Business English</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="inputAdaptiveBatch" />
+              <span>自适应批次大小</span>
+            </label>
+            <span class="form-hint">根据历史标记率自动调整每批词数</span>
+          </div>
+        </div>
+
+        <!-- 🧠 Interaction -->
+        <div class="settings-card">
+          <div class="settings-card-header">🧠 Interaction</div>
+          <div class="form-group">
+            <label for="inputClickBehavior">单击行为</label>
+            <select id="inputClickBehavior">
+              <option value="peek">单击查看释义</option>
+              <option value="mark">单击直接标记</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="inputAutoPronounce" />
+              <span>进入详情页自动朗读</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="inputShowShortcuts" checked />
+              <span>显示快捷键提示</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 🎨 Appearance -->
+        <div class="settings-card">
+          <div class="settings-card-header">🎨 Appearance</div>
+          <div class="form-group">
+            <label for="inputTheme">主题</label>
+            <select id="inputTheme">
+              <option value="dark">深色</option>
+              <option value="light">浅色</option>
+              <option value="system">跟随系统</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 🔌 API -->
+        <div class="settings-card">
+          <div class="settings-card-header">🔌 API</div>
+          <div class="form-group">
+            <label for="inputApiKey">DeepSeek API Key</label>
+            <div class="input-with-toggle">
+              <input type="password" id="inputApiKey" placeholder="sk-..." autocomplete="off" />
+              <button class="btn-toggle-pw" id="toggleApiKey" type="button">Show</button>
+            </div>
+            <span class="form-hint">存于本地浏览器，仅用于调用 DeepSeek API</span>
+          </div>
+        </div>
+
+        <!-- 🔄 Sync -->
+        <div class="settings-card">
+          <div class="settings-card-header">🔄 Sync</div>
+          <div class="form-group">
+            <label for="inputSyncUrl">WebDAV Server URL</label>
+            <input type="text" id="inputSyncUrl" placeholder="https://example.com/remote.php/dav/files/user/" />
+          </div>
+          <div class="form-group">
+            <label for="inputSyncUser">Username</label>
+            <input type="text" id="inputSyncUser" placeholder="WebDAV username" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="inputSyncPass">Password</label>
+            <div class="input-with-toggle">
+              <input type="password" id="inputSyncPass" placeholder="App password" autocomplete="off" />
+              <button class="btn-toggle-pw" id="toggleSyncPass" type="button">Show</button>
+            </div>
+            <span class="form-hint">存于本地浏览器，建议使用应用专用密码</span>
+          </div>
+          <div class="form-group">
+            <label class="toggle-label">
+              <input type="checkbox" id="inputAutoSync" />
+              <span>每批结束后自动同步</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>上次同步</label>
+            <span style="color:var(--color-text-muted);font-size:var(--text-sm)" id="syncLastTime">--</span>
+          </div>
+          <div class="sync-buttons">
+            <button class="btn btn-secondary" id="btnSyncTest">🔌 Test Connection</button>
+            <button class="btn btn-primary" id="btnSyncPush">⬆ Push Data</button>
+            <button class="btn btn-secondary" id="btnSyncPull">⬇ Pull Data</button>
+          </div>
+          <p class="form-hint" id="syncStatus">Not synced yet.</p>
+        </div>
+
+        <!-- 📊 Data -->
+        <div class="settings-card">
+          <div class="settings-card-header">📊 Data</div>
+          <div class="data-summary" id="settingsDataSummary">
+            <div class="data-item"><span class="data-value">0</span><span class="data-label">已学</span></div>
+            <div class="data-item"><span class="data-value">0</span><span class="data-label">已掌握</span></div>
+            <div class="data-item"><span class="data-value">0</span><span class="data-label">连续天</span></div>
+            <div class="data-item"><span class="data-value">0</span><span class="data-label">待复习</span></div>
+          </div>
+          <div class="data-actions">
+            <button class="btn btn-secondary" id="btnSettingsExportAnki">📤 导出 Anki</button>
+            <button class="btn btn-danger" id="btnClearAllData">🗑 清除所有数据</button>
+          </div>
+        </div>
+
+      </div>
+      <div style="padding:var(--space-3);position:sticky;bottom:0;background:var(--color-bg);border-top:1px solid var(--color-border);">
+        <button class="btn btn-primary" id="btnSaveSettingsScreen" style="width:100%;">Save Settings</button>
+      </div>
+    </section>
+
   <!-- ===== Peek Popup (v6.5) ===== -->
   <div class="peek-popup" id="peekPopup" style="display:none">
     <div class="peek-popup-inner">

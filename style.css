@@ -1,3 +1,21 @@
+/* v8.5: Mobile screenSettings styles */
+#screenSettings .settings-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+#screenSettings .settings-card-header {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+#screenSettings .form-group { margin-bottom: var(--space-3); }
+#screenSettings .data-summary { gap: var(--space-2); }
+#screenSettings .data-item { padding: var(--space-2); }
+#screenSettings .data-value { font-size: var(--text-md); }
+
 /* =========================================================
    VocabLearn — style.css (v7.0 HyperOS 设计重构)
    小米设计语言：活力橙、大圆角、毛玻璃、干净排版
@@ -3045,6 +3063,20 @@ html.theme-switching { transition: background-color 100ms ease; }
   /* Settings modal */
   .modal.modal-settings .modal-body { padding: var(--space-3); }
   .settings-card { padding: var(--space-3); }
+
+  /* v8.5: Mobile scroll fixes */
+  body { overflow-x: hidden; }
+  .screen { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .word-grid { overflow-y: auto; -webkit-overflow-scrolling: touch; max-height: calc(100vh - 180px); }
+  .detail-grid { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .welcome-scroll { overflow-y: auto; -webkit-overflow-scrolling: touch; max-height: calc(100vh - 60px); }
+  #screenWelcome { overflow: visible; }
+  #screenGrid, #screenDetail, #screenDone, #screenReview,
+  #screenPractice, #screenReading { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Settings on mobile as full screen */
+  #screenSettings { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  #screenSettings .settings-card:last-child { margin-bottom: 100px; }
 }
 
 @media (max-width: 380px) {

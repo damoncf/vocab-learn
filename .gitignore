@@ -2,3 +2,10 @@
 *.log
 node_modules/
 .workspace/
+*.apk
+android/
+www/
+node_modules/
+capacitor.config.json
+package.json
+package-lock.json
