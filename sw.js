@@ -1,31 +1,34 @@
 /**
- * sw.js — Service Worker for VocabLearn v2.0
+ * sw.js — Service Worker for VocabLearn
  *
- * Cache-first strategy: all core files are pre-cached at install time.
- * Offline-first loading for cached resources.
+ * Network-first for HTML/JS/CSS (always get latest if online)
+ * Cache-first for vocabulary JSON and icons (rarely change)
  */
 
-const CACHE_NAME = 'vocablearn-v1';
+const CACHE_NAME = 'vocablearn-v2';
 
 const PRECACHE_URLS = [
   'index.html',
   'style.css',
   'app.js',
   'storage.js',
+  'onboarding.js',
+  'badges.js',
+  'challenge.js',
   'api.js',
   'review.js',
   'quiz.js',
   'tts.js',
+  'anki.js',
+  'dictation.js',
+  'cloze.js',
+  'sync.js',
   'reading.js',
+  'practice.js',
   'manifest.json',
   'icons/icon-192.png',
   'icons/icon-512.png',
-  'vocabulary/index.json',
-  'vocabulary/cet4.json',
-  'vocabulary/cet6.json',
-  'vocabulary/ielts.json',
-  'vocabulary/toefl.json',
-  'vocabulary/gre.json'
+  'vocabulary/index.json'
 ];
 
 /* =========================================================
@@ -37,7 +40,6 @@ self.addEventListener('install', (event) => {
       return cache.addAll(PRECACHE_URLS);
     })
   );
-  // Activate immediately without waiting for page reload
   self.skipWaiting();
 });
 
@@ -54,45 +56,45 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim())
   );
-  // Take control of all clients immediately
-  self.clients.claim();
 });
 
 /* =========================================================
-   Fetch — cache-first, network fallback
+   Fetch — hybrid strategy
    ========================================================= */
 self.addEventListener('fetch', (event) => {
-  // Only handle GET requests
   if (event.request.method !== 'GET') return;
 
+  const url = new URL(event.request.url);
+
+  // Vocabulary JSON files: cache-first (rarely change, large files)
+  if (url.pathname.includes('/vocabulary/')) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => cached || fetch(event.request))
+    );
+    return;
+  }
+
+  // Icons and manifest: cache-first
+  if (url.pathname.includes('/icons/') || url.pathname.endsWith('manifest.json')) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => cached || fetch(event.request))
+    );
+    return;
+  }
+
+  // HTML, JS, CSS: network-first (always get latest if online)
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      // Not in cache — fetch from network
-      return fetch(event.request).then((networkResponse) => {
-        // Only cache successful, same-origin responses
-        if (!networkResponse || networkResponse.status !== 200) {
-          return networkResponse;
-        }
-
-        // Clone the response before caching (responses are single-use)
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-
-        return networkResponse;
-      }).catch(() => {
-        // Both cache and network failed — return a fallback
-        // For navigation requests, try to return the cached index.html
-        if (event.request.mode === 'navigate') {
-          return caches.match('index.html');
-        }
+    fetch(event.request).then((response) => {
+      if (!response || response.status !== 200) return response;
+      const clone = response.clone();
+      caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+      return response;
+    }).catch(() => {
+      return caches.match(event.request).then((cached) => {
+        if (cached) return cached;
+        if (event.request.mode === 'navigate') return caches.match('index.html');
         return new Response('Offline', { status: 503 });
       });
     })
